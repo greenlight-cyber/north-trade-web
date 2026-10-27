@@ -1,0 +1,6 @@
+.agents/
+.next/
+node_modules/
+package-lock.json
+skills-lock.json
+next-env.d.ts

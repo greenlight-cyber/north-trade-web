@@ -1,0 +1,11 @@
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.ico binary
+
+# Skills de terceros: se guardan tal cual para no alterar sus firmas.
+.agents/** -text
+skills-lock.json -text

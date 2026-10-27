@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Las skills de agentes traen HTML/CSS propio: no deben generar clases del sitio. */
+@source not "../../.agents";
+
+/* Los colores y tipografías de marca se definen en la etapa de identidad visual. */
+body {
+  background: #ffffff;
+  color: #1f1a17;
+}
