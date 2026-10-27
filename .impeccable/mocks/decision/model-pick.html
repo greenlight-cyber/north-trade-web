@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Plano de mensura</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        width: 1440px;
+        height: 900px;
+        font-family: Georgia, serif;
+        background: #f7f5f0;
+        color: #23201c;
+        overflow: hidden;
+      }
+      .nav {
+        height: 84px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 64px;
+        border-bottom: 1px solid #23201c;
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+      }
+      .logo {
+        font-family: Georgia, serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #8c1a1c;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 520px;
+        height: 816px;
+      }
+      .photo {
+        background: linear-gradient(180deg, #a7b6bb 0%, #cfc8b2 40%, #8e8a5a 41%, #596035 100%);
+        margin: 40px 0 40px 64px;
+      }
+      .side {
+        padding: 40px 64px 40px 48px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      .plat {
+        height: 280px;
+        border: 1px solid #6b6358;
+        position: relative;
+      }
+      .plat svg {
+        position: absolute;
+        inset: 16px;
+      }
+      .side h1 {
+        font-size: 48px;
+        line-height: 1.1;
+        font-weight: 400;
+      }
+      .side p {
+        font-family: Arial, sans-serif;
+        font-size: 17px;
+        line-height: 1.5;
+      }
+      .seal {
+        align-self: flex-start;
+        border: 2px solid #8c1a1c;
+        color: #8c1a1c;
+        padding: 10px 16px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <span class="logo">North Trade</span><span>Propiedades · Nosotros · Contacto · EN</span>
+    </div>
+    <div class="grid">
+      <div class="photo"></div>
+      <div class="side">
+        <div class="plat">
+          <svg viewBox="0 0 400 240" width="100%" height="100%">
+            <polygon
+              points="40,30 330,20 370,200 60,220"
+              fill="none"
+              stroke="#23201C"
+              stroke-width="1.5"
+            />
+            <text x="150" y="130" font-size="22" fill="#23201C">2.831 ha</text>
+          </svg>
+        </div>
+        <h1>Campos en el norte argentino</h1>
+        <p>Compra y venta de propiedades rurales en Salta, Formosa y el norte.</p>
+        <span class="seal">Consultar por WhatsApp</span>
+      </div>
+    </div>
+  </body>
+</html>

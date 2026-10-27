@@ -3,8 +3,106 @@
 /* Las skills de agentes traen HTML/CSS propio: no deben generar clases del sitio. */
 @source not "../../.agents";
 
-/* Los colores y tipografías de marca se definen en la etapa de identidad visual. */
-body {
-  background: #ffffff;
-  color: #1f1a17;
+/*
+ * Mundo visual: plano de mensura. Papel, tinta, línea de agrimensor de 1px
+ * y el sello bordó de la firma como única marca de acción y estado.
+ */
+@theme {
+  --color-paper: #f7f5f0;
+  --color-paper-deep: #efebe3;
+  --color-ink: #23201c;
+  --color-line: #6b6358;
+  --color-rule: #cfc8bc;
+  --color-seal: #8c1a1c;
+  --color-seal-dark: #631424;
+
+  --font-serif: var(--font-source-serif), "Georgia", serif;
+  --font-sans: var(--font-public-sans), "Helvetica Neue", "Arial", sans-serif;
+
+  --text-display: clamp(2.5rem, 1.6rem + 3.2vw, 4.25rem);
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.02em;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--color-line) var(--color-paper-deep);
+  }
+
+  body {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    font-variant-numeric: tabular-nums;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-seal);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-seal);
+    outline-offset: 3px;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  input,
+  select,
+  textarea {
+    caret-color: var(--color-seal);
+    accent-color: var(--color-seal);
+  }
+}
+
+@layer components {
+  /* Línea de agrimensor que se traza al cargar; visible de entrada si no hay movimiento. */
+  .survey-trace {
+    transform-origin: left center;
+    animation: survey-trace 900ms var(--ease-out-expo) both;
+  }
+  .survey-trace-y {
+    transform-origin: center top;
+    animation: survey-trace-y 900ms var(--ease-out-expo) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .survey-trace,
+    .survey-trace-y {
+      animation: none;
+    }
+  }
+}
+
+@keyframes survey-trace {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes survey-trace-y {
+  from {
+    transform: scaleY(0);
+  }
 }

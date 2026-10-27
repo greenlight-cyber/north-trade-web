@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   poweredByHeader: false,
   reactStrictMode: true,
+  // 404 propia: el layout raíz vive bajo el segmento de idioma [lang].
+  experimental: { globalNotFound: true },
   turbopack: {
     rules: {
       "*.css": {

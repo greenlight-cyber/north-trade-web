@@ -1,0 +1,166 @@
+{
+  "title": "Elegí el mundo visual de North Trade",
+  "question": "El sorteo asignó «Poncho salteño». Podés quedarte con esa, tomar una alternativa o pedir otra mano.",
+  "options": [
+    {
+      "id": "assigned",
+      "kind": "assigned",
+      "label": "Poncho salteño",
+      "kicker": "THE ROLL",
+      "lineage": "El poncho de Güemes: bordó con guardas negras, tejido en telar",
+      "thesis": "La firma vestida con el poncho de Salta: campos de bordó y guardas negras ordenan la página; la foto del campo manda.",
+      "palette": ["#8C1A1C", "#1A1414", "#F2EDE4", "#631424"],
+      "materials": [
+        "lana de telar, trama sutil",
+        "guardas negras dobles",
+        "fotografía de campo a sangre"
+      ],
+      "viewport": "Foto de campo a pantalla completa; en la esquina inferior izquierda un paño bordó con guarda negra doble, el titular en serif y el buscador (provincia, tipo, hectáreas).",
+      "risk": "Con mano pesada se vuelve souvenir folclórico: el poncho tiene que vivir en franjas y campos de color, nunca como estampado.",
+      "raised": [
+        {
+          "from": "fly-posted-festival-hoarding-built",
+          "raise": "Un solo gesto dominante por pantalla: una foto decisiva y una frase; nada más compite."
+        },
+        {
+          "from": "ink-pigment-printmaking-mezzotint-velvet-night",
+          "raise": "Ninguna imagen decorativa: solo fotos reales de campos, que emergen del paño oscuro."
+        },
+        {
+          "from": "rivers-tides-ocean-depths-mesophotic-deep-dive",
+          "raise": "Las hectáreas como eje rector: la cifra dominante de cada tarjeta y ficha, siempre en el mismo lugar."
+        },
+        {
+          "from": "operate-a-cutting-bench-select-rail",
+          "raise": "El estado es una marca, no un color: «Reservada» como sello sobre la foto, no como etiqueta de color."
+        },
+        {
+          "from": "dream-surreal-impossible-worlds-sleeping-city-fold",
+          "raise": "La geografía como navegación: provincia y departamento ordenan el listado."
+        },
+        {
+          "from": "cyworld-minihompy-room",
+          "raise": "Datos chicos y honestos: zona, tipo y superficie, sin adornos."
+        }
+      ],
+      "html": ".impeccable/mocks/decision/assigned.html"
+    },
+    {
+      "id": "model-pick",
+      "kind": "pick",
+      "label": "Plano de mensura",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Planos de mensura y catastro rural",
+      "thesis": "Cada campo presentado como en su plano: contorno del lote, hectáreas y un sello bordó.",
+      "palette": ["#F7F5F0", "#23201C", "#6B6358", "#8C1A1C"],
+      "materials": ["papel de plano", "línea fina de agrimensor", "sello de goma bordó"],
+      "viewport": "Foto grande a la izquierda; a la derecha el contorno del lote en línea fina con sus hectáreas, el titular y un sello de consulta.",
+      "risk": "Exige el polígono real de cada campo, que hoy no existe (no se puede inventar); y es la dirección a la que llegan casi todos los diseños del rubro.",
+      "html": ".impeccable/mocks/decision/model-pick.html"
+    },
+    {
+      "id": "challenger-festival",
+      "kind": "challenger",
+      "catalogId": "fly-posted-festival-hoarding-built",
+      "label": "Afiche de festival",
+      "verdict": "declined",
+      "lineage": "Afiches serigrafiados de festival",
+      "thesis": "Cada centímetro ocupado; un solo panel blanco en calma.",
+      "palette": ["#F3EDE0", "#111111", "#FF6A00", "#EE1F8A"],
+      "materials": ["gouache", "riso", "papel rasgado"],
+      "viewport": "Collage a sangre con una palabra gigante multicolor.",
+      "case": "Opuesto a la reserva y seriedad pedidas; esconde las fotos de los campos.",
+      "risk": "Ruidoso, juvenil.",
+      "kept": "Un solo gesto dominante por pantalla."
+    },
+    {
+      "id": "challenger-mezzotint",
+      "kind": "challenger",
+      "catalogId": "ink-pigment-printmaking-mezzotint-velvet-night",
+      "label": "Grabado a la manera negra",
+      "verdict": "declined",
+      "lineage": "Mezzotinta",
+      "thesis": "La imagen aparece quitando oscuridad.",
+      "palette": ["#0E0C0B", "#D8D4CC", "#5A4636"],
+      "materials": ["negro aterciopelado", "bruñido"],
+      "viewport": "Plancha negra con una figura que emerge.",
+      "case": "Elegante pero lúgubre; oscurece los campos que tienen que lucirse a pleno sol.",
+      "risk": "Sombrío.",
+      "kept": "Ninguna imagen decorativa: solo fotos reales."
+    },
+    {
+      "id": "challenger-city",
+      "kind": "challenger",
+      "catalogId": "dream-surreal-impossible-worlds-sleeping-city-fold",
+      "label": "Ciudad dormida",
+      "verdict": "declined",
+      "lineage": "Mundos oníricos",
+      "thesis": "Barrios que sueñan su propio clima.",
+      "palette": ["#1B2340", "#E2B04A", "#F4F1E8"],
+      "materials": ["costuras", "estrellas bordadas"],
+      "viewport": "Mapa nocturno plegado como manta.",
+      "case": "Urbano y fantasioso; no habla a productores ni inversores.",
+      "risk": "Lúdico.",
+      "kept": "La geografía como navegación."
+    },
+    {
+      "id": "challenger-dive",
+      "kind": "challenger",
+      "catalogId": "rivers-tides-ocean-depths-mesophotic-deep-dive",
+      "label": "Inmersión profunda",
+      "verdict": "declined",
+      "lineage": "Computadoras de buceo",
+      "thesis": "Un eje vertical de profundidad rige todo.",
+      "palette": ["#0A1A2F", "#2FD3E0", "#F2F2EE"],
+      "materials": ["azul abisal", "partículas"],
+      "viewport": "Perfil vertical de inmersión.",
+      "case": "Sin vínculo con el campo del norte.",
+      "risk": "Ajeno.",
+      "kept": "Una cifra rectora: las hectáreas."
+    },
+    {
+      "id": "challenger-cyworld",
+      "kind": "challenger",
+      "catalogId": "cyworld-minihompy-room",
+      "label": "Cuarto isométrico",
+      "verdict": "declined",
+      "lineage": "Cyworld minihompy",
+      "thesis": "Identidad que se decora.",
+      "palette": ["#F7D9E3", "#BFE3F2", "#FFFFFF"],
+      "materials": ["pastel", "isometría"],
+      "viewport": "Cuarto miniatura decorable.",
+      "case": "Infantil para montos altos.",
+      "risk": "Frívolo.",
+      "kept": "Datos chicos y honestos."
+    },
+    {
+      "id": "challenger-bench",
+      "kind": "challenger",
+      "catalogId": "operate-a-cutting-bench-select-rail",
+      "label": "Mesa de montaje",
+      "verdict": "declined",
+      "lineage": "Moviola y riel de selección",
+      "thesis": "Cada paso, un cuadro perforado.",
+      "palette": ["#0B0B0B", "#F06A1D", "#FFFFFF"],
+      "materials": ["grano de película", "cinta naranja"],
+      "viewport": "Riel perforado sobre campo naranja.",
+      "case": "Técnico y estridente; no transmite confianza rural.",
+      "risk": "Industrial.",
+      "kept": "El estado como marca, no como color."
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "code" },
+  "canon": true,
+  "canonCard": {
+    "kind": "canon",
+    "label": "El estándar del rubro",
+    "thesis": "Lo que hacen los portales inmobiliarios, ejecutado con oficio.",
+    "palette": ["#FFFFFF", "#1F1A17", "#8C1A1C"],
+    "materials": ["grilla limpia", "fotografía de producto"],
+    "viewport": "Foto con buscador centrado y una fila de tarjetas de propiedades debajo.",
+    "risk": "Indistinguible de la competencia, por diseño.",
+    "html": ".impeccable/mocks/decision/canon.html"
+  },
+  "steer": true
+}

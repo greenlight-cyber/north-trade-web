@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Poncho salteño</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        width: 1440px;
+        height: 900px;
+        font-family: Georgia, serif;
+        background: #f2ede4;
+        color: #1a1414;
+        overflow: hidden;
+      }
+      .photo {
+        position: absolute;
+        inset: 0 0 0 0;
+        background: linear-gradient(
+          180deg,
+          #9db0b8 0%,
+          #c9c3ae 38%,
+          #8e8a5a 39%,
+          #6e7340 60%,
+          #4f5530 100%
+        );
+      }
+      .nav {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 84px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 64px;
+        color: #f2ede4;
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .logo {
+        font-family: Georgia, serif;
+        font-size: 28px;
+        text-transform: none;
+        letter-spacing: 0;
+        font-weight: 700;
+      }
+      .band {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 640px;
+        height: 520px;
+        background: #8c1a1c;
+        color: #f2ede4;
+        padding: 64px;
+      }
+      .band:before,
+      .band:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 14px;
+        background: #1a1414;
+      }
+      .band:before {
+        top: 0;
+      }
+      .band:after {
+        top: 24px;
+      }
+      .band h1 {
+        font-size: 56px;
+        line-height: 1.05;
+        font-weight: 400;
+        margin-top: 40px;
+      }
+      .band p {
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+        margin-top: 24px;
+        opacity: 0.85;
+      }
+      .finder {
+        position: absolute;
+        left: 64px;
+        bottom: 64px;
+        right: 64px;
+        display: flex;
+        gap: 1px;
+        background: #631424;
+      }
+      .finder div {
+        flex: 1;
+        background: #f2ede4;
+        color: #1a1414;
+        padding: 18px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+      .finder div:last-child {
+        background: #1a1414;
+        color: #f2ede4;
+        text-align: center;
+      }
+      .cap {
+        position: absolute;
+        right: 64px;
+        bottom: 40px;
+        color: #f2ede4;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="photo"></div>
+    <div class="nav">
+      <span class="logo">North Trade</span><span>Propiedades · Nosotros · Contacto · EN</span>
+    </div>
+    <div class="band">
+      <h1>Campos en el norte argentino</h1>
+      <p>
+        Compra y venta de propiedades rurales en Salta, Formosa y el norte. Seriedad,
+        profesionalidad y absoluta reserva.
+      </p>
+      <div class="finder">
+        <div>Provincia</div>
+        <div>Tipo</div>
+        <div>Hectáreas</div>
+        <div>Ver campos</div>
+      </div>
+    </div>
+    <div class="cap">2.831 ha · Chaguaral, Salta</div>
+  </body>
+</html>

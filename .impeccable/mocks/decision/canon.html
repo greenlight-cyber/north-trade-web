@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Estándar del rubro</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      body {
+        width: 1440px;
+        height: 900px;
+        font-family: Arial, sans-serif;
+        background: #fff;
+        color: #1f1a17;
+        overflow: hidden;
+      }
+      .nav {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 64px;
+      }
+      .logo {
+        font-family: Georgia, serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #8c1a1c;
+      }
+      .hero {
+        height: 520px;
+        margin: 0 64px;
+        background: linear-gradient(180deg, #a7b6bb 0%, #cfc8b2 40%, #8e8a5a 41%, #596035 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-align: center;
+      }
+      .hero h1 {
+        font-family: Georgia, serif;
+        font-size: 56px;
+        font-weight: 400;
+      }
+      .search {
+        margin-top: 32px;
+        display: flex;
+        background: #fff;
+        width: 820px;
+      }
+      .search div {
+        flex: 1;
+        padding: 20px;
+        color: #1f1a17;
+        border-right: 1px solid #ddd;
+      }
+      .search div:last-child {
+        background: #8c1a1c;
+        color: #fff;
+        border: 0;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        margin: 40px 64px;
+      }
+      .cards div {
+        height: 200px;
+        background: #eee9e1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <span class="logo">North Trade</span><span>Propiedades · Nosotros · Contacto · EN</span>
+    </div>
+    <div class="hero">
+      <h1>Campos en el norte argentino</h1>
+      <div class="search">
+        <div>Provincia</div>
+        <div>Tipo</div>
+        <div>Hectáreas</div>
+        <div>Buscar</div>
+      </div>
+    </div>
+    <div class="cards">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </body>
+</html>

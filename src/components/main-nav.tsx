@@ -1,0 +1,110 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useId, useState } from "react";
+
+import { CloseIcon, MenuIcon } from "@/components/icons";
+import type { Locale } from "@/i18n/config";
+import { switchLocalePath, toPublicPath } from "@/i18n/routes";
+
+export type NavItem = { href: string; label: string };
+
+type MainNavProps = {
+  locale: Locale;
+  items: NavItem[];
+  labels: { mainNav: string; openMenu: string; closeMenu: string; switchLanguage: string };
+};
+
+function isActive(pathname: string, href: string): boolean {
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function MainNav({ locale, items, labels }: MainNavProps) {
+  // El proxy reescribe las direcciones: se normaliza a la forma pública que usan los enlaces.
+  const pathname = toPublicPath(usePathname());
+  // El menú móvil queda abierto solo en la página donde se abrió: al navegar, se cierra.
+  const [openOn, setOpenOn] = useState<string | null>(null);
+  const open = openOn === pathname;
+  const setOpen = (value: boolean) => setOpenOn(value ? pathname : null);
+  const panelId = useId();
+  const otherLocale: Locale = locale === "es" ? "en" : "es";
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenOn(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  const languageLink = (
+    <Link
+      href={switchLocalePath(pathname, otherLocale)}
+      hrefLang={otherLocale}
+      lang={otherLocale}
+      aria-label={labels.switchLanguage}
+      className="inline-flex h-9 min-w-9 items-center justify-center border border-line px-2 text-sm font-medium tracking-[0.08em] text-ink uppercase transition-colors hover:border-ink"
+    >
+      {otherLocale}
+    </Link>
+  );
+
+  return (
+    <nav aria-label={labels.mainNav} className="flex items-center gap-6">
+      <ul className="hidden items-center gap-8 md:flex">
+        {items.map((item) => {
+          const active = isActive(pathname, item.href);
+          return (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`text-[0.95rem] transition-colors ${
+                  active
+                    ? "text-seal underline decoration-1 underline-offset-[0.45em]"
+                    : "text-ink hover:text-seal"
+                }`}
+              >
+                {item.label}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+
+      {languageLink}
+
+      <button
+        type="button"
+        className="-mr-2 inline-flex h-11 w-11 items-center justify-center text-ink md:hidden"
+        aria-expanded={open}
+        aria-controls={panelId}
+        aria-label={open ? labels.closeMenu : labels.openMenu}
+        onClick={() => setOpen(!open)}
+      >
+        {open ? <CloseIcon width={24} height={24} /> : <MenuIcon width={24} height={24} />}
+      </button>
+
+      <div
+        id={panelId}
+        hidden={!open}
+        className="absolute inset-x-0 top-full z-40 border-b border-ink bg-paper md:hidden"
+      >
+        <ul className="px-5 py-2">
+          {items.map((item) => (
+            <li key={item.href} className="border-b border-rule last:border-b-0">
+              <Link
+                href={item.href}
+                aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                onClick={() => setOpenOn(null)}
+                className="block py-4 font-serif text-2xl aria-[current=page]:text-seal"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </nav>
+  );
+}
