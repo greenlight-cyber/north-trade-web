@@ -165,7 +165,10 @@ export const property = defineType({
       group: "media",
       of: [defineArrayMember(imageWithAlt("photo", "Foto"))],
       options: { layout: "grid" },
-      validation: (rule) => rule.required().min(1).error("Cargue al menos una foto."),
+      // Aviso y no error: varias propiedades migradas no tienen foto recuperable y
+      // un error impediría corregir su texto hasta conseguirla. Lleva required()
+      // porque, sin él, Sanity no avisa cuando la galería no tiene ningún valor.
+      validation: (rule) => rule.required().min(1).warning("Cargue al menos una foto."),
     }),
     defineField({ ...imageWithAlt("plan", "Plano o imagen satelital"), group: "media" }),
     defineField({
@@ -175,6 +178,14 @@ export const property = defineType({
       type: "string",
       group: "advanced",
       readOnly: true,
+    }),
+    defineField({
+      name: "internalNotes",
+      title: "Notas internas",
+      description: "Solo para el equipo: nunca se muestran en el sitio.",
+      type: "text",
+      rows: 4,
+      group: ["main", "advanced"],
     }),
   ],
   preview: {

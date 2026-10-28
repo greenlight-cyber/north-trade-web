@@ -17,6 +17,7 @@ export const propertyTypes: Option[] = [
   { value: "agricola-ganadero", label: { es: "Agrícola-ganadero", en: "Mixed farming" } },
   { value: "vinedos", label: { es: "Viñedos y fincas", en: "Vineyards & estates" } },
   { value: "monte", label: { es: "Monte a desarrollar", en: "Undeveloped land" } },
+  { value: "fraccion", label: { es: "Fracción / terreno rural", en: "Rural plot" } },
   { value: "urbana", label: { es: "Urbana", en: "Urban" } },
 ];
 

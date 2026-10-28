@@ -41,6 +41,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# migración: fotos descargadas del archivo de Internet (se suben a Sanity)
+/scripts/migracion/.cache/
+
 # impeccable: estado de sesión y capturas locales
 .impeccable/questions/
 .impeccable/review/
