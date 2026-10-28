@@ -1,17 +1,18 @@
 import { ArrowRightIcon, ChevronDownIcon } from "@/components/icons";
 import { areaRanges, propertyTypes, provinces } from "@/config/catalog";
+import type { ListingFilters } from "@/domain/listing";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { localizePath } from "@/i18n/routes";
 
-type PropertySearchProps = { locale: Locale; dict: Dictionary };
+type PropertySearchProps = { locale: Locale; dict: Dictionary; values?: ListingFilters };
 
 /**
  * Buscador con forma de cuadro de datos de plano: cada fila es una celda
  * rotulada. Es un formulario GET común: funciona sin JavaScript.
  */
-export function PropertySearch({ locale, dict }: PropertySearchProps) {
-  const fields = [
+export function PropertySearch({ locale, dict, values = {} }: PropertySearchProps) {
+  const fields: { name: keyof ListingFilters; label: string; options: typeof provinces }[] = [
     { name: "provincia", label: dict.search.province, options: provinces },
     { name: "tipo", label: dict.search.type, options: propertyTypes },
     { name: "superficie", label: dict.search.area, options: areaRanges },
@@ -32,7 +33,7 @@ export function PropertySearch({ locale, dict }: PropertySearchProps) {
             <span className="relative">
               <select
                 name={field.name}
-                defaultValue=""
+                defaultValue={values[field.name] ?? ""}
                 className="w-full min-w-0 cursor-pointer appearance-none bg-transparent py-3 pr-6 text-ink focus:outline-none"
               >
                 <option value="">{dict.search.any}</option>

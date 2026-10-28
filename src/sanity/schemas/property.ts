@@ -3,6 +3,20 @@ import { defineArrayMember, defineField, defineType } from "sanity";
 import { propertyTypes, provinces } from "@/config/catalog";
 import { formatArea, propertyStatuses } from "@/domain/property";
 
+/**
+ * Dirección web solo con letras sin acentos, números y guiones (igual que la migración):
+ * el generador de Sanity deja puntos y tildes, y «lote-3.5» se confundiría con un archivo.
+ */
+const slugify = (input: string) =>
+  input
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 96)
+    .replace(/-+$/, "");
+
 const toOptions = (items: { value: string; label: { es: string } }[]) =>
   items.map((i) => ({ value: i.value, title: i.label.es }));
 
@@ -51,7 +65,7 @@ export const property = defineType({
         "Se genera desde el título con el botón «Generar». No la cambie una vez publicada.",
       type: "slug",
       group: "main",
-      options: { source: "title.es", maxLength: 96 },
+      options: { source: "title.es", maxLength: 96, slugify },
       validation: (rule) => rule.required().error("Genere la dirección web desde el título."),
     }),
     defineField({

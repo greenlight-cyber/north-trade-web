@@ -21,6 +21,11 @@ export const propertyTypes: Option[] = [
   { value: "urbana", label: { es: "Urbana", en: "Urban" } },
 ];
 
+/** Nombre visible de un valor guardado; si no está en la lista, el valor tal cual. */
+export function optionLabel(items: Option[], value: string, locale: Locale): string {
+  return items.find((i) => i.value === value)?.label[locale] ?? value;
+}
+
 /** Rangos de superficie en hectáreas (mínimo incluido, máximo excluido). */
 export const areaRanges: (Option & { min: number; max: number | null })[] = [
   { value: "0-100", min: 0, max: 100, label: { es: "Hasta 100 ha", en: "Up to 100 ha" } },

@@ -1,20 +1,66 @@
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import aerialPhoto from "@/assets/home/campos-salta-aerea.jpg";
-import { PhoneIcon } from "@/components/icons";
+import { ArrowRightIcon, PhoneIcon } from "@/components/icons";
+import { PropertyCard } from "@/components/property-card";
 import { PropertySearch } from "@/components/property-search";
 import { CornerMarks, SurveyFrame } from "@/components/survey-frame";
 import { WhatsAppSeal } from "@/components/whatsapp-seal";
 import { siteConfig } from "@/config/site";
-import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/get-dictionary";
+import { pickHighlights } from "@/domain/listing";
+import { isLocale, type Locale } from "@/i18n/config";
+import { getDictionary, type Dictionary } from "@/i18n/get-dictionary";
+import { localizePath } from "@/i18n/routes";
+import { getListedProperties } from "@/sanity/properties";
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
   const dict = getDictionary(lang);
 
+  // Si Sanity no responde, la portada se muestra igual, sin la selección.
+  const properties = await getListedProperties().catch((error: unknown) => {
+    console.error("Portada: no se pudieron leer las propiedades.", error);
+    return [];
+  });
+  const highlights = pickHighlights(properties, 3);
+
+  return (
+    <>
+      <Hero lang={lang} dict={dict} />
+      {highlights.length > 0 && (
+        <section
+          aria-labelledby="seleccion"
+          className="mx-auto max-w-360 px-5 pb-20 sm:px-8 lg:px-16"
+        >
+          <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-4">
+            <h2 id="seleccion" className="font-serif text-3xl">
+              {dict.home.highlightsTitle}
+            </h2>
+            <Link
+              href={localizePath(lang, "properties")}
+              className="group inline-flex items-center gap-2 font-medium underline decoration-1 underline-offset-[0.35em] hover:text-seal"
+            >
+              {dict.home.highlightsAll}
+              <ArrowRightIcon className="transition-transform duration-200 group-hover:translate-x-1" />
+            </Link>
+          </div>
+          <ul className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            {highlights.map((property) => (
+              <li key={property.id}>
+                <PropertyCard property={property} locale={lang} dict={dict} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </>
+  );
+}
+
+function Hero({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   return (
     <section className="mx-auto grid max-w-360 grid-cols-1 gap-10 px-5 pt-8 pb-16 sm:px-8 lg:h-[clamp(40rem,calc(100dvh-4.5rem),58rem)] lg:grid-cols-[minmax(0,1.62fr)_minmax(24rem,1fr)] lg:gap-14 lg:px-16 lg:pt-12">
       <figure className="relative m-2 min-h-[18rem] lg:m-0 lg:min-h-0">

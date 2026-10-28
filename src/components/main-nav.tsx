@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 
 import { CloseIcon, MenuIcon } from "@/components/icons";
@@ -23,6 +23,7 @@ function isActive(pathname: string, href: string): boolean {
 export function MainNav({ locale, items, labels }: MainNavProps) {
   // El proxy reescribe las direcciones: se normaliza a la forma pública que usan los enlaces.
   const pathname = toPublicPath(usePathname());
+  const router = useRouter();
   // El menú móvil queda abierto solo en la página donde se abrió: al navegar, se cierra.
   const [openOn, setOpenOn] = useState<string | null>(null);
   const open = openOn === pathname;
@@ -37,9 +38,18 @@ export function MainNav({ locale, items, labels }: MainNavProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
+  const languageHref = switchLocalePath(pathname, otherLocale);
   const languageLink = (
     <Link
-      href={switchLocalePath(pathname, otherLocale)}
+      href={languageHref}
+      // Conserva los filtros de búsqueda al cambiar de idioma. Se lee al hacer clic para no
+      // depender de useSearchParams, que obligaría a demorar el armado del encabezado.
+      onClick={(e) => {
+        const query = window.location.search;
+        if (!query || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        router.push(languageHref + query);
+      }}
       hrefLang={otherLocale}
       lang={otherLocale}
       aria-label={labels.switchLanguage}
