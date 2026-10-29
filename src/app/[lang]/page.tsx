@@ -81,7 +81,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
 
 function Hero({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   return (
-    <section className="mx-auto grid max-w-360 grid-cols-1 gap-10 px-5 pt-8 pb-16 sm:px-8 lg:h-[clamp(40rem,calc(100dvh-4.5rem),58rem)] lg:grid-cols-[minmax(0,1.62fr)_minmax(24rem,1fr)] lg:gap-14 lg:px-16 lg:pt-12">
+    <section className="mx-auto grid max-w-360 grid-cols-1 gap-10 px-5 pt-8 pb-16 sm:px-8 lg:min-h-[clamp(40rem,calc(100dvh-4.5rem),58rem)] lg:grid-cols-[minmax(0,1.62fr)_minmax(24rem,1fr)] lg:gap-14 lg:px-16 lg:pt-12">
       <figure className="relative m-2 min-h-[18rem] lg:m-0 lg:min-h-0">
         <CornerMarks />
         <Image
