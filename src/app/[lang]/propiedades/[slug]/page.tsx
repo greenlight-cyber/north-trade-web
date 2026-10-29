@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense, type ReactNode } from "react";
 
+import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 import { ArrowRightIcon, PhoneIcon } from "@/components/icons";
 import { PlatPlaceholder } from "@/components/plat-placeholder";
 import { PropertyPhoto } from "@/components/property-photo";
@@ -143,7 +144,7 @@ async function PropertyDetails({
               </Link>
             </div>
           ) : (
-            <Enquiry lang={lang} dict={dict} title={title} />
+            <Enquiry lang={lang} dict={dict} title={title} slug={property.slug} />
           )}
         </aside>
       </div>
@@ -217,7 +218,9 @@ function Photo({ image, locale, alt }: { image: PropertyImage; locale: Locale; a
   );
 }
 
-function Enquiry({ lang, dict, title }: { lang: Locale; dict: Dictionary; title: string }) {
+type EnquiryProps = { lang: Locale; dict: Dictionary; title: string; slug: string };
+
+function Enquiry({ lang, dict, title, slug }: EnquiryProps) {
   return (
     <div className="mt-8 flex flex-col gap-4">
       <WhatsAppSeal locale={lang} label={dict.property.enquire} propertyTitle={title} />
@@ -228,6 +231,13 @@ function Enquiry({ lang, dict, title }: { lang: Locale; dict: Dictionary; title:
         <PhoneIcon width={16} height={16} />
         {dict.contact.callCta} {siteConfig.contact.phone.display}
       </a>
+      <Link
+        href={`${localizePath(lang, "contact")}?propiedad=${encodeURIComponent(slug)}`}
+        className="text-center text-sm text-line underline hover:text-ink"
+      >
+        {dict.contact.writeCta}
+      </Link>
+      <FloatingWhatsApp locale={lang} label={dict.contact.floating} propertyTitle={title} />
     </div>
   );
 }

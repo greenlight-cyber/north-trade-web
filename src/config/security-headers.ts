@@ -2,7 +2,9 @@
  * Headers de seguridad aplicados a todas las respuestas.
  *
  * La Content-Security-Policy se agrega cuando estén definidos todos los
- * orígenes externos (CMS, captcha, mapas), para no bloquear recursos legítimos.
+ * orígenes externos (CMS, captcha, mapas), para no bloquear recursos legítimos:
+ * cdn.sanity.io (imágenes), challenges.cloudflare.com (script y marco del captcha)
+ * y www.google.com (marco del mapa de la página de contacto).
  */
 export const securityHeaders = [
   // Fuerza HTTPS durante dos años. No incluye subdominios: puede haber

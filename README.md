@@ -27,6 +27,17 @@ Copiá `.env.example` como `.env.local` y completá los valores. El archivo `.en
 | `npm test`       | Corre los tests                                   |
 | `npm run format` | Ordena el formato del código                      |
 
+## Formulario de contacto
+
+Las consultas del formulario llegan por mail (Resend) al correo de `CONTACT_TO_EMAIL`;
+al responder ese mail, la respuesta le llega directo a quien escribió. Está protegido con
+un campo trampa para robots, el captcha de Cloudflare Turnstile y un límite de 5 envíos
+por hora por conexión (Upstash). No se guarda ninguna consulta en el sitio.
+
+Necesita tres cuentas gratuitas (Resend, Cloudflare y Upstash); en `.env.example` está
+paso a paso qué copiar de cada una. Hasta que estén cargadas, la página de contacto
+muestra solo WhatsApp, teléfono y la oficina.
+
 ## Migración del sitio anterior
 
 Las 51 propiedades del sitio anterior se recuperaron de copias del

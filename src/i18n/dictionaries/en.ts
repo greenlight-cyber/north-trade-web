@@ -70,6 +70,80 @@ const en: Dictionary = {
   contact: {
     whatsappCta: "Enquire on WhatsApp",
     callCta: "Call",
+    writeCta: "Send a message",
+    floating: "Message us on WhatsApp",
+  },
+  about: {
+    metaDescription:
+      "North Trade is a rural real estate firm in Salta, Argentina, with long experience in buying and selling farmland. Seriousness, professionalism and complete discretion.",
+    title: "About us",
+    lead: "We are a rural real estate firm with long experience in buying and selling farmland in the province of Salta. We guarantee seriousness, professionalism and complete discretion.",
+    body: "We have the structure and logistics needed to provide comprehensive advice throughout the real estate transaction.",
+    servicesTitle: "Services",
+    services: [
+      {
+        title: "Farmland",
+        text: "Cropland, cattle and mixed farms, estates and rural plots for sale in Salta, Formosa and northern Argentina.",
+      },
+      {
+        title: "Urban properties",
+        text: "Selected plots and urban properties, such as the lots in Cafayate.",
+      },
+      {
+        title: "Comprehensive advice",
+        text: "Support throughout the real estate transaction, with the structure and logistics it requires.",
+      },
+    ],
+    advisoryDetail:
+      "[COMPLETAR: qué incluye el asesoramiento, por ejemplo tasación, documentación o visitas al campo]",
+    firmTitle: "The firm",
+    region: "Region",
+    regionValue: "Salta, Formosa and northern Argentina",
+    ctaTitle: "Looking for farmland?",
+    ctaText: "Tell us what you are looking for: region, size and intended use.",
+  },
+  contactPage: {
+    metaDescription:
+      "Contact North Trade, rural real estate in Salta, Argentina: WhatsApp, phone, office at Toribio Tedín 77 and enquiry form.",
+    title: "Contact",
+    lead: "WhatsApp is the fastest way to reach us. You can also call, visit our office or leave us a message.",
+    directTitle: "Direct contact",
+    formTitle: "Leave us a message",
+    officeTitle: "Office",
+    mapTitle: "Map: North Trade office in Salta",
+    mapShow: "Show map",
+    mapOpen: "Open in Google Maps",
+    mapNote: "The map loads from Google only if you ask for it.",
+  },
+  form: {
+    name: "Full name",
+    email: "Email",
+    phone: "Phone",
+    optional: "optional",
+    message: "Message",
+    messageHint: "Tell us what kind of land you are looking for: region, size and intended use.",
+    propertyLabel: "Enquiry about",
+    captcha: "Spam check",
+    privacy: "We only use your details to reply to this enquiry.",
+    submit: "Send message",
+    sending: "Sending…",
+    errors: {
+      required: "Please fill in this field.",
+      tooShort: "This is too short.",
+      tooLong: "This is too long.",
+      invalidEmail: "Please check the email address.",
+      invalidPhone: "Use only numbers, spaces, hyphens and the + sign.",
+    },
+    status: {
+      success: "Thank you. We received your message and will reply by email or phone.",
+      invalid: "Please check the highlighted fields.",
+      captcha: "We could not complete the spam check. Please wait a few seconds and try again.",
+      rateLimited:
+        "We received several messages in a row from your connection. Please try later or message us on WhatsApp.",
+      unavailable:
+        "The form is not available right now. Please message us on WhatsApp or give us a call.",
+      error: "We could not send your message. Please try again or message us on WhatsApp.",
+    },
   },
   footer: {
     tagline: "Rural real estate in Salta and northern Argentina.",

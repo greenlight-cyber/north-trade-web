@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/config/site";
@@ -45,6 +46,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
           {children}
         </main>
         <SiteFooter locale={lang} dict={dict} />
+        <FloatingWhatsApp locale={lang} label={dict.contact.floating} />
       </body>
     </html>
   );

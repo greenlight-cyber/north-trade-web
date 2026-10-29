@@ -68,6 +68,81 @@ const es = {
   contact: {
     whatsappCta: "Consultar por WhatsApp",
     callCta: "Llamar",
+    writeCta: "Escribir un mensaje",
+    floating: "Escribinos por WhatsApp",
+  },
+  about: {
+    metaDescription:
+      "North Trade es una empresa inmobiliaria rural de Salta, con larga experiencia en la compra y venta de campos. Seriedad, profesionalidad y absoluta reserva.",
+    title: "Nosotros",
+    lead: "Somos una empresa inmobiliaria rural, con larga experiencia en la compra y venta de campos en la provincia de Salta. Aseguramos seriedad, profesionalidad y absoluta reserva.",
+    body: "Contamos con la estructura y logística necesaria para brindar un asesoramiento integral del negocio inmobiliario.",
+    servicesTitle: "Servicios",
+    services: [
+      {
+        title: "Campos rurales",
+        text: "Campos agrícolas, ganaderos y mixtos, fincas y fracciones en venta en Salta, Formosa y el norte argentino.",
+      },
+      {
+        title: "Propiedades urbanas",
+        text: "Terrenos y propiedades urbanas seleccionadas, como los lotes en Cafayate.",
+      },
+      {
+        title: "Asesoramiento integral",
+        text: "Acompañamiento en todo el negocio inmobiliario, con la estructura y la logística necesarias.",
+      },
+    ],
+    advisoryDetail:
+      "[COMPLETAR: qué incluye el asesoramiento, por ejemplo tasación, documentación o visitas al campo]",
+    firmTitle: "La firma",
+    region: "Zona de trabajo",
+    regionValue: "Salta, Formosa y el norte argentino",
+    ctaTitle: "¿Buscás un campo?",
+    ctaText: "Contanos qué estás buscando: zona, superficie y destino.",
+  },
+  contactPage: {
+    metaDescription:
+      "Contacto de North Trade, inmobiliaria rural en Salta: WhatsApp, teléfono, oficina en Toribio Tedín 77 y formulario de consulta.",
+    title: "Contacto",
+    lead: "La forma más rápida es WhatsApp. También podés llamarnos, visitarnos o dejarnos un mensaje.",
+    directTitle: "Contacto directo",
+    formTitle: "Dejanos un mensaje",
+    officeTitle: "Oficina",
+    mapTitle: "Mapa: oficina de North Trade en Salta",
+    mapShow: "Mostrar mapa",
+    mapOpen: "Abrir en Google Maps",
+    mapNote: "El mapa se carga desde Google solo si lo pedís.",
+  },
+  form: {
+    name: "Nombre y apellido",
+    email: "Correo electrónico",
+    phone: "Teléfono",
+    optional: "opcional",
+    message: "Mensaje",
+    messageHint: "Contanos qué tipo de campo buscás: zona, superficie y destino.",
+    propertyLabel: "Consulta por",
+    captcha: "Verificación anti-spam",
+    privacy: "Usamos tus datos solo para responder esta consulta.",
+    submit: "Enviar mensaje",
+    sending: "Enviando…",
+    errors: {
+      required: "Completá este campo.",
+      tooShort: "Es demasiado corto.",
+      tooLong: "Es demasiado largo.",
+      invalidEmail: "Revisá el correo: parece incompleto.",
+      invalidPhone: "Usá solo números, espacios, guiones y el signo +.",
+    },
+    status: {
+      success: "Gracias. Recibimos tu mensaje y te vamos a responder por correo o por teléfono.",
+      invalid: "Revisá los campos marcados.",
+      captcha:
+        "No pudimos completar la verificación anti-spam. Esperá unos segundos y volvé a intentar.",
+      rateLimited:
+        "Recibimos varios mensajes seguidos desde tu conexión. Probá más tarde o escribinos por WhatsApp.",
+      unavailable:
+        "El formulario no está disponible en este momento. Escribinos por WhatsApp o llamanos.",
+      error: "No pudimos enviar el mensaje. Probá de nuevo o escribinos por WhatsApp.",
+    },
   },
   footer: {
     tagline: "Negocios inmobiliarios rurales en Salta y el norte argentino.",
