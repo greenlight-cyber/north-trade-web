@@ -38,6 +38,17 @@ Necesita tres cuentas gratuitas (Resend, Cloudflare y Upstash); en `.env.example
 paso a paso qué copiar de cada una. Hasta que estén cargadas, la página de contacto
 muestra solo WhatsApp, teléfono y la oficina.
 
+## Buscadores y direcciones viejas
+
+- Cada página declara título, descripción, versión en el otro idioma (hreflang) e imagen
+  para compartir. Las fichas usan su primera foto; el resto, `public/og-north-trade.jpg`.
+- `/sitemap.xml` lista todas las páginas y fichas disponibles; `/robots.txt` lo anuncia.
+  En las versiones de prueba de Vercel, `robots.txt` pide no indexar nada.
+- Las direcciones del sitio anterior redirigen con 301 a las nuevas
+  ([`src/config/legacy-redirects.ts`](src/config/legacy-redirects.ts)). Si se cambia la
+  dirección web de una propiedad migrada en el panel, su dirección vieja termina en la
+  página "no existe" (con enlace al listado).
+
 ## Migración del sitio anterior
 
 Las 51 propiedades del sitio anterior se recuperaron de copias del

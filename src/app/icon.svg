@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Isotipo de North Trade redibujado: cuadrado bordó con dos diagonales blancas. -->
+  <clipPath id="c"><rect width="32" height="32"/></clipPath>
+  <rect width="32" height="32" fill="#8C1A1C"/>
+  <g clip-path="url(#c)" stroke="#fff" stroke-width="2.6">
+    <line x1="1" y1="-1" x2="16" y2="33"/>
+    <line x1="16" y1="-1" x2="31" y2="33"/>
+  </g>
+</svg>

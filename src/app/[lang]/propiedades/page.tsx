@@ -15,6 +15,7 @@ import {
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary, type Dictionary } from "@/i18n/get-dictionary";
 import { localizePath } from "@/i18n/routes";
+import { pageMetadata } from "@/lib/seo";
 import { getListedProperties } from "@/sanity/properties";
 
 export async function generateMetadata({
@@ -23,7 +24,13 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const dict = getDictionary(lang);
-  return { title: dict.listing.title, description: dict.listing.lead };
+  // Las vistas filtradas apuntan a la canónica sin filtros.
+  return pageMetadata({
+    locale: lang,
+    route: "properties",
+    title: dict.listing.title,
+    description: dict.listing.lead,
+  });
 }
 
 export default async function ListingPage({

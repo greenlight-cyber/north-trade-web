@@ -1,10 +1,8 @@
-import { createImageUrlBuilder } from "@sanity/image-url";
-
 import { SanityImage } from "@/components/sanity-image";
 import type { PropertyImage } from "@/domain/listing";
 import { pickLocale } from "@/domain/property";
 import type { Locale } from "@/i18n/config";
-import { getSanityEnv } from "@/sanity/env";
+import { sanityImageUrl } from "@/sanity/image-url";
 
 type PropertyPhotoProps = {
   image: PropertyImage;
@@ -16,12 +14,6 @@ type PropertyPhotoProps = {
   className?: string;
 };
 
-function imageUrl(ref: string): string | null {
-  const result = getSanityEnv();
-  if (!result.ok) return null;
-  return createImageUrlBuilder(result.env).image(ref).url();
-}
-
 /** Foto de una propiedad que cubre su contenedor, respetando el punto de interés marcado en el panel. */
 export function PropertyPhoto({
   image,
@@ -31,7 +23,7 @@ export function PropertyPhoto({
   priority = false,
   className = "",
 }: PropertyPhotoProps) {
-  const src = imageUrl(image.ref);
+  const src = sanityImageUrl(image.ref);
   if (!src) return null;
   const position = image.hotspot
     ? `${Math.round(image.hotspot.x * 100)}% ${Math.round(image.hotspot.y * 100)}%`

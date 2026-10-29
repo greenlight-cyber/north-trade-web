@@ -10,6 +10,7 @@ import { siteConfig } from "@/config/site";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
 import { localizePath } from "@/i18n/routes";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -17,7 +18,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const dict = getDictionary(lang);
-  return { title: dict.about.title, description: dict.about.metaDescription };
+  return pageMetadata({
+    locale: lang,
+    route: "about",
+    title: dict.about.title,
+    description: dict.about.metaDescription,
+  });
 }
 
 export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros">) {

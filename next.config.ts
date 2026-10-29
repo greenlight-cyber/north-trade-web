@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
-import { securityHeaders } from "./src/config/security-headers";
+import { legacyRedirects } from "./src/config/legacy-redirects";
+import { contentSecurityPolicy, securityHeaders } from "./src/config/security-headers";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -18,7 +19,18 @@ const nextConfig: NextConfig = {
     },
   },
   async headers() {
-    return [{ source: "/:path*", headers: [...securityHeaders] }];
+    const csp = contentSecurityPolicy({ dev: process.env.NODE_ENV === "development" });
+    return [
+      { source: "/:path*", headers: [...securityHeaders] },
+      // Todo menos el panel de carga.
+      {
+        source: "/((?!admin(?:/|$)).*)",
+        headers: [{ key: "Content-Security-Policy", value: csp }],
+      },
+    ];
+  },
+  async redirects() {
+    return legacyRedirects();
   },
 };
 

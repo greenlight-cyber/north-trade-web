@@ -12,6 +12,7 @@ import { slugPattern } from "@/domain/contact";
 import { pickLocale } from "@/domain/property";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary, type Dictionary } from "@/i18n/get-dictionary";
+import { pageMetadata } from "@/lib/seo";
 import { getProperty } from "@/sanity/properties";
 import { getContactConfig } from "@/server/contact/config";
 
@@ -21,7 +22,12 @@ export async function generateMetadata({
   const { lang } = await params;
   if (!isLocale(lang)) return {};
   const dict = getDictionary(lang);
-  return { title: dict.contactPage.title, description: dict.contactPage.metaDescription };
+  return pageMetadata({
+    locale: lang,
+    route: "contact",
+    title: dict.contactPage.title,
+    description: dict.contactPage.metaDescription,
+  });
 }
 
 export default async function ContactPage({ params, searchParams }: PageProps<"/[lang]/contacto">) {

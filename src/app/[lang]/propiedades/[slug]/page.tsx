@@ -5,6 +5,7 @@ import { Suspense, type ReactNode } from "react";
 
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
 import { ArrowRightIcon, PhoneIcon } from "@/components/icons";
+import { JsonLd } from "@/components/json-ld";
 import { PlatPlaceholder } from "@/components/plat-placeholder";
 import { PropertyPhoto } from "@/components/property-photo";
 import { WhatsAppSeal } from "@/components/whatsapp-seal";
@@ -15,7 +16,11 @@ import { formatArea, pickLocale, propertyStatuses } from "@/domain/property";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary, type Dictionary } from "@/i18n/get-dictionary";
 import { localizePath } from "@/i18n/routes";
-import { getListedSlugs, getProperty } from "@/sanity/properties";
+import { pageMetadata } from "@/lib/seo";
+import { getSiteUrl } from "@/lib/site-url";
+import { realEstateListingData } from "@/lib/structured-data";
+import { shareImageUrl } from "@/sanity/image-url";
+import { getListedSlugs, getProperty, type PropertyDetail } from "@/sanity/properties";
 
 // Cache Components exige al menos una dirección al compilar; esta responde «no encontrada».
 const placeholderSlug = "sin-propiedades";
@@ -32,13 +37,37 @@ export async function generateMetadata({
   if (!isLocale(lang)) return {};
   const property = await getProperty(slug);
   if (!property) return {};
-  const zone = pickLocale(property.zone, lang);
-  const province = optionLabel(provinces, property.province, lang);
+  const title = pickLocale(property.title, lang);
+  const cover = property.gallery[0];
+  const image = cover && shareImageUrl(cover.ref);
+  return pageMetadata({
+    locale: lang,
+    route: "properties",
+    slug: property.slug,
+    title,
+    description: metaDescription(property, lang),
+    image: image ? { url: image, width: 1200, height: 630, alt: title } : undefined,
+    // Las vendidas siguen visibles para enlaces viejos, pero no se ofrecen en buscadores.
+    noIndex: property.status === "vendida",
+  });
+}
+
+/** Texto en una sola línea, sin espacios ni saltos repetidos. */
+const singleLine = (text: string) => text.replace(/\s+/g, " ").trim();
+
+/** "450 ha · Anta · Salta. " más el comienzo de la descripción, hasta ~160 caracteres. */
+function metaDescription(property: PropertyDetail, lang: Locale): string {
   const area = formatArea(property.areaHectares, lang);
-  return {
-    title: pickLocale(property.title, lang),
-    description: [area && `${area.value} ${area.unit}`, zone, province].filter(Boolean).join(" · "),
-  };
+  const facts = [
+    area && `${area.value} ${area.unit}`,
+    pickLocale(property.zone, lang),
+    optionLabel(provinces, property.province, lang),
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  const text = singleLine(pickLocale(property.description, lang));
+  const full = text ? `${facts}. ${text}` : facts;
+  return full.length <= 160 ? full : `${full.slice(0, 157).replace(/\s+\S*$/, "")}…`;
 }
 
 export default function PropertyPage({ params }: PageProps<"/[lang]/propiedades/[slug]">) {
@@ -71,8 +100,22 @@ async function PropertyDetails({
   const untranslated = lang !== "es" && !property.description?.en?.trim() && Boolean(description);
   const [cover, ...photos] = property.gallery;
 
+  // Las vendidas no se ofrecen a los buscadores.
+  const listingData = sold
+    ? null
+    : realEstateListingData({
+        siteUrl: getSiteUrl(),
+        path: localizePath(lang, "properties", property.slug),
+        name: title,
+        description: singleLine(description).slice(0, 500),
+        image: cover ? (shareImageUrl(cover.ref) ?? undefined) : undefined,
+        zone,
+        province,
+      });
+
   return (
     <article>
+      {listingData && <JsonLd data={listingData} />}
       <Link
         href={localizePath(lang, "properties")}
         className="group inline-flex items-center gap-2 text-sm text-line hover:text-ink"

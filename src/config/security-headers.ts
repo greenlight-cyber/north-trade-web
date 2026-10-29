@@ -1,10 +1,5 @@
 /**
  * Headers de seguridad aplicados a todas las respuestas.
- *
- * La Content-Security-Policy se agrega cuando estén definidos todos los
- * orígenes externos (CMS, captcha, mapas), para no bloquear recursos legítimos:
- * cdn.sanity.io (imágenes), challenges.cloudflare.com (script y marco del captcha)
- * y www.google.com (marco del mapa de la página de contacto).
  */
 export const securityHeaders = [
   // Fuerza HTTPS durante dos años. No incluye subdominios: puede haber
@@ -22,3 +17,37 @@ export const securityHeaders = [
     value: "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
   },
 ] as const;
+
+const captcha = "https://challenges.cloudflare.com";
+
+/**
+ * Content-Security-Policy del sitio público: qué orígenes puede usar cada página.
+ *
+ * Sin "nonce": un nonce obliga a generar cada página en cada visita y se pierden las
+ * páginas estáticas, que son las que cargan rápido con conexiones rurales. Por eso los
+ * scripts propios en línea de Next se permiten con 'unsafe-inline', y el resto queda
+ * limitado a una lista corta de orígenes conocidos.
+ *
+ * El panel /admin (Sanity Studio) no la lleva: carga recursos de muchos dominios de Sanity.
+ */
+export function contentSecurityPolicy({ dev }: { dev: boolean }): string {
+  const directives: Record<string, string[]> = {
+    "default-src": ["'self'"],
+    // 'unsafe-eval' solo en desarrollo: React lo usa para mostrar errores.
+    "script-src": ["'self'", "'unsafe-inline'", captcha, ...(dev ? ["'unsafe-eval'"] : [])],
+    "style-src": ["'self'", "'unsafe-inline'"],
+    // Fotos del CDN de Sanity y las vistas previas borrosas (data:).
+    "img-src": ["'self'", "data:", "blob:", "https://cdn.sanity.io"],
+    "font-src": ["'self'"],
+    "connect-src": ["'self'", ...(dev ? ["ws:"] : [])],
+    // Captcha del formulario y mapa de la oficina.
+    "frame-src": [captcha, "https://www.google.com", "https://maps.google.com"],
+    "object-src": ["'none'"],
+    "base-uri": ["'self'"],
+    "form-action": ["'self'"],
+    "frame-ancestors": ["'none'"],
+  };
+  return Object.entries(directives)
+    .map(([name, values]) => `${name} ${values.join(" ")}`)
+    .join("; ");
+}

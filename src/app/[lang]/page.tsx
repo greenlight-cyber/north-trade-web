@@ -1,9 +1,11 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import aerialPhoto from "@/assets/home/campos-salta-aerea.jpg";
 import { ArrowRightIcon, PhoneIcon } from "@/components/icons";
+import { JsonLd } from "@/components/json-ld";
 import { PropertyCard } from "@/components/property-card";
 import { PropertySearch } from "@/components/property-search";
 import { CornerMarks, SurveyFrame } from "@/components/survey-frame";
@@ -13,7 +15,23 @@ import { pickHighlights } from "@/domain/listing";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary, type Dictionary } from "@/i18n/get-dictionary";
 import { localizePath } from "@/i18n/routes";
+import { pageMetadata } from "@/lib/seo";
+import { getSiteUrl } from "@/lib/site-url";
+import { realEstateAgentData } from "@/lib/structured-data";
 import { getListedProperties } from "@/sanity/properties";
+
+export async function generateMetadata({ params }: PageProps<"/[lang]">): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLocale(lang)) return {};
+  const dict = getDictionary(lang);
+  return pageMetadata({
+    locale: lang,
+    route: "home",
+    title: dict.meta.title,
+    absoluteTitle: true,
+    description: dict.meta.description,
+  });
+}
 
 export default async function HomePage({ params }: PageProps<"/[lang]">) {
   const { lang } = await params;
@@ -29,6 +47,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
 
   return (
     <>
+      <JsonLd data={realEstateAgentData(getSiteUrl(), dict.meta.description)} />
       <Hero lang={lang} dict={dict} />
       {highlights.length > 0 && (
         <section
