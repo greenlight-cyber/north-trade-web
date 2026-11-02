@@ -75,10 +75,9 @@ export function SiteFooter({ locale, dict }: SiteFooterProps) {
             <Cell label={f.email}>
               <PendingValue value={contact.email} />
             </Cell>
-            <Cell label={f.hours}>
-              <PendingValue value={contact.hours} />
+            <Cell label={f.associations} wide>
+              {siteConfig.associations.join(" · ")}
             </Cell>
-            <Cell label={f.associations}>{siteConfig.associations.join(" · ")}</Cell>
           </dl>
         </div>
 
