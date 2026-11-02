@@ -1,19 +1,19 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { resolveLocaleRoute } from "@/i18n/routes";
-
+/**
+ * Rama de mantenimiento: toda dirección distinta de la portada vuelve a la portada.
+ * La redirección es temporal (307) para que los buscadores no la guarden: cuando se
+ * publique el sitio completo, las direcciones viejas tendrán sus 301 definitivas.
+ */
 export function proxy(request: NextRequest) {
-  const decision = resolveLocaleRoute(request.nextUrl.pathname);
-  if (decision.action === "next") return NextResponse.next();
-
+  if (request.nextUrl.pathname === "/") return NextResponse.next();
   const url = request.nextUrl.clone();
-  url.pathname = decision.pathname;
-  return decision.action === "redirect"
-    ? NextResponse.redirect(url, 308)
-    : NextResponse.rewrite(url);
+  url.pathname = "/";
+  url.search = "";
+  return NextResponse.redirect(url, 307);
 }
 
 export const config = {
-  // Excluye archivos internos de Next, la API, el panel y todo archivo con extensión.
-  matcher: ["/((?!_next/|api/|admin/|admin$|.*\\.[\\w]+$).*)"],
+  // Excluye archivos internos de Next y todo archivo con extensión (logo, ícono, robots.txt).
+  matcher: ["/((?!_next/|.*\\.[\\w]+$).*)"],
 };
