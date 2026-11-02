@@ -19,7 +19,7 @@ const es = {
   },
   home: {
     title: "Campos en el norte argentino",
-    lead: "Somos una empresa inmobiliaria rural, con larga experiencia en la compra y venta de campos en la provincia de Salta. Aseguramos seriedad, profesionalidad y absoluta reserva.",
+    lead: "Somos una empresa inmobiliaria rural, con experiencia extensa en la compra y venta de campos en la provincia de Salta. Aseguramos seriedad, profesionalidad y absoluta reserva.",
     heroAlt: "Vista aérea de lotes agrícolas en Salta, separados por cortinas de monte nativo.",
     heroCaption: "Campos en Salta · vista aérea",
     highlightsTitle: "Propiedades seleccionadas",
@@ -39,7 +39,7 @@ const es = {
     price: "Precio",
     priceValue: "Consultar",
     area: "Superficie",
-    type: "Tipo",
+    type: "Aptitud",
     province: "Provincia",
     zone: "Zona",
     status: "Estado",
@@ -60,7 +60,7 @@ const es = {
   search: {
     legend: "Buscar propiedades",
     province: "Provincia",
-    type: "Tipo",
+    type: "Aptitud",
     area: "Superficie",
     any: "Todas",
     submit: "Ver propiedades",
@@ -73,27 +73,26 @@ const es = {
   },
   about: {
     metaDescription:
-      "North Trade es una empresa inmobiliaria rural de Salta, con larga experiencia en la compra y venta de campos. Seriedad, profesionalidad y absoluta reserva.",
+      "North Trade es una empresa inmobiliaria rural de Salta, con experiencia extensa en la compra y venta de campos. Seriedad, profesionalidad y absoluta reserva.",
     title: "Nosotros",
-    lead: "Somos una empresa inmobiliaria rural, con larga experiencia en la compra y venta de campos en la provincia de Salta. Aseguramos seriedad, profesionalidad y absoluta reserva.",
+    lead: "Somos una empresa inmobiliaria rural, con experiencia extensa en la compra y venta de campos en la provincia de Salta. Aseguramos seriedad, profesionalidad y absoluta reserva.",
     body: "Contamos con la estructura y logística necesaria para brindar un asesoramiento integral del negocio inmobiliario.",
     servicesTitle: "Servicios",
     services: [
       {
-        title: "Campos rurales",
-        text: "Campos agrícolas, ganaderos y mixtos, fincas y fracciones en venta en Salta, Formosa y el norte argentino.",
+        title: "Propiedades rurales",
+        text: "Campos agrícolas, ganaderos y mixtos, fincas y fracciones en venta en la provincia de Salta.",
       },
       {
         title: "Propiedades urbanas",
-        text: "Terrenos y propiedades urbanas seleccionadas, como los lotes en Cafayate.",
+        text: "Terrenos y propiedades urbanas seleccionadas en dos zonas:",
+        areas: ["Salta", "Cafayate"],
       },
       {
         title: "Asesoramiento integral",
         text: "Acompañamiento en todo el negocio inmobiliario, con la estructura y la logística necesarias.",
       },
     ],
-    advisoryDetail:
-      "[COMPLETAR: qué incluye el asesoramiento, por ejemplo tasación, documentación o visitas al campo]",
     firmTitle: "La firma",
     region: "Zona de trabajo",
     regionValue: "Salta, Formosa y el norte argentino",
@@ -153,8 +152,7 @@ const es = {
     whatsapp: "WhatsApp",
     email: "Correo",
     hours: "Horario",
-    license: "Matrícula",
-    trajectory: "Trayectoria",
+    associations: "Asociados a",
     rights: "Todos los derechos reservados.",
   },
 };

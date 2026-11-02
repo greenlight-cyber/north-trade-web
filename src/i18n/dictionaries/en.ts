@@ -21,7 +21,7 @@ const en: Dictionary = {
   },
   home: {
     title: "Farmland in northern Argentina",
-    lead: "We are a rural real estate firm with long experience buying and selling farmland in the province of Salta. We guarantee professionalism, reliability and absolute discretion.",
+    lead: "We are a rural real estate firm with extensive experience buying and selling farmland in the province of Salta. We guarantee professionalism, reliability and absolute discretion.",
     heroAlt: "Aerial view of farm plots in Salta, divided by strips of native forest.",
     heroCaption: "Farmland in Salta · aerial view",
     highlightsTitle: "Selected properties",
@@ -41,7 +41,7 @@ const en: Dictionary = {
     price: "Price",
     priceValue: "On request",
     area: "Area",
-    type: "Type",
+    type: "Land use",
     province: "Province",
     zone: "District",
     status: "Status",
@@ -62,7 +62,7 @@ const en: Dictionary = {
   search: {
     legend: "Search properties",
     province: "Province",
-    type: "Type",
+    type: "Land use",
     area: "Area",
     any: "Any",
     submit: "View properties",
@@ -75,27 +75,26 @@ const en: Dictionary = {
   },
   about: {
     metaDescription:
-      "North Trade is a rural real estate firm in Salta, Argentina, with long experience in buying and selling farmland. Seriousness, professionalism and complete discretion.",
+      "North Trade is a rural real estate firm in Salta, Argentina, with extensive experience in buying and selling farmland. Seriousness, professionalism and complete discretion.",
     title: "About us",
-    lead: "We are a rural real estate firm with long experience in buying and selling farmland in the province of Salta. We guarantee seriousness, professionalism and complete discretion.",
+    lead: "We are a rural real estate firm with extensive experience in buying and selling farmland in the province of Salta. We guarantee seriousness, professionalism and complete discretion.",
     body: "We have the structure and logistics needed to provide comprehensive advice throughout the real estate transaction.",
     servicesTitle: "Services",
     services: [
       {
-        title: "Farmland",
-        text: "Cropland, cattle and mixed farms, estates and rural plots for sale in Salta, Formosa and northern Argentina.",
+        title: "Rural properties",
+        text: "Cropland, cattle and mixed farms, estates and rural plots for sale in the province of Salta.",
       },
       {
         title: "Urban properties",
-        text: "Selected plots and urban properties, such as the lots in Cafayate.",
+        text: "Selected plots and urban properties in two areas:",
+        areas: ["Salta", "Cafayate"],
       },
       {
         title: "Comprehensive advice",
         text: "Support throughout the real estate transaction, with the structure and logistics it requires.",
       },
     ],
-    advisoryDetail:
-      "[COMPLETAR: qué incluye el asesoramiento, por ejemplo tasación, documentación o visitas al campo]",
     firmTitle: "The firm",
     region: "Region",
     regionValue: "Salta, Formosa and northern Argentina",
@@ -154,8 +153,7 @@ const en: Dictionary = {
     whatsapp: "WhatsApp",
     email: "Email",
     hours: "Office hours",
-    license: "License",
-    trajectory: "Experience",
+    associations: "Member of",
     rights: "All rights reserved.",
   },
 };

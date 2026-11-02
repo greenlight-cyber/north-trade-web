@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
+import logo from "@/assets/brand/logotipo.png";
 import { PendingValue } from "@/components/pending-value";
 import { siteConfig } from "@/config/site";
 import type { Locale } from "@/i18n/config";
@@ -24,7 +26,7 @@ function Cell({ label, children, wide }: { label: string; children: ReactNode; w
  * firma con nombre, domicilio y matrícula. Aquí van los datos reales de la firma.
  */
 export function SiteFooter({ locale, dict }: SiteFooterProps) {
-  const { contact, trust } = siteConfig;
+  const { contact } = siteConfig;
   const f = dict.footer;
 
   return (
@@ -32,7 +34,7 @@ export function SiteFooter({ locale, dict }: SiteFooterProps) {
       <div className="mx-auto max-w-360 px-5 py-14 sm:px-8 lg:px-16">
         <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
           <div>
-            <p className="font-serif text-3xl">{siteConfig.name}</p>
+            <Image src={logo} alt={siteConfig.name} width={175} height={41} className="h-auto" />
             <p className="mt-2 max-w-xs text-line">{f.tagline}</p>
             <ul className="mt-8 space-y-2">
               {(["properties", "about", "contact"] as const).map((key) => (
@@ -76,12 +78,7 @@ export function SiteFooter({ locale, dict }: SiteFooterProps) {
             <Cell label={f.hours}>
               <PendingValue value={contact.hours} />
             </Cell>
-            <Cell label={f.license}>
-              <PendingValue value={trust.license} />
-            </Cell>
-            <Cell label={f.trajectory} wide>
-              <PendingValue value={trust.yearsInBusiness} />
-            </Cell>
+            <Cell label={f.associations}>{siteConfig.associations.join(" · ")}</Cell>
           </dl>
         </div>
 

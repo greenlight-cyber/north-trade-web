@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { ArrowRightIcon } from "@/components/icons";
-import { PendingValue } from "@/components/pending-value";
 import { WhatsAppSeal } from "@/components/whatsapp-seal";
 import { siteConfig } from "@/config/site";
 import { isLocale } from "@/i18n/config";
@@ -31,7 +30,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
   if (!isLocale(lang)) notFound();
   const dict = getDictionary(lang);
   const t = dict.about;
-  const { contact, trust } = siteConfig;
+  const { contact } = siteConfig;
 
   return (
     <div className="mx-auto max-w-360 px-5 pt-10 pb-24 sm:px-8 lg:px-16 lg:pt-14">
@@ -56,10 +55,14 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
               </span>
               <h3 className="mt-2 text-2xl">{service.title}</h3>
               <p className="mt-3 text-ink/85">{service.text}</p>
-              {index === t.services.length - 1 && (
-                <p className="mt-3 text-sm">
-                  <PendingValue value={t.advisoryDetail} />
-                </p>
+              {service.areas && (
+                <ul className="mt-4 border-t border-line">
+                  {service.areas.map((area) => (
+                    <li key={area} className="border-b border-line py-2 font-serif text-lg">
+                      {area}
+                    </li>
+                  ))}
+                </ul>
               )}
             </li>
           ))}
@@ -72,12 +75,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
             {t.firmTitle}
           </h2>
           <dl>
-            <Row label={dict.footer.trajectory}>
-              <PendingValue value={trust.yearsInBusiness} />
-            </Row>
-            <Row label={dict.footer.license}>
-              <PendingValue value={trust.license} />
-            </Row>
+            <Row label={dict.footer.associations}>{siteConfig.associations.join(" · ")}</Row>
             <Row label={t.region}>{t.regionValue}</Row>
             <Row label={dict.footer.address}>
               <address className="not-italic">{contact.address.display}</address>

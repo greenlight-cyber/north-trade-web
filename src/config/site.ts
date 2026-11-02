@@ -33,10 +33,8 @@ export const siteConfig = {
     email: "[COMPLETAR: email de contacto]",
     hours: "[COMPLETAR: horario de atención]",
   },
-  trust: {
-    yearsInBusiness: "[COMPLETAR: años de trayectoria]",
-    license: "[COMPLETAR: matrícula profesional]",
-  },
+  /** Entidades de las que North Trade es socia. Los logos están pendientes. */
+  associations: ["CUCIS", "CAIR"],
 } as const;
 
 export type SiteConfig = typeof siteConfig;

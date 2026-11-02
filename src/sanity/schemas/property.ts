@@ -99,7 +99,7 @@ export const property = defineType({
     }),
     defineField({
       name: "propertyType",
-      title: "Tipo",
+      title: "Aptitud",
       type: "string",
       group: "main",
       options: { list: toOptions(propertyTypes) },

@@ -15,10 +15,10 @@ export const propertyTypes: Option[] = [
   { value: "agricola", label: { es: "Agrícola", en: "Cropland" } },
   { value: "ganadero", label: { es: "Ganadero", en: "Cattle ranch" } },
   { value: "agricola-ganadero", label: { es: "Agrícola-ganadero", en: "Mixed farming" } },
-  { value: "vinedos", label: { es: "Viñedos y fincas", en: "Vineyards & estates" } },
-  { value: "monte", label: { es: "Monte a desarrollar", en: "Undeveloped land" } },
-  { value: "fraccion", label: { es: "Fracción / terreno rural", en: "Rural plot" } },
-  { value: "urbana", label: { es: "Urbana", en: "Urban" } },
+  { value: "vinedos", label: { es: "Viñedos", en: "Vineyards" } },
+  { value: "monte", label: { es: "A desarrollar", en: "Undeveloped land" } },
+  { value: "fraccion", label: { es: "Terreno rural", en: "Rural plot" } },
+  { value: "urbana", label: { es: "Propiedades urbanas", en: "Urban properties" } },
 ];
 
 /** Nombre visible de un valor guardado; si no está en la lista, el valor tal cual. */
