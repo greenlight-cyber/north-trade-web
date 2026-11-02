@@ -14,7 +14,7 @@ export const provinces: Option[] = [
 export const propertyTypes: Option[] = [
   { value: "agricola", label: { es: "Agrícola", en: "Cropland" } },
   { value: "ganadero", label: { es: "Ganadero", en: "Cattle ranch" } },
-  { value: "agricola-ganadero", label: { es: "Agrícola-ganadero", en: "Mixed farming" } },
+  { value: "agricola-ganadero", label: { es: "Mixto", en: "Mixed farming" } },
   { value: "vinedos", label: { es: "Viñedos", en: "Vineyards" } },
   { value: "monte", label: { es: "A desarrollar", en: "Undeveloped land" } },
   { value: "fraccion", label: { es: "Terreno rural", en: "Rural plot" } },
