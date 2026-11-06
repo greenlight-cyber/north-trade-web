@@ -4,8 +4,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 
+import { flags } from "@/components/flags";
 import { CloseIcon, MenuIcon } from "@/components/icons";
-import type { Locale } from "@/i18n/config";
+import { languageNames, locales, type Locale } from "@/i18n/config";
 import { switchLocalePath, toPublicPath } from "@/i18n/routes";
 
 export type NavItem = { href: string; label: string };
@@ -13,7 +14,13 @@ export type NavItem = { href: string; label: string };
 type MainNavProps = {
   locale: Locale;
   items: NavItem[];
-  labels: { mainNav: string; openMenu: string; closeMenu: string; switchLanguage: string };
+  labels: {
+    mainNav: string;
+    openMenu: string;
+    closeMenu: string;
+    language: string;
+    switchLanguage: string;
+  };
 };
 
 function isActive(pathname: string, href: string): boolean {
@@ -39,26 +46,52 @@ export function MainNav({ locale, items, labels }: MainNavProps) {
   }, [open]);
 
   const languageHref = switchLocalePath(pathname, otherLocale);
-  const languageLink = (
-    <Link
-      href={languageHref}
-      // Conserva los filtros de búsqueda al cambiar de idioma. Se lee al hacer clic para no
-      // depender de useSearchParams, que obligaría a demorar el armado del encabezado.
-      onClick={(e) => {
-        const query = window.location.search;
-        if (!query || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-        e.preventDefault();
-        router.push(languageHref + query);
-      }}
-      hrefLang={otherLocale}
-      lang={otherLocale}
-      aria-label={labels.switchLanguage}
-      className="inline-flex h-9 min-w-9 items-center justify-center border border-line px-2 text-sm font-medium tracking-[0.08em] text-ink uppercase transition-colors hover:border-ink"
-    >
-      {otherLocale}
-    </Link>
+  const flagBox = "inline-flex h-9 w-11 items-center justify-center border";
+  const flag = (l: Locale) => {
+    const Flag = flags[l];
+    return <Flag width={24} height={16} className="outline-1 outline-rule" />;
+  };
+  // Las dos banderas, en el mismo orden en ambos idiomas: la actual queda marcada.
+  const languageSwitch = (
+    <div role="group" aria-label={labels.language} className="flex items-center gap-1.5">
+      {locales.map((l) =>
+        l === locale ? (
+          <span
+            key={l}
+            aria-current="true"
+            title={languageNames[l]}
+            className={`${flagBox} border-seal`}
+          >
+            {flag(l)}
+            <span className="sr-only" lang={l}>
+              {languageNames[l]}
+            </span>
+          </span>
+        ) : (
+          <Link
+            key={l}
+            href={languageHref}
+            // Conserva los filtros de búsqueda al cambiar de idioma. Se lee al hacer clic para no
+            // depender de useSearchParams, que obligaría a demorar el armado del encabezado.
+            onClick={(e) => {
+              const query = window.location.search;
+              if (!query || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0)
+                return;
+              e.preventDefault();
+              router.push(languageHref + query);
+            }}
+            hrefLang={l}
+            lang={l}
+            aria-label={labels.switchLanguage}
+            title={languageNames[l]}
+            className={`${flagBox} border-transparent opacity-80 transition hover:border-line hover:opacity-100`}
+          >
+            {flag(l)}
+          </Link>
+        ),
+      )}
+    </div>
   );
-
   return (
     <nav aria-label={labels.mainNav} className="flex items-center gap-6">
       <ul className="hidden items-center gap-8 md:flex">
@@ -82,7 +115,7 @@ export function MainNav({ locale, items, labels }: MainNavProps) {
         })}
       </ul>
 
-      {languageLink}
+      {languageSwitch}
 
       <button
         type="button"

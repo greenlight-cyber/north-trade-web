@@ -11,6 +11,7 @@ const en: Dictionary = {
     mainNav: "Main navigation",
     openMenu: "Open menu",
     closeMenu: "Close menu",
+    language: "Language",
     switchLanguage: "Leer en español",
     home: "North Trade, home",
   },

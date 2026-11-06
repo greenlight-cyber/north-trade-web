@@ -9,6 +9,7 @@ const es = {
     mainNav: "Navegación principal",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
+    language: "Idioma",
     switchLanguage: "Read in English",
     home: "North Trade, inicio",
   },

@@ -24,6 +24,7 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
             mainNav: dict.a11y.mainNav,
             openMenu: dict.a11y.openMenu,
             closeMenu: dict.a11y.closeMenu,
+            language: dict.a11y.language,
             switchLanguage: dict.a11y.switchLanguage,
           }}
         />

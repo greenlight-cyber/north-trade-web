@@ -34,7 +34,7 @@ export function PropertySearch({ locale, dict, values = {} }: PropertySearchProp
               <select
                 name={field.name}
                 defaultValue={values[field.name] ?? ""}
-                className="w-full min-w-0 cursor-pointer appearance-none bg-transparent py-3 pr-6 text-ink focus:outline-none"
+                className="plat-select w-full min-w-0 cursor-pointer bg-transparent py-3 pr-6 text-ink focus:outline-none"
               >
                 <option value="">{dict.search.any}</option>
                 {field.options.map((o) => (

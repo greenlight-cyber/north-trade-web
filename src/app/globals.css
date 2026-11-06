@@ -93,6 +93,102 @@
       animation: none;
     }
   }
+
+  /*
+   * Desplegables con la lista de opciones propia del sitio (papel, línea de tinta, sello
+   * en la opción elegida). Usa el <select> personalizable de los navegadores nuevos
+   * (Chrome y Edge); los demás muestran la lista del sistema, que funciona igual.
+   */
+  .plat-select {
+    appearance: none;
+  }
+
+  @supports (appearance: base-select) {
+    .plat-select,
+    .plat-select::picker(select) {
+      appearance: base-select;
+    }
+
+    .plat-select {
+      border: 0;
+      padding-inline-start: 0;
+    }
+
+    /* La flecha la dibuja el sitio, al costado del campo. */
+    .plat-select::picker-icon {
+      display: none;
+    }
+
+    .plat-select::picker(select) {
+      margin-top: 2px;
+      min-width: anchor-size(width);
+      max-height: min(20rem, 60dvh);
+      border: 1px solid var(--color-ink);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      padding: 0;
+      opacity: 0;
+      translate: 0 -4px;
+      transition:
+        opacity 160ms var(--ease-out-expo),
+        translate 160ms var(--ease-out-expo),
+        overlay 160ms allow-discrete,
+        display 160ms allow-discrete;
+    }
+
+    .plat-select:open::picker(select) {
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    @starting-style {
+      .plat-select:open::picker(select) {
+        opacity: 0;
+        translate: 0 -4px;
+      }
+    }
+
+    .plat-select option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--color-rule);
+      cursor: pointer;
+      transition: background-color 120ms;
+    }
+
+    .plat-select option:last-of-type {
+      border-bottom: 0;
+    }
+
+    .plat-select option:hover,
+    .plat-select option:focus-visible {
+      background: var(--color-paper-deep);
+      outline: none;
+    }
+
+    .plat-select option:checked {
+      color: var(--color-seal);
+      font-weight: 500;
+    }
+
+    /* Marca de la opción elegida: un pequeño cuadrado de sello, al final de la fila. */
+    .plat-select option::checkmark {
+      order: 1;
+      margin-inline-start: auto;
+      content: "";
+      width: 0.45rem;
+      height: 0.45rem;
+      background: var(--color-seal);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .plat-select::picker(select) {
+        transition: none;
+      }
+    }
+  }
 }
 
 @keyframes survey-trace {

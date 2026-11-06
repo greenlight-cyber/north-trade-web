@@ -13,3 +13,9 @@ export const localeTags: Record<Locale, string> = {
   es: "es-AR",
   en: "en",
 };
+
+/** Nombre de cada idioma en su propia lengua, para el selector de banderas. */
+export const languageNames: Record<Locale, string> = {
+  es: "Español",
+  en: "English",
+};
