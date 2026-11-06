@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 
+import { blockSearchEngines } from "@/lib/indexing";
 import { getSiteUrl } from "@/lib/site-url";
 
 export default function robots(): MetadataRoute.Robots {
-  // Las versiones de prueba de Vercel no deben aparecer en Google.
-  if (process.env.VERCEL_ENV === "preview") {
+  if (blockSearchEngines()) {
     return { rules: { userAgent: "*", disallow: "/" } };
   }
   return {
