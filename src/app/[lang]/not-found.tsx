@@ -11,7 +11,7 @@ export default function NotFound() {
   const link =
     "group link-trace inline-flex items-center gap-2 pb-0.5 font-medium transition-colors hover:text-seal";
   return (
-    <section className="mx-auto w-full max-w-360 px-5 py-24 sm:px-8 lg:px-16 lg:py-36">
+    <section className="mx-auto w-full max-w-360 px-5 py-20 sm:px-8 lg:px-16 lg:py-28">
       <p className="eyebrow">404</p>
       <h1 className="mt-5 max-w-[14ch] text-hero">Esta página no existe</h1>
       <p className="mt-8 max-w-[52ch] text-lg text-ink/85">

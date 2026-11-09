@@ -56,7 +56,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <Hero lang={lang} dict={dict} />
       <Statement lang={lang} dict={dict} />
       {highlights.length > 0 && (
-        <section aria-labelledby="seleccion" className={`${container} pb-24 lg:pb-36`}>
+        <section aria-labelledby="seleccion" className={`${container} pb-20 lg:pb-28`}>
           <div className="flex flex-wrap items-end justify-between gap-6 border-b border-ink pb-6">
             <div>
               <p className="eyebrow">{dict.nav.properties}</p>
@@ -73,7 +73,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
             </Link>
           </div>
           {/* Composición asimétrica: la primera ocupa la columna ancha y alta. */}
-          <ul className="mt-12 grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-y-12">
+          <ul className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-y-12">
             {highlights.map((property, index) => (
               <li
                 key={property.id}
@@ -87,11 +87,11 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
                   property={property}
                   locale={lang}
                   dict={dict}
-                  variant={index === 0 ? "feature" : "default"}
+                  variant={index === 0 ? "feature" : "side"}
                   sizes={
                     index === 0
                       ? "(min-width: 1024px) 55vw, 100vw"
-                      : "(min-width: 1024px) 38vw, (min-width: 640px) 50vw, 100vw"
+                      : "(min-width: 1024px) 22vw, (min-width: 640px) 50vw, 100vw"
                   }
                 />
               </li>
@@ -107,7 +107,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
 function Hero({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   return (
     <section aria-labelledby="portada" className="relative">
-      <figure className="relative h-[clamp(34rem,calc(100svh-8.5rem),56rem)] overflow-hidden bg-ink">
+      <figure className="relative flex min-h-[clamp(32rem,calc(100svh-8.5rem),50rem)] flex-col justify-end overflow-hidden bg-ink">
         <Image
           src={aerialPhoto}
           alt={dict.home.heroAlt}
@@ -126,7 +126,7 @@ function Hero({ lang, dict }: { lang: Locale; dict: Dictionary }) {
           {dict.home.heroCaption}
         </figcaption>
 
-        <div className={`${container} absolute inset-x-0 bottom-0 pb-24 sm:pb-28 lg:pb-32`}>
+        <div className={`${container} relative w-full pt-28 pb-20 sm:pb-24 lg:pt-32 lg:pb-28`}>
           <p style={step(0)} className="rise eyebrow text-paper/85 before:bg-paper/85">
             {siteConfig.contact.address.city} · Argentina
           </p>
@@ -166,7 +166,7 @@ function Statement({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   return (
     <section
       aria-labelledby="firma-portada"
-      className={`${container} grid grid-cols-1 gap-10 py-24 lg:grid-cols-12 lg:gap-14 lg:py-36`}
+      className={`${container} grid grid-cols-1 gap-10 py-20 lg:grid-cols-12 lg:gap-14 lg:py-28`}
     >
       <div className="lg:col-span-4">
         <h2 id="firma-portada" className="eyebrow">

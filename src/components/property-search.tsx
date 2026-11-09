@@ -36,7 +36,7 @@ export function PropertySearch({ locale, dict, values = {}, className = "" }: Pr
         {fields.map((field) => (
           <label
             key={field.name}
-            className="group relative flex flex-col justify-center border-b border-rule px-5 py-3.5 transition-colors focus-within:bg-paper-deep hover:bg-paper-deep md:border-r md:border-b-0 md:border-rule"
+            className="group relative flex flex-col justify-center border-b border-rule px-5 py-3 transition-colors focus-within:bg-paper-deep hover:bg-paper-deep md:border-r md:border-b-0 md:border-rule"
           >
             <span className="text-[0.6875rem] font-medium tracking-[0.16em] text-line uppercase">
               {field.label}
@@ -45,7 +45,7 @@ export function PropertySearch({ locale, dict, values = {}, className = "" }: Pr
               <select
                 name={field.name}
                 defaultValue={values[field.name] ?? ""}
-                className="plat-select w-full min-w-0 cursor-pointer bg-transparent pr-7 font-serif text-xl text-ink focus:outline-none"
+                className="plat-select w-full min-w-0 cursor-pointer bg-transparent pr-7 font-serif text-lg text-ink focus:outline-none"
               >
                 <option value="">{dict.search.any}</option>
                 {field.options.map((o) => (
@@ -61,7 +61,7 @@ export function PropertySearch({ locale, dict, values = {}, className = "" }: Pr
       </fieldset>
       <button
         type="submit"
-        className="group inline-flex min-h-16 items-center justify-center gap-3 bg-seal px-8 text-sm font-semibold tracking-[0.14em] text-paper uppercase transition-colors duration-300 hover:bg-seal-dark focus-visible:outline-offset-[-4px] focus-visible:outline-paper"
+        className="group inline-flex min-h-14 items-center justify-center gap-3 bg-seal px-8 text-sm font-semibold tracking-[0.14em] text-paper uppercase transition-colors duration-300 hover:bg-seal-dark focus-visible:outline-offset-[-4px] focus-visible:outline-paper"
       >
         {dict.search.submit}
         <ArrowRightIcon className="transition-transform duration-300 ease-out-expo group-hover:translate-x-1.5" />

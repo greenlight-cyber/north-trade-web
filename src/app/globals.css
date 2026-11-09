@@ -24,7 +24,7 @@
   --text-display--letter-spacing: -0.02em;
 
   /* Títulos de portada: más grandes que display, para el hero y las aperturas de sección. */
-  --text-hero: clamp(2.75rem, 1.2rem + 5.6vw, 6.5rem);
+  --text-hero: clamp(2.5rem, 1.3rem + 4.2vw, 5.25rem);
   --text-hero--line-height: 0.98;
   --text-hero--letter-spacing: -0.025em;
 

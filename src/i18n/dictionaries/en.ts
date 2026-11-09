@@ -100,7 +100,7 @@ const en: Dictionary = {
     ],
     firmTitle: "The firm",
     region: "Region",
-    regionValue: "Salta, Formosa and northern Argentina",
+    regionValue: "Salta, Argentina",
     ctaTitle: "Looking for farmland?",
     ctaText: "Tell us what you are looking for: region, size and intended use.",
   },
@@ -108,7 +108,6 @@ const en: Dictionary = {
     metaDescription:
       "Contact North Trade, rural real estate in Salta, Argentina: WhatsApp, phone, office at Toribio Tedín 77 and enquiry form.",
     title: "Contact",
-    lead: "WhatsApp is the fastest way to reach us. You can also call, visit our office or leave us a message.",
     directTitle: "Direct contact",
     formTitle: "Leave us a message",
     officeTitle: "Office",

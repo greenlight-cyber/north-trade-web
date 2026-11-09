@@ -15,8 +15,11 @@ type PropertyCardProps = {
   locale: Locale;
   dict: Dictionary;
   priority?: boolean;
-  /** "feature": foto alta y título grande, para la propiedad principal de la portada. */
-  variant?: "default" | "feature";
+  /**
+   * "feature": foto alta y título grande, para la propiedad principal de la portada.
+   * "side": en pantallas grandes, foto a la izquierda y datos a la derecha (más compacta).
+   */
+  variant?: "default" | "feature" | "side";
   sizes?: string;
 };
 
@@ -35,12 +38,17 @@ export function PropertyCard({
   const province = optionLabel(provinces, property.province, locale);
   const status = propertyStatuses.find((s) => s.value === property.status);
   const feature = variant === "feature";
+  const side = variant === "side";
 
   return (
-    <article className="group relative flex h-full flex-col">
+    <article
+      className={`group relative flex h-full flex-col ${
+        side ? "lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start lg:gap-6" : ""
+      }`}
+    >
       <div
         className={`relative overflow-hidden bg-paper-deep ${
-          feature ? "aspect-4/3 lg:aspect-auto lg:min-h-[34rem] lg:flex-1" : "aspect-4/3"
+          feature ? "aspect-4/3 lg:aspect-auto lg:min-h-96 lg:flex-1" : "aspect-4/3"
         }`}
       >
         {property.cover ? (
@@ -71,13 +79,13 @@ export function PropertyCard({
         )}
       </div>
 
-      <div className={feature ? "pt-6" : "pt-5"}>
+      <div className={feature ? "pt-5" : side ? "pt-4 lg:pt-0" : "pt-4"}>
         <p className="text-[0.6875rem] font-medium tracking-[0.16em] text-line uppercase">
           {[zone, province].filter(Boolean).join(" · ")}
         </p>
         <h3
           className={`mt-2 flex items-start justify-between gap-4 font-serif leading-tight text-balance ${
-            feature ? "text-3xl lg:text-4xl" : "text-[1.4rem]"
+            feature ? "text-2xl lg:text-3xl" : "text-xl"
           }`}
         >
           {/* El enlace cubre toda la tarjeta, pero su nombre accesible es solo el título. */}
@@ -93,18 +101,18 @@ export function PropertyCard({
           />
         </h3>
 
-        <dl className="mt-4 grid grid-cols-2 border-t border-rule pt-3">
+        <dl className="mt-3 grid grid-cols-2 border-t border-rule pt-2.5">
           <div>
             <dt className="text-[0.6875rem] tracking-[0.16em] text-line uppercase">
               {dict.property.area}
             </dt>
-            <dd className="mt-0.5 font-serif text-lg tabular-nums">{areaText ?? "—"}</dd>
+            <dd className="mt-0.5 font-serif text-base tabular-nums">{areaText ?? "—"}</dd>
           </div>
           <div className="border-l border-rule pl-4">
             <dt className="text-[0.6875rem] tracking-[0.16em] text-line uppercase">
               {dict.property.type}
             </dt>
-            <dd className="mt-0.5 font-serif text-lg">
+            <dd className="mt-0.5 font-serif text-base">
               {optionLabel(propertyTypes, property.propertyType, locale)}
             </dd>
           </div>

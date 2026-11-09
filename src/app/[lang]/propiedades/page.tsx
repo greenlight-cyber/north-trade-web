@@ -43,7 +43,7 @@ export default async function ListingPage({
   const dict = getDictionary(lang);
 
   return (
-    <div className="mx-auto max-w-360 px-5 pt-14 pb-24 sm:px-8 lg:px-16 lg:pt-24 lg:pb-36">
+    <div className="mx-auto max-w-360 px-5 pt-14 pb-20 sm:px-8 lg:px-16 lg:pt-20 lg:pb-28">
       <header className="grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-7">
           <p className="rise eyebrow">{siteConfig.name}</p>
@@ -100,7 +100,7 @@ async function Results({ lang, dict, searchParams }: ResultsProps) {
         </div>
 
         {properties.length ? (
-          <ul className="mt-12 grid grid-cols-1 gap-x-10 gap-y-16 sm:grid-cols-2 xl:grid-cols-3">
+          <ul className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-3">
             {properties.map((property, index) => (
               <li key={property.id} className={index < 3 ? undefined : "reveal"}>
                 <PropertyCard property={property} locale={lang} dict={dict} priority={index < 2} />

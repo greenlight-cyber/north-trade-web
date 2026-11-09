@@ -72,7 +72,7 @@ function metaDescription(property: PropertyDetail, lang: Locale): string {
 
 export default function PropertyPage({ params }: PageProps<"/[lang]/propiedades/[slug]">) {
   return (
-    <div className="mx-auto max-w-360 px-5 pt-8 pb-24 sm:px-8 lg:px-16 lg:pt-12 lg:pb-36">
+    <div className="mx-auto max-w-360 px-5 pt-8 pb-20 sm:px-8 lg:px-16 lg:pt-12 lg:pb-28">
       <Suspense fallback={<p className="py-20 text-line">…</p>}>
         <PropertyDetails params={params} />
       </Suspense>
@@ -178,7 +178,7 @@ async function PropertyDetails({
         )}
       </section>
 
-      <div className="mt-16 grid grid-cols-1 gap-14 lg:mt-24 lg:grid-cols-12 lg:gap-14">
+      <div className="mt-16 grid grid-cols-1 gap-14 lg:mt-20 lg:grid-cols-12 lg:gap-14">
         <aside className="lg:sticky lg:top-24 lg:order-last lg:col-span-4 lg:col-start-9 lg:self-start">
           <div className="border border-ink bg-paper p-6 sm:p-8">
             <dl aria-label={dict.property.facts}>

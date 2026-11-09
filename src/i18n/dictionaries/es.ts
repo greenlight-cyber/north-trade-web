@@ -98,7 +98,7 @@ const es = {
     ],
     firmTitle: "La firma",
     region: "Zona de trabajo",
-    regionValue: "Salta, Formosa y el norte argentino",
+    regionValue: "Salta, Argentina",
     ctaTitle: "¿Buscás un campo?",
     ctaText: "Contanos qué estás buscando: zona, superficie y destino.",
   },
@@ -106,7 +106,6 @@ const es = {
     metaDescription:
       "Contacto de North Trade, inmobiliaria rural en Salta: WhatsApp, teléfono, oficina en Toribio Tedín 77 y formulario de consulta.",
     title: "Contacto",
-    lead: "La forma más rápida es WhatsApp. También podés llamarnos, visitarnos o dejarnos un mensaje.",
     directTitle: "Contacto directo",
     formTitle: "Dejanos un mensaje",
     officeTitle: "Oficina",

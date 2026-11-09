@@ -37,9 +37,9 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
   const { contact } = siteConfig;
 
   return (
-    <div className="pb-24 lg:pb-36">
+    <div className="pb-24 lg:pb-28">
       <header
-        className={`${container} grid grid-cols-1 gap-8 pt-14 lg:grid-cols-12 lg:gap-14 lg:pt-24`}
+        className={`${container} grid grid-cols-1 gap-8 pt-14 lg:grid-cols-12 lg:gap-14 lg:pt-20`}
       >
         <div className="lg:col-span-5">
           <p className="rise eyebrow">{siteConfig.name}</p>
@@ -68,7 +68,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
         </figcaption>
       </figure>
 
-      <section aria-labelledby="servicios" className={`${container} mt-24 lg:mt-36`}>
+      <section aria-labelledby="servicios" className={`${container} mt-20 lg:mt-28`}>
         <div className="grid grid-cols-1 gap-6 border-b border-ink pb-6 lg:grid-cols-12 lg:gap-14">
           <p className="eyebrow lg:col-span-5">{siteConfig.name}</p>
           <h2 id="servicios" className="text-display lg:col-span-7">
@@ -79,7 +79,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
           {t.services.map((service, index) => (
             <li
               key={service.title}
-              className="reveal grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 gap-y-4 border-b border-rule py-10 lg:grid-cols-12 lg:gap-14 lg:py-14"
+              className="reveal grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 gap-y-4 border-b border-rule py-8 lg:grid-cols-12 lg:gap-14 lg:py-10"
             >
               <span
                 aria-hidden
@@ -109,7 +109,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
       </section>
 
       <div
-        className={`${container} mt-24 grid grid-cols-1 gap-16 lg:mt-36 lg:grid-cols-12 lg:gap-14`}
+        className={`${container} mt-20 grid grid-cols-1 gap-16 lg:mt-28 lg:grid-cols-12 lg:gap-14`}
       >
         <section aria-labelledby="firma" className="reveal lg:col-span-6">
           <p className="eyebrow">{siteConfig.name}</p>

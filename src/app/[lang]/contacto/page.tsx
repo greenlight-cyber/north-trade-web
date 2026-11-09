@@ -38,18 +38,13 @@ export default async function ContactPage({ params, searchParams }: PageProps<"/
   const { contact } = siteConfig;
 
   return (
-    <div className="mx-auto max-w-360 px-5 pt-14 pb-24 sm:px-8 lg:px-16 lg:pt-24 lg:pb-36">
-      <header className="grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-14">
-        <div className="lg:col-span-7">
-          <p className="rise eyebrow">{siteConfig.name}</p>
-          <h1 className="rise mt-5 text-hero [--i:1]">{t.title}</h1>
-        </div>
-        <p className="rise max-w-[46ch] text-lg text-ink/85 [--i:2] lg:col-span-5 lg:pb-3">
-          {t.lead}
-        </p>
+    <div className="mx-auto max-w-360 px-5 pt-14 pb-20 sm:px-8 lg:px-16 lg:pt-20 lg:pb-28">
+      <header>
+        <p className="rise eyebrow">{siteConfig.name}</p>
+        <h1 className="rise mt-5 text-hero [--i:1]">{t.title}</h1>
       </header>
 
-      <div className="mt-16 grid grid-cols-1 gap-16 lg:mt-24 lg:grid-cols-[minmax(0,1.4fr)_minmax(20rem,1fr)] lg:gap-20">
+      <div className="mt-16 grid grid-cols-1 gap-16 lg:mt-20 lg:grid-cols-[minmax(0,1.4fr)_minmax(20rem,1fr)] lg:gap-20">
         <section aria-labelledby="mensaje">
           <h2 id="mensaje" className="border-b border-ink pb-4 font-serif text-3xl lg:text-4xl">
             {t.formTitle}
