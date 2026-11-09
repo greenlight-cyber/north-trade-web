@@ -23,6 +23,11 @@
   --text-display--line-height: 1.04;
   --text-display--letter-spacing: -0.02em;
 
+  /* Títulos de portada: más grandes que display, para el hero y las aperturas de sección. */
+  --text-hero: clamp(2.75rem, 1.2rem + 5.6vw, 6.5rem);
+  --text-hero--line-height: 0.98;
+  --text-hero--letter-spacing: -0.025em;
+
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -32,6 +37,8 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-text-size-adjust: 100%;
+    /* El encabezado queda fijo arriba: que el foco y los anclajes no queden tapados. */
+    scroll-padding-top: 5.5rem;
     scrollbar-color: var(--color-line) var(--color-paper-deep);
   }
 
@@ -77,19 +84,72 @@
 }
 
 @layer components {
-  /* Línea de agrimensor que se traza al cargar; visible de entrada si no hay movimiento. */
-  .survey-trace {
-    transform-origin: left center;
-    animation: survey-trace 900ms var(--ease-out-expo) both;
+  /* Rótulo de sección: versalitas con un trazo bordó delante. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    /* También cuando el rótulo es un título (h2), que por defecto va en serif. */
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-line);
   }
-  .survey-trace-y {
-    transform-origin: center top;
-    animation: survey-trace-y 900ms var(--ease-out-expo) both;
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    background: var(--color-seal);
+  }
+
+  /* Subrayado que se traza de izquierda a derecha al pasar el mouse. */
+  .link-trace {
+    background: linear-gradient(currentColor, currentColor) left bottom / 0% 1px no-repeat;
+    transition: background-size 400ms var(--ease-out-expo);
+  }
+  .link-trace:hover,
+  .link-trace:focus-visible,
+  .link-trace[aria-current="page"] {
+    background-size: 100% 1px;
+  }
+
+  /*
+   * Entrada de portada: el contenido sube y aparece una sola vez al cargar.
+   * --i escalona los elementos (0, 1, 2…).
+   */
+  .rise {
+    animation: rise 900ms var(--ease-out-expo) both;
+    animation-delay: calc(var(--i, 0) * 110ms + 150ms);
+  }
+  .hero-photo {
+    animation: settle 1800ms var(--ease-out-expo) both;
+  }
+
+  /*
+   * Aparición al hacer scroll, sin JavaScript: usa las animaciones ligadas al scroll
+   * de los navegadores nuevos. Los demás muestran el contenido directamente.
+   */
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+    /* Fotos de franja: se asientan (de un leve acercamiento a su tamaño) al entrar. */
+    .reveal-photo {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .survey-trace,
-    .survey-trace-y {
+    .rise,
+    .hero-photo,
+    .reveal,
+    .reveal-photo {
       animation: none;
     }
   }
@@ -191,14 +251,15 @@
   }
 }
 
-@keyframes survey-trace {
+@keyframes rise {
   from {
-    transform: scaleX(0);
+    opacity: 0;
+    translate: 0 1.5rem;
   }
 }
 
-@keyframes survey-trace-y {
+@keyframes settle {
   from {
-    transform: scaleY(0);
+    scale: 1.08;
   }
 }

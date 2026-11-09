@@ -9,6 +9,7 @@ const en: Dictionary = {
   a11y: {
     skipToContent: "Skip to content",
     mainNav: "Main navigation",
+    footerNav: "Footer navigation",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     language: "Language",
@@ -27,6 +28,7 @@ const en: Dictionary = {
     heroCaption: "Farmland in Salta · aerial view",
     highlightsTitle: "Selected properties",
     highlightsAll: "View all properties",
+    aboutLink: "About North Trade",
   },
   listing: {
     title: "Properties for sale",
@@ -148,7 +150,6 @@ const en: Dictionary = {
   footer: {
     tagline: "Rural real estate in Salta and northern Argentina.",
     titleBlock: "Firm details",
-    firm: "Firm",
     address: "Office",
     phone: "Phone",
     whatsapp: "WhatsApp",

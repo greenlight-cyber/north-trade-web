@@ -14,7 +14,8 @@ export function SiteHeader({ locale, dict }: SiteHeaderProps) {
   ];
 
   return (
-    <header className="relative z-30 border-b border-ink bg-paper">
+    // Fijo arriba y translúcido: el contenido se ve pasar por detrás, sin perder legibilidad.
+    <header className="sticky top-0 z-30 border-b border-ink/20 bg-paper/90 backdrop-blur-md supports-[not(backdrop-filter:blur(1px))]:bg-paper">
       <div className="mx-auto flex h-[4.5rem] max-w-360 items-center justify-between px-5 sm:px-8 lg:px-16">
         <Logo href={localizePath(locale, "home")} label={dict.a11y.home} />
         <MainNav

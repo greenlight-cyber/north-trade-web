@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useState, type CSSProperties } from "react";
 
 import { flags } from "@/components/flags";
 import { CloseIcon, MenuIcon } from "@/components/icons";
@@ -102,10 +102,8 @@ export function MainNav({ locale, items, labels }: MainNavProps) {
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`text-[0.95rem] transition-colors ${
-                  active
-                    ? "text-seal underline decoration-1 underline-offset-[0.45em]"
-                    : "text-ink hover:text-seal"
+                className={`link-trace pb-1 text-[0.95rem] tracking-[0.01em] transition-colors ${
+                  active ? "text-seal" : "text-ink hover:text-seal"
                 }`}
               >
                 {item.label}
@@ -128,25 +126,33 @@ export function MainNav({ locale, items, labels }: MainNavProps) {
         {open ? <CloseIcon width={24} height={24} /> : <MenuIcon width={24} height={24} />}
       </button>
 
+      {/* Menú móvil: ocupa la pantalla bajo el encabezado, con los enlaces en tipografía grande. */}
       <div
         id={panelId}
         hidden={!open}
-        className="absolute inset-x-0 top-full z-40 border-b border-ink bg-paper md:hidden"
+        className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-ink bg-paper md:hidden"
       >
-        <ul className="px-5 py-2">
-          {items.map((item) => (
-            <li key={item.href} className="border-b border-rule last:border-b-0">
+        <ol className="px-5 pt-6">
+          {items.map((item, index) => (
+            <li
+              key={item.href}
+              style={{ "--i": index } as CSSProperties}
+              className="rise border-b border-rule"
+            >
               <Link
                 href={item.href}
                 aria-current={isActive(pathname, item.href) ? "page" : undefined}
                 onClick={() => setOpenOn(null)}
-                className="block py-4 font-serif text-2xl aria-[current=page]:text-seal"
+                className="flex items-baseline gap-4 py-5 font-serif text-4xl aria-[current=page]:text-seal"
               >
+                <span aria-hidden className="font-sans text-xs tracking-[0.16em] text-line">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 {item.label}
               </Link>
             </li>
           ))}
-        </ul>
+        </ol>
       </div>
     </nav>
   );

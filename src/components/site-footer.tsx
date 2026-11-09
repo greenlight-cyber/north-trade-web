@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 
 import logo from "@/assets/brand/logotipo.png";
 import { PendingValue } from "@/components/pending-value";
+import { WhatsAppSeal } from "@/components/whatsapp-seal";
 import { siteConfig } from "@/config/site";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/get-dictionary";
@@ -12,78 +13,94 @@ import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 type SiteFooterProps = { locale: Locale; dict: Dictionary };
 
-function Cell({ label, children, wide }: { label: string; children: ReactNode; wide?: boolean }) {
+function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className={`border-t border-l border-line px-4 py-3 ${wide ? "sm:col-span-2" : ""}`}>
-      <dt className="text-xs font-medium tracking-[0.12em] text-line uppercase">{label}</dt>
-      <dd className="mt-1">{children}</dd>
+    <div className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-4 border-b border-paper/15 py-3.5">
+      <dt className="pt-0.5 text-[0.6875rem] font-medium tracking-[0.16em] text-paper/55 uppercase">
+        {label}
+      </dt>
+      <dd>{children}</dd>
     </div>
   );
 }
 
 /**
- * Pie de página con forma de rótulo de plano: el cuadro donde el agrimensor
- * firma con nombre, domicilio y matrícula. Aquí van los datos reales de la firma.
+ * Pie de página en tinta, como el rótulo de un plano: el logo va sobre una placa de
+ * papel (el bordó no se lee sobre fondo oscuro) y al lado, los datos reales de la firma.
  */
 export function SiteFooter({ locale, dict }: SiteFooterProps) {
   const { contact } = siteConfig;
   const f = dict.footer;
+  const linkHover = "transition-colors hover:text-paper";
 
   return (
-    <footer className="mt-auto border-t border-ink bg-paper-deep">
-      <div className="mx-auto max-w-360 px-5 py-14 sm:px-8 lg:px-16">
-        <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
-          <div>
-            <Image src={logo} alt={siteConfig.name} width={175} height={41} className="h-auto" />
-            <p className="mt-2 max-w-xs text-line">{f.tagline}</p>
-            <ul className="mt-8 space-y-2">
+    <footer className="mt-auto bg-ink text-paper">
+      <div className="mx-auto max-w-360 px-5 pt-20 pb-10 sm:px-8 lg:px-16 lg:pt-28">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-5">
+            <span className="inline-block bg-paper p-3">
+              <Image src={logo} alt={siteConfig.name} width={175} height={41} className="h-auto" />
+            </span>
+            <p className="mt-8 max-w-[22ch] font-serif text-3xl leading-tight text-balance">
+              {f.tagline}
+            </p>
+            <WhatsAppSeal
+              locale={locale}
+              label={dict.contact.whatsappCta}
+              tone="inverse"
+              className="mt-10"
+            />
+          </div>
+
+          <nav aria-label={dict.a11y.footerNav} className="lg:col-span-3">
+            <ul className="space-y-3">
               {(["properties", "about", "contact"] as const).map((key) => (
                 <li key={key}>
-                  <Link href={localizePath(locale, key)} className="underline hover:text-seal">
+                  <Link
+                    href={localizePath(locale, key)}
+                    className="link-trace pb-0.5 font-serif text-2xl text-paper/85 transition-colors hover:text-paper"
+                  >
                     {dict.nav[key]}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           <dl
             aria-label={f.titleBlock}
-            className="grid border-r border-b border-line sm:grid-cols-2"
+            className="border-t border-paper/15 text-paper/85 lg:col-span-4"
           >
-            <Cell label={f.firm} wide>
-              <span className="font-serif text-xl">{siteConfig.name}</span>
-            </Cell>
-            <Cell label={f.address}>
+            <Row label={f.address}>
               <address className="not-italic">{contact.address.display}</address>
-            </Cell>
-            <Cell label={f.phone}>
-              <a href={`tel:${contact.phone.e164}`} className="hover:text-seal">
+            </Row>
+            <Row label={f.phone}>
+              <a href={`tel:${contact.phone.e164}`} className={linkHover}>
                 {contact.phone.display}
               </a>
-            </Cell>
-            <Cell label={f.whatsapp}>
+            </Row>
+            <Row label={f.whatsapp}>
               <a
                 href={buildWhatsAppUrl({ locale })}
-                className="hover:text-seal"
+                className={linkHover}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 {contact.whatsapp.display}
               </a>
-            </Cell>
-            <Cell label={f.email}>
+            </Row>
+            <Row label={f.email}>
               <PendingValue value={contact.email} />
-            </Cell>
-            <Cell label={f.associations} wide>
-              {siteConfig.associations.join(" · ")}
-            </Cell>
+            </Row>
+            <Row label={f.associations}>{siteConfig.associations.join(" · ")}</Row>
           </dl>
         </div>
 
-        <p className="mt-12 border-t border-rule pt-6 text-sm text-line">
-          © {siteConfig.name}. {f.rights}
-        </p>
+        <div className="mt-20 flex flex-wrap items-baseline justify-between gap-4 border-t border-paper/15 pt-6 text-sm text-paper/55">
+          <p>
+            © {siteConfig.name}. {f.rights}
+          </p>
+        </div>
       </div>
     </footer>
   );

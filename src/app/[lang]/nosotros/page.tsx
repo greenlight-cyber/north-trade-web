@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
+import aerialPhoto from "@/assets/home/campos-salta-aerea.jpg";
 import { ArrowRightIcon } from "@/components/icons";
 import { WhatsAppSeal } from "@/components/whatsapp-seal";
 import { siteConfig } from "@/config/site";
@@ -25,6 +27,8 @@ export async function generateMetadata({
   });
 }
 
+const container = "mx-auto max-w-360 px-5 sm:px-8 lg:px-16";
+
 export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros">) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
@@ -33,48 +37,86 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
   const { contact } = siteConfig;
 
   return (
-    <div className="mx-auto max-w-360 px-5 pt-10 pb-24 sm:px-8 lg:px-16 lg:pt-14">
-      <header className="max-w-4xl">
-        <h1 className="text-display">{t.title}</h1>
-        <p className="mt-6 font-serif text-2xl leading-snug text-balance lg:text-3xl">{t.lead}</p>
-        <p className="mt-6 max-w-[60ch] text-lg text-ink/85">{t.body}</p>
+    <div className="pb-24 lg:pb-36">
+      <header
+        className={`${container} grid grid-cols-1 gap-8 pt-14 lg:grid-cols-12 lg:gap-14 lg:pt-24`}
+      >
+        <div className="lg:col-span-5">
+          <p className="rise eyebrow">{siteConfig.name}</p>
+          <h1 className="rise mt-5 text-hero [--i:1]">{t.title}</h1>
+        </div>
+        <div className="lg:col-span-7 lg:pt-14">
+          <p className="rise font-serif text-[clamp(1.5rem,1.1rem+1.4vw,2.5rem)] leading-[1.2] text-balance [--i:2]">
+            {t.lead}
+          </p>
+          <p className="rise mt-8 max-w-[56ch] text-lg text-ink/85 [--i:3]">{t.body}</p>
+        </div>
       </header>
 
-      <section aria-labelledby="servicios" className="mt-20">
-        <h2 id="servicios" className="border-b border-ink pb-3 font-serif text-3xl">
-          {t.servicesTitle}
-        </h2>
-        <ol className="grid grid-cols-1 md:grid-cols-3">
+      {/* Lámina de paisaje a todo el ancho, recortada en franja. */}
+      <figure className="relative mt-20 aspect-[4/3] overflow-hidden bg-ink sm:aspect-[21/9] lg:mt-28">
+        <Image
+          src={aerialPhoto}
+          alt={dict.home.heroAlt}
+          fill
+          placeholder="blur"
+          sizes="100vw"
+          className="reveal-photo object-cover object-[50%_70%]"
+        />
+        <figcaption className="absolute right-5 bottom-5 bg-paper px-3 py-1.5 text-[0.6875rem] tracking-[0.16em] text-ink uppercase sm:right-8 lg:right-16">
+          {dict.home.heroCaption}
+        </figcaption>
+      </figure>
+
+      <section aria-labelledby="servicios" className={`${container} mt-24 lg:mt-36`}>
+        <div className="grid grid-cols-1 gap-6 border-b border-ink pb-6 lg:grid-cols-12 lg:gap-14">
+          <p className="eyebrow lg:col-span-5">{siteConfig.name}</p>
+          <h2 id="servicios" className="text-display lg:col-span-7">
+            {t.servicesTitle}
+          </h2>
+        </div>
+        <ol>
           {t.services.map((service, index) => (
             <li
               key={service.title}
-              className="border-b border-line py-8 md:border-b-0 md:border-l md:px-8 md:first:border-l-0 md:first:pl-0"
+              className="reveal grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 gap-y-4 border-b border-rule py-10 lg:grid-cols-12 lg:gap-14 lg:py-14"
             >
-              <span aria-hidden className="font-serif text-lg text-seal tabular-nums">
+              <span
+                aria-hidden
+                className="font-serif text-3xl text-seal tabular-nums lg:col-span-2 lg:text-5xl"
+              >
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 className="mt-2 text-2xl">{service.title}</h3>
-              <p className="mt-3 text-ink/85">{service.text}</p>
-              {service.areas && (
-                <ul className="mt-4 border-t border-line">
-                  {service.areas.map((area) => (
-                    <li key={area} className="border-b border-line py-2 font-serif text-lg">
-                      {area}
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <h3 className="text-3xl leading-tight lg:col-span-3 lg:text-4xl">{service.title}</h3>
+              <div className="col-start-2 lg:col-span-7 lg:col-start-6">
+                <p className="max-w-[52ch] text-lg text-ink/85">{service.text}</p>
+                {service.areas && (
+                  <ul className="mt-6 flex flex-wrap gap-3">
+                    {service.areas.map((area) => (
+                      <li
+                        key={area}
+                        className="border border-ink px-4 py-2 font-serif text-lg leading-none"
+                      >
+                        {area}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
             </li>
           ))}
         </ol>
       </section>
 
-      <div className="mt-20 grid grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-20">
-        <section aria-labelledby="firma">
-          <h2 id="firma" className="border-b border-ink pb-3 font-serif text-3xl">
+      <div
+        className={`${container} mt-24 grid grid-cols-1 gap-16 lg:mt-36 lg:grid-cols-12 lg:gap-14`}
+      >
+        <section aria-labelledby="firma" className="reveal lg:col-span-6">
+          <p className="eyebrow">{siteConfig.name}</p>
+          <h2 id="firma" className="mt-5 text-display">
             {t.firmTitle}
           </h2>
-          <dl>
+          <dl className="mt-10 border-t border-ink">
             <Row label={dict.footer.associations}>{siteConfig.associations.join(" · ")}</Row>
             <Row label={t.region}>{t.regionValue}</Row>
             <Row label={dict.footer.address}>
@@ -83,19 +125,24 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
           </dl>
         </section>
 
-        <section aria-labelledby="buscas" className="border border-line p-6 sm:p-10">
-          <h2 id="buscas" className="font-serif text-3xl">
-            {t.ctaTitle}
-          </h2>
-          <p className="mt-3 text-ink/85">{t.ctaText}</p>
-          <div className="mt-8 flex flex-col items-start gap-5">
+        <section
+          aria-labelledby="buscas"
+          className="reveal flex flex-col justify-between bg-paper-deep p-8 sm:p-12 lg:col-span-5 lg:col-start-8"
+        >
+          <div>
+            <h2 id="buscas" className="text-display">
+              {t.ctaTitle}
+            </h2>
+            <p className="mt-5 max-w-[40ch] text-lg text-ink/85">{t.ctaText}</p>
+          </div>
+          <div className="mt-10 flex flex-col items-start gap-6">
             <WhatsAppSeal locale={lang} label={dict.contact.whatsappCta} />
             <Link
               href={localizePath(lang, "contact")}
-              className="group inline-flex items-center gap-2 font-medium underline decoration-1 underline-offset-[0.35em] hover:text-seal"
+              className="group link-trace inline-flex items-center gap-2 pb-0.5 font-medium hover:text-seal"
             >
               {dict.contact.writeCta}
-              <ArrowRightIcon className="transition-transform duration-200 group-hover:translate-x-1" />
+              <ArrowRightIcon className="transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         </section>
@@ -106,9 +153,11 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
 
 function Row({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[9rem_minmax(0,1fr)] border-b border-line py-4">
-      <dt className="text-xs font-medium tracking-[0.12em] text-line uppercase">{label}</dt>
-      <dd>{children}</dd>
+    <div className="grid grid-cols-[9rem_minmax(0,1fr)] gap-4 border-b border-rule py-5">
+      <dt className="pt-1 text-[0.6875rem] font-medium tracking-[0.16em] text-line uppercase">
+        {label}
+      </dt>
+      <dd className="font-serif text-xl">{children}</dd>
     </div>
   );
 }

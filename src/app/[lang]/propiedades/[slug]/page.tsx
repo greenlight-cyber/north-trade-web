@@ -72,7 +72,7 @@ function metaDescription(property: PropertyDetail, lang: Locale): string {
 
 export default function PropertyPage({ params }: PageProps<"/[lang]/propiedades/[slug]">) {
   return (
-    <div className="mx-auto max-w-360 px-5 pt-8 pb-20 sm:px-8 lg:px-16 lg:pt-10">
+    <div className="mx-auto max-w-360 px-5 pt-8 pb-24 sm:px-8 lg:px-16 lg:pt-12 lg:pb-36">
       <Suspense fallback={<p className="py-20 text-line">…</p>}>
         <PropertyDetails params={params} />
       </Suspense>
@@ -113,98 +113,112 @@ async function PropertyDetails({
         province,
       });
 
+  const place = [zone, province].filter(Boolean).join(" · ");
+
   return (
     <article>
       {listingData && <JsonLd data={listingData} />}
       <Link
         href={localizePath(lang, "properties")}
-        className="group inline-flex items-center gap-2 text-sm text-line hover:text-ink"
+        className="group link-trace inline-flex items-center gap-2 pb-0.5 text-sm text-line transition-colors hover:text-ink"
       >
-        <ArrowRightIcon className="rotate-180 transition-transform group-hover:-translate-x-1" />
+        <ArrowRightIcon className="rotate-180 transition-transform duration-300 group-hover:-translate-x-1" />
         {dict.property.back}
       </Link>
 
-      <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(20rem,1fr)] lg:gap-14">
-        <section aria-label={dict.property.photos} className="flex flex-col gap-4">
-          <div className="relative aspect-4/3 overflow-hidden border border-line bg-paper-deep">
-            {cover ? (
-              <PropertyPhoto
-                image={cover}
-                locale={lang}
-                fallbackAlt={dict.property.photoOf(1, property.gallery.length)}
-                sizes="(min-width: 1024px) 60vw, 100vw"
-                priority
-              />
-            ) : (
-              <PlatPlaceholder label={areaText ?? title} caption={dict.property.noPhotos} />
+      <header className="mt-10 grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-14">
+        <div className="lg:col-span-8">
+          <div className="rise flex flex-wrap items-center gap-4">
+            {place && <p className="eyebrow">{place}</p>}
+            {status && property.status !== "disponible" && (
+              <p className="bg-seal px-2.5 py-1 text-[0.6875rem] font-semibold tracking-[0.16em] text-paper uppercase">
+                {status.label[lang]}
+              </p>
             )}
           </div>
-          {photos.length > 0 && (
-            <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {photos.map((photo, index) => (
-                <li
-                  key={`${index}-${photo.ref}`}
-                  className="relative aspect-4/3 overflow-hidden border border-line"
-                >
-                  <Photo
-                    image={photo}
-                    locale={lang}
-                    alt={dict.property.photoOf(index + 2, property.gallery.length)}
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+          <h1 className="rise mt-5 text-display text-balance [--i:1]">{title}</h1>
+        </div>
+        {areaText && (
+          <p className="rise font-serif text-4xl tabular-nums [--i:2] lg:col-span-4 lg:pb-1 lg:text-right lg:text-5xl">
+            {areaText}
+          </p>
+        )}
+      </header>
 
-        <aside className="lg:sticky lg:top-6 lg:self-start">
-          {status && property.status !== "disponible" && (
-            <p className="mb-4 inline-block border border-seal px-2 py-1 text-xs font-semibold tracking-[0.12em] text-seal uppercase">
-              {status.label[lang]}
-            </p>
-          )}
-          <h1 className="font-serif text-4xl leading-tight text-balance lg:text-5xl">{title}</h1>
-          <p className="mt-3 text-line">{[zone, province].filter(Boolean).join(" · ")}</p>
-
-          <dl aria-label={dict.property.facts} className="mt-8 border-t border-line">
-            <Fact label={dict.property.area}>{areaText ?? "—"}</Fact>
-            <Fact label={dict.property.type}>
-              {optionLabel(propertyTypes, property.propertyType, lang)}
-            </Fact>
-            <Fact label={dict.property.province}>{province}</Fact>
-            {zone && <Fact label={dict.property.zone}>{zone}</Fact>}
-            <Fact label={dict.property.price}>{dict.property.priceValue}</Fact>
-          </dl>
-
-          {sold ? (
-            <div className="mt-8">
-              <p>{dict.property.sold}</p>
-              <Link
-                href={localizePath(lang, "properties")}
-                className="mt-3 inline-block font-medium underline underline-offset-4 hover:text-seal"
-              >
-                {dict.property.soldCta}
-              </Link>
-            </div>
+      <section aria-label={dict.property.photos} className="mt-10 lg:mt-12">
+        <div className="rise relative aspect-4/3 overflow-hidden bg-paper-deep [--i:3] sm:aspect-video lg:aspect-[21/10]">
+          {cover ? (
+            <PropertyPhoto
+              image={cover}
+              locale={lang}
+              fallbackAlt={dict.property.photoOf(1, property.gallery.length)}
+              sizes="(min-width: 1440px) 1312px, 100vw"
+              priority
+              className="hero-photo"
+            />
           ) : (
-            <Enquiry lang={lang} dict={dict} title={title} slug={property.slug} />
+            <PlatPlaceholder label={areaText ?? title} caption={dict.property.noPhotos} />
           )}
-        </aside>
-      </div>
+        </div>
+        {photos.length > 0 && (
+          <ul className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {photos.map((photo, index) => (
+              <li
+                key={`${index}-${photo.ref}`}
+                className="group relative aspect-4/3 overflow-hidden bg-paper-deep"
+              >
+                <Photo
+                  image={photo}
+                  locale={lang}
+                  alt={dict.property.photoOf(index + 2, property.gallery.length)}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
-      <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1.6fr)_minmax(20rem,1fr)] lg:gap-14">
-        <div>
+      <div className="mt-16 grid grid-cols-1 gap-14 lg:mt-24 lg:grid-cols-12 lg:gap-14">
+        <aside className="lg:sticky lg:top-24 lg:order-last lg:col-span-4 lg:col-start-9 lg:self-start">
+          <div className="border border-ink bg-paper p-6 sm:p-8">
+            <dl aria-label={dict.property.facts}>
+              <Fact label={dict.property.area}>{areaText ?? "—"}</Fact>
+              <Fact label={dict.property.type}>
+                {optionLabel(propertyTypes, property.propertyType, lang)}
+              </Fact>
+              <Fact label={dict.property.province}>{province}</Fact>
+              {zone && <Fact label={dict.property.zone}>{zone}</Fact>}
+              <Fact label={dict.property.price}>{dict.property.priceValue}</Fact>
+            </dl>
+
+            {sold ? (
+              <div className="mt-8">
+                <p>{dict.property.sold}</p>
+                <Link
+                  href={localizePath(lang, "properties")}
+                  className="link-trace mt-3 inline-block pb-0.5 font-medium hover:text-seal"
+                >
+                  {dict.property.soldCta}
+                </Link>
+              </div>
+            ) : (
+              <Enquiry lang={lang} dict={dict} title={title} slug={property.slug} />
+            )}
+          </div>
+        </aside>
+
+        <div className="lg:col-span-7">
           {description && (
-            <section aria-labelledby="descripcion">
-              <h2 id="descripcion" className="border-b border-line pb-3 font-serif text-2xl">
+            <section aria-labelledby="descripcion" className="reveal">
+              <h2 id="descripcion" className="eyebrow">
                 {dict.property.description}
               </h2>
               {untranslated && (
-                <p className="mt-4 text-sm text-line italic">{dict.property.translationNote}</p>
+                <p className="mt-5 text-sm text-line italic">{dict.property.translationNote}</p>
               )}
               <div
                 lang={untranslated ? "es" : undefined}
-                className="mt-5 max-w-[70ch] leading-relaxed whitespace-pre-line text-ink/90"
+                className="mt-6 max-w-[68ch] text-lg leading-relaxed whitespace-pre-line text-ink/90"
               >
                 {description}
               </div>
@@ -212,30 +226,32 @@ async function PropertyDetails({
           )}
 
           {property.plan && (
-            <section aria-labelledby="plano" className="mt-12">
-              <h2 id="plano" className="border-b border-line pb-3 font-serif text-2xl">
+            <section aria-labelledby="plano" className="reveal mt-16">
+              <h2 id="plano" className="eyebrow">
                 {dict.property.plan}
               </h2>
-              <div className="relative mt-5 aspect-4/3 overflow-hidden border border-line">
+              <div className="relative mt-6 aspect-4/3 overflow-hidden border border-rule bg-paper-deep">
                 <PropertyPhoto
                   image={property.plan}
                   locale={lang}
                   fallbackAlt={dict.property.plan}
-                  sizes="(min-width: 1024px) 60vw, 100vw"
+                  sizes="(min-width: 1024px) 55vw, 100vw"
                   className="object-contain!"
                 />
               </div>
             </section>
           )}
-        </div>
 
-        <section aria-labelledby="ubicacion">
-          <h2 id="ubicacion" className="border-b border-line pb-3 font-serif text-2xl">
-            {dict.property.location}
-          </h2>
-          <p className="mt-5 text-lg">{[zone, province].filter(Boolean).join(", ")}</p>
-          <p className="mt-2 text-sm text-line">{dict.property.locationNote}</p>
-        </section>
+          <section aria-labelledby="ubicacion" className="reveal mt-16 border-t border-ink pt-8">
+            <h2 id="ubicacion" className="eyebrow">
+              {dict.property.location}
+            </h2>
+            <p className="mt-5 font-serif text-3xl">
+              {[zone, province].filter(Boolean).join(", ")}
+            </p>
+            <p className="mt-3 text-sm text-line">{dict.property.locationNote}</p>
+          </section>
+        </div>
       </div>
     </article>
   );
@@ -243,9 +259,11 @@ async function PropertyDetails({
 
 function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[8rem_minmax(0,1fr)] border-b border-line py-3">
-      <dt className="text-xs font-medium tracking-[0.12em] text-line uppercase">{label}</dt>
-      <dd className="tabular-nums">{children}</dd>
+    <div className="flex items-baseline justify-between gap-4 border-b border-rule py-3.5 first:pt-0">
+      <dt className="text-[0.6875rem] font-medium tracking-[0.16em] text-line uppercase">
+        {label}
+      </dt>
+      <dd className="text-right font-serif text-lg tabular-nums">{children}</dd>
     </div>
   );
 }
@@ -256,7 +274,8 @@ function Photo({ image, locale, alt }: { image: PropertyImage; locale: Locale; a
       image={image}
       locale={locale}
       fallbackAlt={alt}
-      sizes="(min-width: 1024px) 20vw, 50vw"
+      sizes="(min-width: 1024px) 25vw, 50vw"
+      className="transition-transform duration-1000 ease-out-expo group-hover:scale-[1.04]"
     />
   );
 }
@@ -266,17 +285,23 @@ type EnquiryProps = { lang: Locale; dict: Dictionary; title: string; slug: strin
 function Enquiry({ lang, dict, title, slug }: EnquiryProps) {
   return (
     <div className="mt-8 flex flex-col gap-4">
-      <WhatsAppSeal locale={lang} label={dict.property.enquire} propertyTitle={title} />
+      <WhatsAppSeal
+        locale={lang}
+        label={dict.property.enquire}
+        propertyTitle={title}
+        tone="solid"
+        className="min-h-14"
+      />
       <a
         href={`tel:${siteConfig.contact.phone.e164}`}
-        className="inline-flex items-center justify-center gap-2 text-sm text-line hover:text-ink"
+        className="inline-flex items-center justify-center gap-2 text-sm text-line transition-colors hover:text-ink"
       >
         <PhoneIcon width={16} height={16} />
         {dict.contact.callCta} {siteConfig.contact.phone.display}
       </a>
       <Link
         href={`${localizePath(lang, "contact")}?propiedad=${encodeURIComponent(slug)}`}
-        className="text-center text-sm text-line underline hover:text-ink"
+        className="link-trace mx-auto pb-0.5 text-sm text-line transition-colors hover:text-ink"
       >
         {dict.contact.writeCta}
       </Link>

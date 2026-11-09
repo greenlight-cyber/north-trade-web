@@ -5,13 +5,19 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { localizePath } from "@/i18n/routes";
 
-type PropertySearchProps = { locale: Locale; dict: Dictionary; values?: ListingFilters };
+type PropertySearchProps = {
+  locale: Locale;
+  dict: Dictionary;
+  values?: ListingFilters;
+  className?: string;
+};
 
 /**
- * Buscador con forma de cuadro de datos de plano: cada fila es una celda
- * rotulada. Es un formulario GET común: funciona sin JavaScript.
+ * Buscador con forma de rótulo de plano: una fila de celdas rotuladas (una debajo de
+ * otra en celulares) y la acción en bordó al final. Es un formulario GET común:
+ * funciona sin JavaScript.
  */
-export function PropertySearch({ locale, dict, values = {} }: PropertySearchProps) {
+export function PropertySearch({ locale, dict, values = {}, className = "" }: PropertySearchProps) {
   const fields: { name: keyof ListingFilters; label: string; options: typeof provinces }[] = [
     { name: "provincia", label: dict.search.province, options: provinces },
     { name: "tipo", label: dict.search.type, options: propertyTypes },
@@ -19,22 +25,27 @@ export function PropertySearch({ locale, dict, values = {} }: PropertySearchProp
   ];
 
   return (
-    <form action={localizePath(locale, "properties")} method="get" role="search">
-      <fieldset className="border-t border-line">
+    <form
+      action={localizePath(locale, "properties")}
+      method="get"
+      role="search"
+      className={`grid border border-ink bg-paper md:grid-cols-[repeat(3,minmax(0,1fr))_auto] ${className}`}
+    >
+      <fieldset className="contents">
         <legend className="sr-only">{dict.search.legend}</legend>
         {fields.map((field) => (
           <label
             key={field.name}
-            className="grid grid-cols-[7.5rem_minmax(0,1fr)] items-center border-b border-line focus-within:bg-paper-deep"
+            className="group relative flex flex-col justify-center border-b border-rule px-5 py-3.5 transition-colors focus-within:bg-paper-deep hover:bg-paper-deep md:border-r md:border-b-0 md:border-rule"
           >
-            <span className="py-3 text-xs font-medium tracking-[0.12em] text-line uppercase">
+            <span className="text-[0.6875rem] font-medium tracking-[0.16em] text-line uppercase">
               {field.label}
             </span>
-            <span className="relative">
+            <span className="relative mt-1">
               <select
                 name={field.name}
                 defaultValue={values[field.name] ?? ""}
-                className="plat-select w-full min-w-0 cursor-pointer bg-transparent py-3 pr-6 text-ink focus:outline-none"
+                className="plat-select w-full min-w-0 cursor-pointer bg-transparent pr-7 font-serif text-xl text-ink focus:outline-none"
               >
                 <option value="">{dict.search.any}</option>
                 {field.options.map((o) => (
@@ -43,17 +54,17 @@ export function PropertySearch({ locale, dict, values = {} }: PropertySearchProp
                   </option>
                 ))}
               </select>
-              <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-0 -translate-y-1/2 text-line" />
+              <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-0 -translate-y-1/2 text-line transition-transform duration-300 group-hover:translate-y-[-30%]" />
             </span>
           </label>
         ))}
       </fieldset>
       <button
         type="submit"
-        className="group mt-4 inline-flex items-center gap-2 font-medium text-ink underline decoration-1 underline-offset-[0.35em] hover:text-seal"
+        className="group inline-flex min-h-16 items-center justify-center gap-3 bg-seal px-8 text-sm font-semibold tracking-[0.14em] text-paper uppercase transition-colors duration-300 hover:bg-seal-dark focus-visible:outline-offset-[-4px] focus-visible:outline-paper"
       >
         {dict.search.submit}
-        <ArrowRightIcon className="transition-transform duration-200 group-hover:translate-x-1" />
+        <ArrowRightIcon className="transition-transform duration-300 ease-out-expo group-hover:translate-x-1.5" />
       </button>
     </form>
   );

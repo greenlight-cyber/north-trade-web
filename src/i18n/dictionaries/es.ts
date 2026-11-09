@@ -7,6 +7,7 @@ const es = {
   a11y: {
     skipToContent: "Ir al contenido",
     mainNav: "Navegación principal",
+    footerNav: "Navegación del pie",
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
     language: "Idioma",
@@ -25,6 +26,7 @@ const es = {
     heroCaption: "Campos en Salta · vista aérea",
     highlightsTitle: "Propiedades seleccionadas",
     highlightsAll: "Ver todas las propiedades",
+    aboutLink: "Sobre North Trade",
   },
   listing: {
     title: "Propiedades en venta",
@@ -147,7 +149,6 @@ const es = {
   footer: {
     tagline: "Negocios inmobiliarios rurales en Salta y el norte argentino.",
     titleBlock: "Datos de la firma",
-    firm: "Firma",
     address: "Domicilio",
     phone: "Teléfono",
     whatsapp: "WhatsApp",
