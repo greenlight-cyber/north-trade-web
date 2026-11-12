@@ -3,10 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
+import { PageHero } from "@/components/page-hero";
 import { PropertyCard } from "@/components/property-card";
 import { PropertySearch } from "@/components/property-search";
 import { WhatsAppSeal } from "@/components/whatsapp-seal";
-import { siteConfig } from "@/config/site";
 import {
   filterProperties,
   hasFilters,
@@ -43,22 +43,15 @@ export default async function ListingPage({
   const dict = getDictionary(lang);
 
   return (
-    <div className="mx-auto max-w-360 px-5 pt-14 pb-20 sm:px-8 lg:px-16 lg:pt-20 lg:pb-28">
-      <header className="grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-14">
-        <div className="lg:col-span-7">
-          <p className="rise eyebrow">{siteConfig.name}</p>
-          <h1 className="rise mt-5 text-hero [--i:1]">{dict.listing.title}</h1>
-        </div>
-        <p className="rise max-w-[46ch] text-lg text-ink/85 [--i:2] lg:col-span-5 lg:pb-3">
-          {dict.listing.lead}
-        </p>
-      </header>
-
-      {/* Los filtros dependen de la dirección: esa parte se arma al pedir la página. */}
-      <Suspense fallback={<p className="mt-14 text-line">{dict.listing.loading}</p>}>
-        <Results lang={lang} dict={dict} searchParams={searchParams} />
-      </Suspense>
-    </div>
+    <>
+      <PageHero backdrop="cultivo" title={dict.listing.title} lead={dict.listing.lead} />
+      <div className="mx-auto max-w-360 px-5 pb-20 sm:px-8 lg:px-16 lg:pb-28">
+        {/* Los filtros dependen de la dirección: esa parte se arma al pedir la página. */}
+        <Suspense fallback={<p className="mt-14 text-line">{dict.listing.loading}</p>}>
+          <Results lang={lang} dict={dict} searchParams={searchParams} />
+        </Suspense>
+      </div>
+    </>
   );
 }
 

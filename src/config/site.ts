@@ -7,7 +7,7 @@
  */
 export const siteConfig = {
   name: "North Trade",
-  tagline: "Negocios inmobiliarios rurales en el norte argentino",
+  tagline: "Negocios inmobiliarios en Salta, Argentina",
   description:
     "Inmobiliaria rural de Salta. Compra y venta de campos en Salta, Formosa y el norte argentino, con asesoramiento integral, seriedad y absoluta reserva.",
   url: "https://www.northtrade.com.ar",
@@ -31,7 +31,6 @@ export const siteConfig = {
       number: "5493876054595",
     },
     email: "[COMPLETAR: email de contacto]",
-    hours: "[COMPLETAR: horario de atención]",
   },
   /** Entidades de las que North Trade es socia. Los logos están pendientes. */
   associations: ["CUCIS", "CAIR"],

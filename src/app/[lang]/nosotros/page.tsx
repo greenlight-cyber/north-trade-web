@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
-import aerialPhoto from "@/assets/home/campos-salta-aerea.jpg";
 import { ArrowRightIcon } from "@/components/icons";
+import { PageHero } from "@/components/page-hero";
 import { WhatsAppSeal } from "@/components/whatsapp-seal";
 import { siteConfig } from "@/config/site";
 import { isLocale } from "@/i18n/config";
@@ -38,43 +37,21 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
 
   return (
     <div className="pb-24 lg:pb-28">
-      <header
-        className={`${container} grid grid-cols-1 gap-8 pt-14 lg:grid-cols-12 lg:gap-14 lg:pt-20`}
-      >
-        <div className="lg:col-span-5">
-          <p className="rise eyebrow">{siteConfig.name}</p>
-          <h1 className="rise mt-5 text-hero [--i:1]">{t.title}</h1>
-        </div>
-        <div className="lg:col-span-7 lg:pt-14">
-          <p className="rise font-serif text-[clamp(1.5rem,1.1rem+1.4vw,2.5rem)] leading-[1.2] text-balance [--i:2]">
-            {t.lead}
-          </p>
-          <p className="rise mt-8 max-w-[56ch] text-lg text-ink/85 [--i:3]">{t.body}</p>
-        </div>
-      </header>
+      <PageHero backdrop="vinedo-cerros" title={t.title} />
 
-      {/* Lámina de paisaje a todo el ancho, recortada en franja. */}
-      <figure className="relative mt-20 aspect-[4/3] overflow-hidden bg-ink sm:aspect-[21/9] lg:mt-28">
-        <Image
-          src={aerialPhoto}
-          alt={dict.home.heroAlt}
-          fill
-          placeholder="blur"
-          sizes="100vw"
-          className="reveal-photo object-cover object-[50%_70%]"
-        />
-        <figcaption className="absolute right-5 bottom-5 bg-paper px-3 py-1.5 text-[0.6875rem] tracking-[0.16em] text-ink uppercase sm:right-8 lg:right-16">
-          {dict.home.heroCaption}
-        </figcaption>
-      </figure>
+      <section
+        className={`${container} grid grid-cols-1 gap-8 pt-16 lg:grid-cols-12 lg:gap-14 lg:pt-24`}
+      >
+        <p className="reveal font-serif text-[clamp(1.5rem,1.1rem+1.4vw,2.5rem)] leading-[1.2] text-balance lg:col-span-8">
+          {t.lead}
+        </p>
+        <p className="reveal max-w-[44ch] text-lg text-ink/85 lg:col-span-4 lg:pt-2">{t.body}</p>
+      </section>
 
       <section aria-labelledby="servicios" className={`${container} mt-20 lg:mt-28`}>
-        <div className="grid grid-cols-1 gap-6 border-b border-ink pb-6 lg:grid-cols-12 lg:gap-14">
-          <p className="eyebrow lg:col-span-5">{siteConfig.name}</p>
-          <h2 id="servicios" className="text-display lg:col-span-7">
-            {t.servicesTitle}
-          </h2>
-        </div>
+        <h2 id="servicios" className="border-b border-ink pb-6 text-display">
+          {t.servicesTitle}
+        </h2>
         <ol>
           {t.services.map((service, index) => (
             <li
@@ -112,8 +89,7 @@ export default async function AboutPage({ params }: PageProps<"/[lang]/nosotros"
         className={`${container} mt-20 grid grid-cols-1 gap-16 lg:mt-28 lg:grid-cols-12 lg:gap-14`}
       >
         <section aria-labelledby="firma" className="reveal lg:col-span-6">
-          <p className="eyebrow">{siteConfig.name}</p>
-          <h2 id="firma" className="mt-5 text-display">
+          <h2 id="firma" className="text-display">
             {t.firmTitle}
           </h2>
           <dl className="mt-10 border-t border-ink">

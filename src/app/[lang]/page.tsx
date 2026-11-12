@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import type { CSSProperties } from "react";
 
 import aerialPhoto from "@/assets/home/campos-salta-aerea.jpg";
+import { BackgroundImage } from "@/components/background-image";
 import { ArrowRightIcon, PhoneIcon } from "@/components/icons";
 import { JsonLd } from "@/components/json-ld";
 import { PropertyCard } from "@/components/property-card";
@@ -58,12 +59,9 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       {highlights.length > 0 && (
         <section aria-labelledby="seleccion" className={`${container} pb-20 lg:pb-28`}>
           <div className="flex flex-wrap items-end justify-between gap-6 border-b border-ink pb-6">
-            <div>
-              <p className="eyebrow">{dict.nav.properties}</p>
-              <h2 id="seleccion" className="mt-4 text-display">
-                {dict.home.highlightsTitle}
-              </h2>
-            </div>
+            <h2 id="seleccion" className="text-display">
+              {dict.home.highlightsTitle}
+            </h2>
             <Link
               href={localizePath(lang, "properties")}
               className="group link-trace inline-flex items-center gap-2 pb-1 font-medium hover:text-seal"
@@ -164,53 +162,68 @@ function Hero({ lang, dict }: { lang: Locale; dict: Dictionary }) {
 function Statement({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   const t = dict.about;
   return (
-    <section
-      aria-labelledby="firma-portada"
-      className={`${container} grid grid-cols-1 gap-10 py-20 lg:grid-cols-12 lg:gap-14 lg:py-28`}
-    >
-      <div className="lg:col-span-4">
-        <h2 id="firma-portada" className="eyebrow">
+    // Fondo de llanura con bruma bajo un velo de papel: el paisaje se insinúa sin competir con el texto.
+    <section aria-labelledby="firma-portada" className="relative isolate overflow-hidden">
+      <BackgroundImage name="bruma" className="-z-10 object-[50%_80%]" />
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgb(247_245_240/0.8)_0%,rgb(247_245_240/0.58)_50%,rgb(247_245_240/0.42)_100%)]"
+      />
+      <div
+        className={`${container} grid grid-cols-1 gap-10 py-20 lg:grid-cols-12 lg:gap-14 lg:py-28`}
+      >
+        {/* Título solo para lectores de pantalla: a la vista, el texto abre la sección. */}
+        <h2 id="firma-portada" className="sr-only">
           {dict.nav.about}
         </h2>
-      </div>
-      <div className="lg:col-span-8">
-        <p className="reveal font-serif text-[clamp(1.75rem,1.1rem+2vw,3.25rem)] leading-[1.12] text-balance">
-          {t.body}
-        </p>
-        <ol className="mt-14 grid grid-cols-1 border-t border-ink sm:grid-cols-3">
-          {t.services.map((service, index) => (
-            <li
-              key={service.title}
-              className="reveal border-b border-rule py-7 sm:border-b-0 sm:border-l sm:px-6 sm:first:border-l-0 sm:first:pl-0"
-            >
-              <span aria-hidden className="font-serif text-sm text-seal tabular-nums">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-3 text-xl leading-snug">{service.title}</h3>
-              {service.areas && (
-                <p className="mt-2 text-[0.6875rem] tracking-[0.16em] text-line uppercase">
-                  {service.areas.join(" · ")}
-                </p>
-              )}
-            </li>
-          ))}
-        </ol>
-        <Link
-          href={localizePath(lang, "about")}
-          className="group link-trace mt-10 inline-flex items-center gap-2 pb-1 font-medium hover:text-seal"
-        >
-          {dict.home.aboutLink}
-          <ArrowRightIcon className="transition-transform duration-300 group-hover:translate-x-1" />
-        </Link>
+        <div className="lg:col-span-8 lg:col-start-5">
+          <p className="reveal font-serif text-[clamp(1.75rem,1.1rem+2vw,3.25rem)] leading-[1.12] text-balance">
+            {t.body}
+          </p>
+          <ol className="mt-14 grid grid-cols-1 border-t border-ink sm:grid-cols-3">
+            {t.services.map((service, index) => (
+              <li
+                key={service.title}
+                className="reveal border-b border-rule py-7 sm:border-b-0 sm:border-l sm:px-6 sm:first:border-l-0 sm:first:pl-0"
+              >
+                <span aria-hidden className="font-serif text-sm text-seal tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 text-xl leading-snug">{service.title}</h3>
+                {service.areas && (
+                  <p className="mt-2 text-[0.6875rem] tracking-[0.16em] text-line uppercase">
+                    {service.areas.join(" · ")}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ol>
+          <Link
+            href={localizePath(lang, "about")}
+            className="group link-trace mt-10 inline-flex items-center gap-2 pb-1 font-medium hover:text-seal"
+          >
+            {dict.home.aboutLink}
+            <ArrowRightIcon className="transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        </div>
       </div>
     </section>
   );
 }
 
-/** Cierre en bordó: la invitación a escribir por WhatsApp antes del pie. */
+/** Cierre sobre el viñedo: la invitación a escribir por WhatsApp antes del pie. */
 function ClosingBand({ lang, dict }: { lang: Locale; dict: Dictionary }) {
   return (
-    <section aria-labelledby="cierre" className="bg-seal text-paper">
+    <section
+      aria-labelledby="cierre"
+      className="relative isolate overflow-hidden bg-ink text-paper"
+    >
+      <BackgroundImage name="vinedo-uvas" className="reveal-photo -z-10 object-[50%_55%]" />
+      {/* Velo de tinta más denso a la izquierda, donde va el título. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgb(35_32_28/0.82)_0%,rgb(35_32_28/0.6)_60%,rgb(35_32_28/0.5)_100%)]"
+      />
       <div
         className={`${container} grid grid-cols-1 items-end gap-10 py-20 lg:grid-cols-12 lg:gap-14 lg:py-28`}
       >

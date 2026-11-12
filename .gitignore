@@ -48,3 +48,6 @@ next-env.d.ts
 .impeccable/questions/
 .impeccable/review/
 .impeccable/build/
+
+# fondos: originales de las imágenes de fondo (en la web van las optimizadas de public/fondos)
+/imagenes-fondo/
