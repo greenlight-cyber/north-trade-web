@@ -29,7 +29,7 @@ export function PropertySearch({ locale, dict, values = {}, className = "" }: Pr
       action={localizePath(locale, "properties")}
       method="get"
       role="search"
-      className={`grid border border-ink bg-paper md:grid-cols-[repeat(3,minmax(0,1fr))_auto] ${className}`}
+      className={`grid overflow-hidden rounded-xl border border-ink bg-paper md:grid-cols-[repeat(3,minmax(0,1fr))_auto] ${className}`}
     >
       <fieldset className="contents">
         <legend className="sr-only">{dict.search.legend}</legend>
