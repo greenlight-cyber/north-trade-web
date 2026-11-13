@@ -57,7 +57,7 @@ export default async function HomePage({ params }: PageProps<"/[lang]">) {
       <Hero lang={lang} dict={dict} />
       <Statement lang={lang} dict={dict} />
       {highlights.length > 0 && (
-        <section aria-labelledby="seleccion" className={`${container} pb-20 lg:pb-28`}>
+        <section aria-labelledby="seleccion" className={`${container} py-20 lg:py-28`}>
           <div className="flex flex-wrap items-end justify-between gap-6 border-b border-ink pb-6">
             <h2 id="seleccion" className="text-display">
               {dict.home.highlightsTitle}
