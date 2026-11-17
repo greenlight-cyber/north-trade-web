@@ -12,7 +12,7 @@ const turnstileResponse = z.object({
 });
 
 // Claves secretas de prueba publicadas por Cloudflare (1x…AA, 2x…AA, 3x…AA).
-const testSecret = /^[123]x0{33}AA$/;
+const testSecret = /^[123]x0{31}AA$/;
 
 /** Verifica el captcha de Cloudflare Turnstile. Ante cualquier falla, responde false. */
 export async function verifyTurnstile(

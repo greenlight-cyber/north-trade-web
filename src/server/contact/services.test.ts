@@ -118,6 +118,13 @@ describe("verifyTurnstile", () => {
     expect(await verifyTurnstile("secreto-real", "token", null)).toBe(false);
   });
 
+  it("con las claves de prueba oficiales de Cloudflare (que no informan la acción) aprueba", async () => {
+    vi.stubGlobal("fetch", turnstileReturns({ success: true }));
+    expect(await verifyTurnstile("1x0000000000000000000000000000000AA", "token", null)).toBe(true);
+    // Una clave real sin acción no se acepta.
+    expect(await verifyTurnstile("0x4AAAAAAAreal", "token", null)).toBe(false);
+  });
+
   it("ante una falla de red responde que no", async () => {
     vi.stubGlobal(
       "fetch",
