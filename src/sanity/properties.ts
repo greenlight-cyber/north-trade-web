@@ -5,7 +5,7 @@ import { cacheLife, cacheTag } from "next/cache";
 import { z } from "zod";
 
 import { listedStatuses, type PropertySummary } from "@/domain/listing";
-import { propertyStatuses } from "@/domain/property";
+import { propertyStatuses, slugPattern } from "@/domain/property";
 
 import { apiVersion, getSanityEnv } from "./env";
 
@@ -63,7 +63,8 @@ const statusValues = propertyStatuses.map((s) => s.value) as [
 
 const summarySchema = z.object({
   id: z.string(),
-  slug: z.string().min(1),
+  // Una dirección cargada a mano con otro formato rompería los enlaces: se omite la ficha.
+  slug: z.string().max(200).regex(slugPattern),
   title: localized,
   status: z.enum(statusValues),
   category: z.enum(["rural", "urbana"]),
@@ -121,7 +122,11 @@ export async function getListedSlugs(): Promise<string[]> {
   const client = getClient();
   if (!client) return [];
   const slugs = await client.fetch<unknown>(slugsQuery, { statuses: listedStatuses });
-  return z.array(z.string()).catch([]).parse(slugs);
+  return z
+    .array(z.unknown())
+    .catch([])
+    .parse(slugs)
+    .filter((slug): slug is string => typeof slug === "string" && slugPattern.test(slug));
 }
 
 /** Incluye vendidas: un enlace viejo a una propiedad vendida muestra su estado en vez de un error. */
@@ -129,6 +134,8 @@ export async function getProperty(slug: string): Promise<PropertyDetail | null> 
   "use cache";
   cacheTag(propertiesTag);
   cacheLife("hours");
+  // Una dirección inventada con otro formato no puede existir: no se consulta a Sanity.
+  if (!slugPattern.test(slug)) return null;
   const client = getClient();
   if (!client) return null;
   const item = await client.fetch<unknown>(detailQuery, { slug });

@@ -8,6 +8,12 @@ export const propertyStatuses = [
 
 export type PropertyStatus = (typeof propertyStatuses)[number]["value"];
 
+/**
+ * Formato de las direcciones de las fichas: minúsculas, números y guiones (sin puntos,
+ * que el proxy tomaría por archivos, ni barras). Igual al que genera el panel.
+ */
+export const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
 /** El español es obligatorio al publicar, pero un borrador puede no tenerlo. */
 export type LocalizedString = { es?: string | null; en?: string | null };
 

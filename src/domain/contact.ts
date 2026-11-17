@@ -2,6 +2,8 @@ import { z } from "zod";
 
 import { locales } from "@/i18n/config";
 
+import { slugPattern } from "./property";
+
 /** Campos visibles del formulario de contacto. */
 export const contactFields = ["name", "email", "phone", "message", "consent"] as const;
 export type ContactField = (typeof contactFields)[number];
@@ -32,9 +34,6 @@ export type ContactState = {
 };
 
 export const contactLimits = { name: 100, email: 200, phone: 40, message: 3000 } as const;
-
-/** Las direcciones de las fichas: minúsculas, números y guiones. */
-export const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const text = (max: number) =>
   z
