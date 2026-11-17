@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import { parseBody } from "next-sanity/webhook";
 
 import { propertiesTag } from "@/sanity/properties";
+import { isRecentSignature, signatureHeader } from "@/server/webhook-signature";
 
 /**
  * Webhook de Sanity: al publicar, despublicar o borrar una propiedad, el sitio
@@ -19,6 +20,10 @@ export async function POST(request: NextRequest) {
   try {
     const { isValidSignature, body } = await parseBody<{ _type?: string }>(request, secret, true);
     if (!isValidSignature) return Response.json({ ok: false }, { status: 401 });
+    // Firma auténtica pero vieja: es un aviso capturado y repetido.
+    if (!isRecentSignature(request.headers.get(signatureHeader), Date.now())) {
+      return Response.json({ ok: false }, { status: 401 });
+    }
     if (body?._type !== "property") return Response.json({ ok: true, revalidated: false });
 
     // Sin margen: un cambio de estado (por ejemplo, «vendida») tiene que verse enseguida.
