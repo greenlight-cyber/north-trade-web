@@ -1,6 +1,6 @@
 # Progreso — sitio de North Trade
 
-_Última actualización: 16/11/2026_
+_Última actualización: 17/11/2026_
 
 ## Terminado
 
@@ -24,6 +24,14 @@ _Última actualización: 16/11/2026_
   - Nuevo lema del pie: «Negocios inmobiliarios en Salta, Argentina».
   - Se corrigió el margen sobre «Propiedades» en la portada.
   - El buscador tiene esquinas redondeadas.
+- **Auditoría de seguridad y privacidad** (detalle en `SEGURIDAD.md`):
+  - Política de privacidad en `/privacidad` y `/en/privacy`, con enlace en el pie.
+  - Casilla de consentimiento obligatoria en el formulario, validada en el servidor.
+  - Tope de 50 consultas por día para todo el sitio, además del límite por conexión.
+  - El aviso de Sanity rechaza firmas viejas; las direcciones de las fichas se validan.
+  - Verificación automática en GitHub (pruebas, linter, build, `npm audit`) y Dependabot.
+  - Dependencias actualizadas (Next, React y Sanity).
+  - Las pruebas ya funcionan con `npm test` en esta computadora.
 
 ## Decisiones
 
@@ -33,6 +41,8 @@ _Última actualización: 16/11/2026_
   - Se sirven ya optimizadas para no gastar la cuota de optimización de imágenes de Vercel.
 - **Estilo:** el resto del sitio mantiene esquinas rectas (estilo «plano de mensura»); solo el buscador va redondeado.
 - **Buscadores:** el sitio sigue oculto para Google (`BLOQUEAR_BUSCADORES=1` en Vercel) hasta el lanzamiento.
+- **Sanity gratuito:** el contenido del panel se puede leer desde afuera. Las notas del equipo
+  avisan que no son privadas, y nunca se cargan precios ni datos de dueños.
 - **Ficha de propiedad:** se mantienen los títulos «Descripción», «Plano» y «Ubicación», porque ordenan el contenido de la página.
 
 ## Pendiente
@@ -47,7 +57,8 @@ _Última actualización: 16/11/2026_
 - **Lanzamiento:**
   - quitar `BLOQUEAR_BUSCADORES`;
   - dominio y DNS (los hace el dueño al final).
-- **En la computadora del dueño:** las pruebas fallan con el modo habitual, por un problema de la herramienta y no del código. Con `npx vitest run --pool=vmThreads` pasan las 77. Hay que revisarlo, o fijar ese modo en `vitest.config.ts`.
+- **Seguridad (tareas de la empresa):** ver la lista al final de `SEGURIDAD.md` (2FA, datos
+  `[COMPLETAR]` de la política, revisión legal, configuración de Vercel y Sanity).
 
 ## Próximo paso
 

@@ -14,8 +14,10 @@ export type ContactDeps = {
   /** true si la dirección de la visita todavía puede enviar. */
   allowRequest: () => Promise<boolean>;
   verifyCaptcha: (token: string) => Promise<boolean>;
-  /** true si el sitio todavía no llegó al tope diario de mails (se cuenta tras el captcha). */
+  /** true si el sitio todavía no llegó al tope diario de mails. Solo consulta. */
   allowDailyTotal: () => Promise<boolean>;
+  /** Anota un mail enviado en el tope diario. */
+  recordSent: () => Promise<void>;
   findProperty: (slug: string) => Promise<EnquiredProperty | null>;
   send: (message: ContactMessage, property: EnquiredProperty | null) => Promise<void>;
   logError: (message: string, error?: unknown) => void;
@@ -45,7 +47,8 @@ export async function handleContact(formData: FormData, deps: ContactDeps): Prom
     if (!(await deps.verifyCaptcha(raw.captchaToken))) {
       return { status: "captcha", values: keepValues(raw) };
     }
-    // Después del captcha: un robot sin verificar no puede agotar el tope de todos.
+    // Después del captcha, y solo cuentan los mails enviados: ni un robot sin verificar
+    // ni una falla de Resend pueden agotar el tope de todos.
     if (!(await deps.allowDailyTotal())) {
       deps.logError(
         "Contacto: se alcanzó el tope diario de consultas; el formulario queda en pausa.",
@@ -63,6 +66,7 @@ export async function handleContact(formData: FormData, deps: ContactDeps): Prom
       : null;
 
     await deps.send(parsed.data, property);
+    await deps.recordSent();
     return { status: "success" };
   } catch (error) {
     deps.logError("Contacto: falló el envío de la consulta.", error);

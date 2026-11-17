@@ -8,6 +8,9 @@ import { slugPattern } from "./property";
 export const contactFields = ["name", "email", "phone", "message", "consent"] as const;
 export type ContactField = (typeof contactFields)[number];
 
+/** Campo oculto con la fecha de la política de privacidad que vio la visita. */
+export const privacyVersionField = "privacyVersion";
+
 /** Valor que envía el navegador cuando la casilla de consentimiento está marcada. */
 export const consentValue = "on";
 
@@ -61,6 +64,12 @@ export const contactSchema = z.object({
   // Datos de contexto: si llegan mal se descartan en lugar de rechazar la consulta.
   property: z.string().max(200).regex(slugPattern).optional().catch(undefined),
   lang: z.enum(locales).catch("es"),
+  // Fecha (AAAA-MM-DD) de la política mostrada junto a la casilla; si falta, se usa la vigente.
+  privacyVersion: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional()
+    .catch(undefined),
 });
 
 export type ContactMessage = z.infer<typeof contactSchema>;
@@ -79,6 +88,7 @@ export function readContactForm(formData: FormData) {
     consent: get("consent"),
     property: get("property") || undefined,
     lang: get("lang"),
+    privacyVersion: get(privacyVersionField) || undefined,
     honeypot: get(honeypotField),
     captchaToken: get(captchaField),
   };

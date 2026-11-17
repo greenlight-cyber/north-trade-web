@@ -8,6 +8,7 @@ import {
   consentValue,
   contactLimits,
   honeypotField,
+  privacyVersionField,
   type ContactField,
   type ContactState,
 } from "@/domain/contact";
@@ -33,12 +34,21 @@ type ContactFormProps = {
   siteKey: string;
   /** Dirección de la política de privacidad en el idioma de la página. */
   privacyHref: string;
+  /** Fecha de la política vigente, para dejar constancia de qué versión se aceptó. */
+  privacyVersion: string;
   property?: { slug: string; title: string };
 };
 
 const initialState: ContactState = { status: "idle" };
 
-export function ContactForm({ locale, labels, siteKey, privacyHref, property }: ContactFormProps) {
+export function ContactForm({
+  locale,
+  labels,
+  siteKey,
+  privacyHref,
+  privacyVersion,
+  property,
+}: ContactFormProps) {
   const [state, formAction, pending] = useActionState(sendContact, initialState);
   const captchaRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | undefined>(undefined);
@@ -91,6 +101,7 @@ export function ContactForm({ locale, labels, siteKey, privacyHref, property }: 
         onReady={renderCaptcha}
       />
       <input type="hidden" name="lang" value={locale} />
+      <input type="hidden" name={privacyVersionField} value={privacyVersion} />
       {property && (
         <>
           <input type="hidden" name="property" value={property.slug} />

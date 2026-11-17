@@ -131,6 +131,7 @@ async function FormSection({ lang, dict, searchParams }: FormSectionProps) {
       labels={dict.form}
       siteKey={setup.config.turnstile.siteKey}
       privacyHref={localizePath(lang, "privacy")}
+      privacyVersion={siteConfig.privacy.updated}
       property={property}
     />
   );

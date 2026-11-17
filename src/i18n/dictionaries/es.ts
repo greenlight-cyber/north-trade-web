@@ -182,7 +182,7 @@ const es = {
         title: "Qué datos recibimos",
         paragraphs: [
           "Solo los que escribís en el formulario de contacto: nombre y apellido, correo electrónico, teléfono (si lo indicás), tu mensaje y, si corresponde, la propiedad por la que consultás.",
-          "Para frenar envíos automáticos también se usa la dirección IP de tu conexión: el servicio anti-spam la verifica y el contador de envíos guarda solo una versión cifrada durante una hora.",
+          "Para frenar envíos automáticos también se usa la dirección IP de tu conexión: el servicio anti-spam la verifica y el contador de envíos guarda durante una hora solo un código seudónimo calculado a partir de ella, nunca la dirección.",
           "Si nos escribís por WhatsApp o nos llamás, esa conversación no pasa por este sitio.",
         ],
       },

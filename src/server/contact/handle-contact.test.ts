@@ -26,6 +26,7 @@ const fakeDeps = (overrides: Partial<ContactDeps> = {}): ContactDeps => ({
   allowRequest: vi.fn(async () => true),
   verifyCaptcha: vi.fn(async (token: string) => token === "token-valido"),
   allowDailyTotal: vi.fn(async () => true),
+  recordSent: vi.fn(async () => {}),
   findProperty: vi.fn(async () => ({ title: "Campo en Anta", url: "https://x/propiedades/a" })),
   send: vi.fn(async () => {}),
   logError: vi.fn(),
@@ -36,6 +37,7 @@ describe("handleContact", () => {
   it("envía una consulta válida con la propiedad consultada", async () => {
     const deps = fakeDeps();
     expect(await handleContact(form(valid), deps)).toEqual({ status: "success" });
+    expect(deps.recordSent).toHaveBeenCalledOnce();
     expect(deps.send).toHaveBeenCalledWith(
       expect.objectContaining({ email: "ana@example.com", property: "campo-en-anta" }),
       { title: "Campo en Anta", url: "https://x/propiedades/a" },
@@ -129,6 +131,8 @@ describe("handleContact", () => {
       },
     });
     expect(deps.logError).toHaveBeenCalled();
+    // Un mail que no salió no cuenta para el tope diario.
+    expect(deps.recordSent).not.toHaveBeenCalled();
   });
 });
 
@@ -160,5 +164,14 @@ describe("buildContactEmail", () => {
     expect(text).toContain("<b>Hola</b>");
     expect(text).not.toContain("Propiedad:");
     expect(text).toMatch(/Consentimiento: aceptó la política de privacidad del \d{4}-\d{2}-\d{2}/);
+  });
+
+  it("registra la versión de la política que vio la visita", () => {
+    const { text } = buildContactEmail(
+      { ...message, privacyVersion: "2026-01-02" },
+      null,
+      new Date("2026-10-28T15:00:00Z"),
+    );
+    expect(text).toContain("aceptó la política de privacidad del 2026-01-02");
   });
 });

@@ -131,11 +131,16 @@ export async function getListedSlugs(): Promise<string[]> {
 
 /** Incluye vendidas: un enlace viejo a una propiedad vendida muestra su estado en vez de un error. */
 export async function getProperty(slug: string): Promise<PropertyDetail | null> {
+  // Una dirección inventada con otro formato no puede existir: ni se consulta a Sanity ni
+  // ocupa lugar en la caché.
+  if (!slugPattern.test(slug)) return null;
+  return getPropertyCached(slug);
+}
+
+async function getPropertyCached(slug: string): Promise<PropertyDetail | null> {
   "use cache";
   cacheTag(propertiesTag);
   cacheLife("hours");
-  // Una dirección inventada con otro formato no puede existir: no se consulta a Sanity.
-  if (!slugPattern.test(slug)) return null;
   const client = getClient();
   if (!client) return null;
   const item = await client.fetch<unknown>(detailQuery, { slug });

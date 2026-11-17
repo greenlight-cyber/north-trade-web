@@ -17,13 +17,15 @@ export async function POST(request: NextRequest) {
     return Response.json({ ok: false }, { status: 500 });
   }
 
+  // Firma vieja o ausente: un aviso capturado y repetido. Se rechaza antes de leer nada.
+  // La hora es parte de lo firmado, así que no se puede cambiar sin invalidar la firma.
+  if (!isRecentSignature(request.headers.get(signatureHeader), Date.now())) {
+    return Response.json({ ok: false }, { status: 401 });
+  }
+
   try {
     const { isValidSignature, body } = await parseBody<{ _type?: string }>(request, secret, true);
     if (!isValidSignature) return Response.json({ ok: false }, { status: 401 });
-    // Firma auténtica pero vieja: es un aviso capturado y repetido.
-    if (!isRecentSignature(request.headers.get(signatureHeader), Date.now())) {
-      return Response.json({ ok: false }, { status: 401 });
-    }
     if (body?._type !== "property") return Response.json({ ok: true, revalidated: false });
 
     // Sin margen: un cambio de estado (por ejemplo, «vendida») tiene que verse enseguida.

@@ -25,7 +25,7 @@ export function buildContactEmail(
     property ? `Propiedad: ${property.title}\n${property.url}` : null,
     `Idioma del sitio: ${languageNames[message.lang]}`,
     // Constancia del consentimiento (Ley 25.326, art. 5) y de qué versión de la política leyó.
-    `Consentimiento: aceptó la política de privacidad del ${siteConfig.privacy.updated}`,
+    `Consentimiento: aceptó la política de privacidad del ${message.privacyVersion ?? siteConfig.privacy.updated}`,
     `Recibido: ${receivedAt.toLocaleString("es-AR", { timeZone: "America/Argentina/Salta" })}`,
     "",
     "Mensaje:",

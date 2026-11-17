@@ -30,6 +30,7 @@ describe("parseContact", () => {
         consent: true,
         property: undefined,
         lang: "en",
+        privacyVersion: undefined,
       },
     });
   });
@@ -81,6 +82,15 @@ describe("parseContact", () => {
       readContactForm(form({ ...valid, property: "<script>", lang: "fr" })),
     );
     expect(result).toMatchObject({ ok: true, data: { property: undefined, lang: "es" } });
+  });
+
+  it("guarda la versión de la política solo si tiene formato de fecha", () => {
+    expect(
+      parseContact(readContactForm(form({ ...valid, privacyVersion: "2026-11-17" }))),
+    ).toMatchObject({ ok: true, data: { privacyVersion: "2026-11-17" } });
+    expect(
+      parseContact(readContactForm(form({ ...valid, privacyVersion: "<b>ayer</b>" }))),
+    ).toMatchObject({ ok: true, data: { privacyVersion: undefined } });
   });
 
   it("conserva una propiedad válida", () => {

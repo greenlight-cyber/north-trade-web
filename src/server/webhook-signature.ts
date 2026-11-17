@@ -1,14 +1,20 @@
 /** Cabecera con la que Sanity firma sus webhooks: "t=<milisegundos>,v1=<firma>". */
 export const signatureHeader = "sanity-webhook-signature";
 
-/** Antigüedad máxima aceptada de una firma (la hora del envío va dentro de la firma). */
-export const signatureMaxAgeMs = 5 * 60 * 1000;
+/**
+ * Antigüedad máxima aceptada de una firma. Una hora, igual que la caché de propiedades
+ * (`cacheLife("hours")`): un reintento de Sanity más tardío no aporta nada, porque para
+ * entonces la caché ya se renovó sola.
+ */
+export const signatureMaxAgeMs = 60 * 60 * 1000;
 
+// Mismo formato que valida @sanity/webhook (SIGNATURE_HEADER_REGEX).
 const timestampPattern = /^t=(\d+)[, ]+v1=/;
 
 /**
- * true si la firma se generó hace poco. Se usa después de verificar la firma, cuando la
- * hora ya es auténtica: así, alguien que capture un aviso no puede repetirlo más tarde.
+ * true si la firma dice haberse generado hace poco. La hora va dentro de lo firmado, así
+ * que, junto con la verificación de la firma, impide repetir más tarde un aviso capturado.
+ * Se revisa antes que la firma porque es gratis y evita la espera de 3 s de `parseBody`.
  */
 export function isRecentSignature(
   header: string | null,

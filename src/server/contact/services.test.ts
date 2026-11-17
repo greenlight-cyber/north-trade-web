@@ -4,8 +4,10 @@ import {
   allowByDailyLimit,
   allowByRateLimit,
   clientIp,
+  dailyKey,
   dailyLimit,
   rateLimit,
+  recordDailySend,
   verifyTurnstile,
 } from "./services";
 
@@ -62,21 +64,45 @@ describe("allowByRateLimit", () => {
   });
 });
 
-describe("allowByDailyLimit", () => {
-  it("usa un único contador de 24 horas para todo el sitio", async () => {
-    const fetchMock = upstashReturns(1);
-    vi.stubGlobal("fetch", fetchMock);
-    expect(await allowByDailyLimit(upstash)).toBe(true);
-    const [, , , key, window] = sentBody(fetchMock);
-    expect(key).toBe("contacto:total-diario");
-    expect(window).toBe(String(dailyLimit.windowSeconds));
+describe("tope diario", () => {
+  // 01:30 del 17/11/2026 en Salta (UTC−3).
+  const now = new Date("2026-11-17T04:30:00Z");
+
+  it("usa un contador por día calendario de Salta", () => {
+    expect(dailyKey(now)).toBe("contacto:total:2026-11-17");
+    // 23:30 del 16 en Salta, aunque en UTC ya sea el 17.
+    expect(dailyKey(new Date("2026-11-17T02:30:00Z"))).toBe("contacto:total:2026-11-16");
   });
 
-  it("frena al superar el tope diario", async () => {
-    vi.stubGlobal("fetch", upstashReturns(dailyLimit.max));
-    expect(await allowByDailyLimit(upstash)).toBe(true);
-    vi.stubGlobal("fetch", upstashReturns(dailyLimit.max + 1));
-    expect(await allowByDailyLimit(upstash)).toBe(false);
+  it("solo lee el contador al consultar, sin sumar", async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ result: null })));
+    vi.stubGlobal("fetch", fetchMock);
+    expect(await allowByDailyLimit(upstash, now)).toBe(true);
+    expect(sentBody(fetchMock)).toEqual(["GET", "contacto:total:2026-11-17"]);
+  });
+
+  it("frena cuando ya se enviaron los del día", async () => {
+    const returns = (value: string) =>
+      vi.fn(async () => new Response(JSON.stringify({ result: value })));
+    vi.stubGlobal("fetch", returns(String(dailyLimit.max - 1)));
+    expect(await allowByDailyLimit(upstash, now)).toBe(true);
+    vi.stubGlobal("fetch", returns(String(dailyLimit.max)));
+    expect(await allowByDailyLimit(upstash, now)).toBe(false);
+  });
+
+  it("anota cada envío con vencimiento, y si Upstash falla no rompe nada", async () => {
+    const fetchMock = upstashReturns(1);
+    vi.stubGlobal("fetch", fetchMock);
+    await recordDailySend(upstash, now);
+    const [command, , , key, seconds] = sentBody(fetchMock);
+    expect([command, key, seconds]).toEqual(["EVAL", "contacto:total:2026-11-17", "172800"]);
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => Promise.reject(new Error("sin red"))),
+    );
+    await expect(recordDailySend(upstash, now)).resolves.toBeUndefined();
+    expect(await allowByDailyLimit(upstash, now)).toBe(true);
   });
 });
 

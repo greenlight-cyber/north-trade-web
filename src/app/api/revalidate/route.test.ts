@@ -1,4 +1,5 @@
-import { encodeSignatureHeader } from "@sanity/webhook";
+import { createHmac } from "node:crypto";
+
 import type { NextRequest } from "next/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -11,9 +12,13 @@ import { POST } from "./route";
 const secret = "frase-secreta-de-prueba";
 const now = Date.UTC(2026, 10, 17, 12, 0, 0);
 
+/** Firma como Sanity: HMAC-SHA256 de "<hora>.<cuerpo>" en base64url. */
+const sign = (payload: string, sentAt: number, key: string) =>
+  `t=${sentAt},v1=${createHmac("sha256", key).update(`${sentAt}.${payload}`).digest("base64url")}`;
+
 async function signedRequest(body: unknown, { sentAt = now, key = secret } = {}) {
   const payload = JSON.stringify(body);
-  const signature = await encodeSignatureHeader(payload, sentAt, key);
+  const signature = sign(payload, sentAt, key);
   return new Request("https://sitio.example/api/revalidate", {
     method: "POST",
     headers: { "sanity-webhook-signature": signature, "content-type": "application/json" },
@@ -71,7 +76,7 @@ describe("webhook de Sanity", () => {
   });
 
   it("rechaza un aviso auténtico pero viejo (repetido)", async () => {
-    const sentAt = now - 60 * 60 * 1000;
+    const sentAt = now - 2 * 60 * 60 * 1000;
     const response = await call(await signedRequest({ _type: "property" }, { sentAt }));
     expect(response.status).toBe(401);
     expect(revalidateTag).not.toHaveBeenCalled();

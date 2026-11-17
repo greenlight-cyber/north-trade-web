@@ -183,7 +183,7 @@ const en: Dictionary = {
         title: "What data we receive",
         paragraphs: [
           "Only what you type into the contact form: your full name, email address, phone number (if you give one), your message and, where relevant, the property you are asking about.",
-          "To stop automated submissions, your connection's IP address is also used: the spam check verifies it, and the submission counter keeps only an encrypted version for one hour.",
+          "To stop automated submissions, your connection's IP address is also used: the spam check verifies it, and the submission counter keeps, for one hour, only a pseudonymous code derived from it, never the address itself.",
           "If you message us on WhatsApp or call us, that conversation does not go through this website.",
         ],
       },
