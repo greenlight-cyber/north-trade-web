@@ -32,6 +32,17 @@ export const siteConfig = {
     },
     email: "[COMPLETAR: email de contacto]",
   },
+  /** Responsable de los datos personales, para la política de privacidad. */
+  legal: {
+    name: "[COMPLETAR: razón social]",
+    taxId: "[COMPLETAR: CUIT]",
+  },
+  privacy: {
+    /** Fecha de la versión vigente de la política (AAAA-MM-DD); cambiarla al editar el texto. */
+    updated: "2026-11-17",
+    /** Cuánto se guardan las consultas recibidas antes de borrarlas. */
+    retention: "[COMPLETAR: plazo de conservación de las consultas]",
+  },
   /** Entidades de las que North Trade es socia. Los logos están pendientes. */
   associations: ["CUCIS", "CAIR"],
 } as const;

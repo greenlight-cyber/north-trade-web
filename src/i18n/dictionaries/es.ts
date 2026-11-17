@@ -123,7 +123,16 @@ const es = {
     messageHint: "Contanos qué tipo de campo buscás: zona, superficie y destino.",
     propertyLabel: "Consulta por",
     captcha: "Verificación anti-spam",
-    privacy: "Usamos tus datos solo para responder esta consulta.",
+    privacy:
+      "Responsable: North Trade. Usamos tus datos solo para responder esta consulta y podés pedir acceso, corrección o borrado en cualquier momento.",
+    consentBefore: "Leí la",
+    consentLink: "política de privacidad",
+    consentAfter:
+      "y acepto que North Trade use mis datos para responder esta consulta, también con proveedores fuera de Argentina.",
+    legalNotices: [
+      "El titular de los datos personales tiene la facultad de ejercer el derecho de acceso a los mismos en forma gratuita a intervalos no inferiores a seis meses, salvo que se acredite un interés legítimo al efecto conforme lo establecido en el artículo 14, inciso 3 de la Ley N° 25.326.",
+      "La Agencia de Acceso a la Información Pública, en su carácter de Órgano de Control de la Ley N° 25.326, tiene la atribución de atender las denuncias y reclamos que interpongan quienes resulten afectados en sus derechos por incumplimiento de las normas vigentes en materia de protección de datos personales.",
+    ],
     submit: "Enviar mensaje",
     sending: "Enviando…",
     errors: {
@@ -132,6 +141,7 @@ const es = {
       tooLong: "Es demasiado largo.",
       invalidEmail: "Revisá el correo: parece incompleto.",
       invalidPhone: "Usá solo números, espacios, guiones y el signo +.",
+      consentRequired: "Para enviar el mensaje, marcá la casilla de privacidad.",
     },
     status: {
       success: "Gracias. Recibimos tu mensaje y te vamos a responder por correo o por teléfono.",
@@ -154,6 +164,68 @@ const es = {
     email: "Correo",
     associations: "Asociados a",
     rights: "Todos los derechos reservados.",
+    privacy: "Política de privacidad",
+  },
+  privacyPage: {
+    title: "Política de privacidad",
+    metaDescription:
+      "Qué datos personales recibe North Trade a través de su sitio web, para qué los usa, cuánto tiempo los guarda y cómo pedir acceso, corrección o borrado.",
+    lead: "Qué datos recibimos a través de este sitio, para qué los usamos y cómo podés pedir que los corrijamos o borremos.",
+    updated: "Última actualización",
+    responsibleTitle: "Responsable de los datos",
+    responsible: "Responsable",
+    taxId: "CUIT",
+    address: "Domicilio",
+    email: "Correo",
+    sections: [
+      {
+        title: "Qué datos recibimos",
+        paragraphs: [
+          "Solo los que escribís en el formulario de contacto: nombre y apellido, correo electrónico, teléfono (si lo indicás), tu mensaje y, si corresponde, la propiedad por la que consultás.",
+          "Para frenar envíos automáticos también se usa la dirección IP de tu conexión: el servicio anti-spam la verifica y el contador de envíos guarda solo una versión cifrada durante una hora.",
+          "Si nos escribís por WhatsApp o nos llamás, esa conversación no pasa por este sitio.",
+        ],
+      },
+      {
+        title: "Para qué los usamos",
+        paragraphs: [
+          "Únicamente para responder tu consulta y seguir la conversación sobre las propiedades que te interesan.",
+          "No los usamos para publicidad, no te sumamos a listas de correo y no los vendemos ni los cedemos a terceros.",
+        ],
+      },
+      {
+        title: "Quién más interviene",
+        paragraphs: [
+          "Para que el sitio funcione usamos estos proveedores, que tratan los datos solo por cuenta nuestra:",
+        ],
+        items: [
+          "Vercel, que aloja el sitio (Estados Unidos).",
+          "Resend, que entrega por correo tu consulta (Estados Unidos).",
+          "Cloudflare Turnstile, que hace la verificación anti-spam.",
+          "Upstash, que lleva el contador de envíos contra el spam.",
+        ],
+        after:
+          "Algunos de estos proveedores están fuera de Argentina. Al marcar la casilla del formulario aceptás esa transferencia, que se hace solo para responder tu consulta.",
+      },
+    ],
+    retentionTitle: "Cuánto tiempo los guardamos",
+    retentionBefore: "Guardamos las consultas recibidas durante",
+    retentionAfter:
+      "y después las borramos. El contador anti-spam se borra solo, una hora después del envío.",
+    rightsTitle: "Tus derechos",
+    rights: [
+      "Podés pedir gratis acceso a tus datos y que los corrijamos, actualicemos o borremos. Escribinos al correo indicado arriba o acercate a la oficina.",
+      "Respondemos los pedidos de acceso dentro de los 10 días corridos, y los de corrección o borrado dentro de los 5 días hábiles.",
+    ],
+    cookiesTitle: "Cookies",
+    cookies: [
+      "Este sitio no usa cookies de publicidad ni de análisis de visitas.",
+      "El captcha de Cloudflare puede leer datos técnicos del navegador solo para distinguir personas de robots. El mapa de Google se carga solo si lo pedís, y en ese caso se aplican las reglas de Google.",
+    ],
+    changesTitle: "Cambios en esta política",
+    changes: "Si cambiamos esta política, la fecha de actualización de esta página lo indica.",
+    legalTitle: "Información legal",
+    authorityLink: "Agencia de Acceso a la Información Pública",
   },
 };
 

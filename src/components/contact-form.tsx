@@ -5,6 +5,7 @@ import { useActionState, useEffect, useRef, type ReactNode } from "react";
 
 import {
   captchaAction,
+  consentValue,
   contactLimits,
   honeypotField,
   type ContactField,
@@ -30,12 +31,14 @@ type ContactFormProps = {
   locale: Locale;
   labels: Dictionary["form"];
   siteKey: string;
+  /** Dirección de la política de privacidad en el idioma de la página. */
+  privacyHref: string;
   property?: { slug: string; title: string };
 };
 
 const initialState: ContactState = { status: "idle" };
 
-export function ContactForm({ locale, labels, siteKey, property }: ContactFormProps) {
+export function ContactForm({ locale, labels, siteKey, privacyHref, property }: ContactFormProps) {
   const [state, formAction, pending] = useActionState(sendContact, initialState);
   const captchaRef = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | undefined>(undefined);
@@ -77,6 +80,7 @@ export function ContactForm({ locale, labels, siteKey, property }: ContactFormPr
     const code = state.errors?.[field];
     return code ? labels.errors[code] : undefined;
   };
+  const consentError = error("consent");
   const statusText = state.status === "idle" ? "" : labels.status[state.status];
 
   return (
@@ -177,7 +181,44 @@ export function ContactForm({ locale, labels, siteKey, property }: ContactFormPr
         <div ref={captchaRef} className="min-h-[65px]" />
       </div>
 
-      <p className="mt-4 text-sm text-line">{labels.privacy}</p>
+      <div className="mt-6">
+        <label className="flex items-start gap-3 text-sm">
+          <input
+            type="checkbox"
+            name="consent"
+            value={consentValue}
+            required
+            defaultChecked={values.consent === consentValue}
+            aria-invalid={consentError ? true : undefined}
+            aria-describedby={consentError ? "contacto-consent-error" : undefined}
+            className="mt-0.5 size-5 shrink-0 accent-seal"
+          />
+          <span>
+            {labels.consentBefore}{" "}
+            <a
+              href={privacyHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-seal"
+            >
+              {labels.consentLink}
+            </a>{" "}
+            {labels.consentAfter}
+          </span>
+        </label>
+        {consentError && (
+          <p id="contacto-consent-error" className="mt-1 text-sm text-seal">
+            {consentError}
+          </p>
+        )}
+      </div>
+
+      <div className="mt-4 space-y-2 text-xs text-line">
+        <p>{labels.privacy}</p>
+        {labels.legalNotices.map((notice) => (
+          <p key={notice}>{notice}</p>
+        ))}
+      </div>
 
       <button
         type="submit"

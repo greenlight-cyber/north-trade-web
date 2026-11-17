@@ -13,6 +13,7 @@ const valid = {
   email: "ana@example.com",
   phone: "",
   message: "Busco un campo agrícola de 500 ha en Anta.",
+  consent: "on",
   lang: "en",
 };
 
@@ -26,6 +27,7 @@ describe("parseContact", () => {
         email: "ana@example.com",
         phone: undefined,
         message: valid.message,
+        consent: true,
         property: undefined,
         lang: "en",
       },
@@ -43,7 +45,23 @@ describe("parseContact", () => {
         email: "invalidEmail",
         phone: "invalidPhone",
         message: "required",
+        consent: "consentRequired",
       },
+    });
+  });
+
+  it("exige marcar la casilla de consentimiento", () => {
+    const withoutConsent = Object.fromEntries(
+      Object.entries(valid).filter(([key]) => key !== "consent"),
+    );
+    expect(parseContact(readContactForm(form(withoutConsent)))).toEqual({
+      ok: false,
+      errors: { consent: "consentRequired" },
+    });
+    // Solo vale el valor que envía el navegador con la casilla marcada.
+    expect(parseContact(readContactForm(form({ ...valid, consent: "false" })))).toMatchObject({
+      ok: false,
+      errors: { consent: "consentRequired" },
     });
   });
 

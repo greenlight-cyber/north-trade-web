@@ -125,7 +125,16 @@ const en: Dictionary = {
     messageHint: "Tell us what kind of land you are looking for: region, size and intended use.",
     propertyLabel: "Enquiry about",
     captcha: "Spam check",
-    privacy: "We only use your details to reply to this enquiry.",
+    privacy:
+      "Data controller: North Trade. We only use your details to reply to this enquiry, and you can ask us to access, correct or delete them at any time.",
+    consentBefore: "I have read the",
+    consentLink: "privacy policy",
+    consentAfter:
+      "and agree that North Trade may use my details to reply to this enquiry, including through service providers outside Argentina.",
+    legalNotices: [
+      "The data subject has the right to access their personal data free of charge at intervals of no less than six months, unless a legitimate interest is shown, as set forth in Article 14, paragraph 3 of Argentine Law No. 25,326.",
+      "The Agency for Access to Public Information (AAIP), as the supervisory authority of Law No. 25,326, is empowered to handle complaints and claims filed by anyone whose rights are affected by a breach of the rules on personal data protection.",
+    ],
     submit: "Send message",
     sending: "Sending…",
     errors: {
@@ -134,6 +143,7 @@ const en: Dictionary = {
       tooLong: "This is too long.",
       invalidEmail: "Please check the email address.",
       invalidPhone: "Use only numbers, spaces, hyphens and the + sign.",
+      consentRequired: "To send your message, please tick the privacy box.",
     },
     status: {
       success: "Thank you. We received your message and will reply by email or phone.",
@@ -155,6 +165,68 @@ const en: Dictionary = {
     email: "Email",
     associations: "Member of",
     rights: "All rights reserved.",
+    privacy: "Privacy policy",
+  },
+  privacyPage: {
+    title: "Privacy policy",
+    metaDescription:
+      "What personal data North Trade receives through its website, what it is used for, how long it is kept and how to ask for access, correction or deletion.",
+    lead: "What data we receive through this website, what we use it for and how you can ask us to correct or delete it.",
+    updated: "Last updated",
+    responsibleTitle: "Data controller",
+    responsible: "Controller",
+    taxId: "Tax ID (CUIT)",
+    address: "Office",
+    email: "Email",
+    sections: [
+      {
+        title: "What data we receive",
+        paragraphs: [
+          "Only what you type into the contact form: your full name, email address, phone number (if you give one), your message and, where relevant, the property you are asking about.",
+          "To stop automated submissions, your connection's IP address is also used: the spam check verifies it, and the submission counter keeps only an encrypted version for one hour.",
+          "If you message us on WhatsApp or call us, that conversation does not go through this website.",
+        ],
+      },
+      {
+        title: "What we use it for",
+        paragraphs: [
+          "Only to reply to your enquiry and continue the conversation about the properties you are interested in.",
+          "We do not use it for advertising, we do not add you to mailing lists and we do not sell or share it with third parties.",
+        ],
+      },
+      {
+        title: "Who else is involved",
+        paragraphs: [
+          "The website relies on these service providers, which process data only on our behalf:",
+        ],
+        items: [
+          "Vercel, which hosts the website (United States).",
+          "Resend, which delivers your enquiry by email (United States).",
+          "Cloudflare Turnstile, which runs the spam check.",
+          "Upstash, which keeps the anti-spam submission counter.",
+        ],
+        after:
+          "Some of these providers are outside Argentina. By ticking the box on the form you agree to that transfer, which is made only to reply to your enquiry.",
+      },
+    ],
+    retentionTitle: "How long we keep it",
+    retentionBefore: "We keep the enquiries we receive for",
+    retentionAfter:
+      "and then delete them. The anti-spam counter deletes itself one hour after you submit.",
+    rightsTitle: "Your rights",
+    rights: [
+      "You can ask, free of charge, to access your data and to have it corrected, updated or deleted. Email us at the address above or visit our office.",
+      "We answer access requests within 10 calendar days, and correction or deletion requests within 5 business days.",
+    ],
+    cookiesTitle: "Cookies",
+    cookies: [
+      "This website does not use advertising or analytics cookies.",
+      "Cloudflare's spam check may read technical browser data only to tell people from bots. The Google map loads only if you ask for it, and Google's terms then apply.",
+    ],
+    changesTitle: "Changes to this policy",
+    changes: "If we change this policy, the date on this page will show it.",
+    legalTitle: "Legal information",
+    authorityLink: "Agency for Access to Public Information (AAIP)",
   },
 };
 

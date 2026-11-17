@@ -3,8 +3,11 @@ import { z } from "zod";
 import { locales } from "@/i18n/config";
 
 /** Campos visibles del formulario de contacto. */
-export const contactFields = ["name", "email", "phone", "message"] as const;
+export const contactFields = ["name", "email", "phone", "message", "consent"] as const;
 export type ContactField = (typeof contactFields)[number];
+
+/** Valor que envía el navegador cuando la casilla de consentimiento está marcada. */
+export const consentValue = "on";
 
 /** Campo trampa: invisible para personas, los robots lo completan. */
 export const honeypotField = "sitio_web";
@@ -16,7 +19,7 @@ export const captchaField = "cf-turnstile-response";
 export const captchaAction = "contacto";
 
 export type ContactErrorCode =
-  "required" | "tooShort" | "tooLong" | "invalidEmail" | "invalidPhone";
+  "required" | "tooShort" | "tooLong" | "invalidEmail" | "invalidPhone" | "consentRequired";
 
 export type ContactStatus =
   "idle" | "success" | "invalid" | "captcha" | "rateLimited" | "unavailable" | "error";
@@ -52,6 +55,10 @@ export const contactSchema = z.object({
   message: text(contactLimits.message)
     .min(1, { error: "required" satisfies ContactErrorCode })
     .min(10, { error: "tooShort" satisfies ContactErrorCode }),
+  // Ley 25.326, art. 5: sin consentimiento expreso no se procesa la consulta.
+  consent: z
+    .literal(consentValue, { error: "consentRequired" satisfies ContactErrorCode })
+    .transform(() => true as const),
   // Datos de contexto: si llegan mal se descartan en lugar de rechazar la consulta.
   property: z.string().max(200).regex(slugPattern).optional().catch(undefined),
   lang: z.enum(locales).catch("es"),
@@ -70,6 +77,7 @@ export function readContactForm(formData: FormData) {
     email: get("email"),
     phone: get("phone"),
     message: get("message"),
+    consent: get("consent"),
     property: get("property") || undefined,
     lang: get("lang"),
     honeypot: get(honeypotField),

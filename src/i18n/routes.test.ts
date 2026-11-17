@@ -12,6 +12,8 @@ describe("localizePath", () => {
   it("arma direcciones en inglés con prefijo y nombres traducidos", () => {
     expect(localizePath("en", "home")).toBe("/en");
     expect(localizePath("en", "contact")).toBe("/en/contact");
+    expect(localizePath("es", "privacy")).toBe("/privacidad");
+    expect(localizePath("en", "privacy")).toBe("/en/privacy");
     expect(localizePath("en", "properties", "campo-en-anta")).toBe("/en/properties/campo-en-anta");
   });
 });
@@ -30,6 +32,21 @@ describe("resolveLocaleRoute", () => {
     expect(resolveLocaleRoute("/es/contacto")).toEqual({
       action: "redirect",
       pathname: "/contacto",
+    });
+  });
+
+  it("sirve la política de privacidad en los dos idiomas", () => {
+    expect(resolveLocaleRoute("/privacidad")).toEqual({
+      action: "rewrite",
+      pathname: "/es/privacidad",
+    });
+    expect(resolveLocaleRoute("/en/privacy")).toEqual({
+      action: "rewrite",
+      pathname: "/en/privacidad",
+    });
+    expect(resolveLocaleRoute("/en/privacidad")).toEqual({
+      action: "redirect",
+      pathname: "/en/privacy",
     });
   });
 

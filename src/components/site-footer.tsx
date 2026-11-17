@@ -90,6 +90,9 @@ export function SiteFooter({ locale, dict }: SiteFooterProps) {
           <p>
             © {siteConfig.name}. {f.rights}
           </p>
+          <Link href={localizePath(locale, "privacy")} className={`underline ${linkHover}`}>
+            {f.privacy}
+          </Link>
         </div>
       </div>
     </footer>

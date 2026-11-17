@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import type { ContactMessage } from "@/domain/contact";
 
 import type { EnquiredProperty } from "./handle-contact";
@@ -23,6 +24,8 @@ export function buildContactEmail(
     `Teléfono: ${message.phone ?? "(no lo indicó)"}`,
     property ? `Propiedad: ${property.title}\n${property.url}` : null,
     `Idioma del sitio: ${languageNames[message.lang]}`,
+    // Constancia del consentimiento (Ley 25.326, art. 5) y de qué versión de la política leyó.
+    `Consentimiento: aceptó la política de privacidad del ${siteConfig.privacy.updated}`,
     `Recibido: ${receivedAt.toLocaleString("es-AR", { timeZone: "America/Argentina/Salta" })}`,
     "",
     "Mensaje:",

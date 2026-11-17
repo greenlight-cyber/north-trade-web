@@ -16,6 +16,7 @@ const valid = {
   email: "ana@example.com",
   phone: "+54 387 555-0000",
   message: "Busco un campo ganadero en Anta.",
+  consent: "on",
   property: "campo-en-anta",
   lang: "es",
   [captchaField]: "token-valido",
@@ -60,6 +61,15 @@ describe("handleContact", () => {
     expect(deps.verifyCaptcha).not.toHaveBeenCalled();
   });
 
+  it("sin consentimiento no envía ni gasta límite ni captcha", async () => {
+    const deps = fakeDeps();
+    const result = await handleContact(form({ ...valid, consent: "" }), deps);
+    expect(result).toMatchObject({ status: "invalid", errors: { consent: "consentRequired" } });
+    expect(deps.allowRequest).not.toHaveBeenCalled();
+    expect(deps.verifyCaptcha).not.toHaveBeenCalled();
+    expect(deps.send).not.toHaveBeenCalled();
+  });
+
   it("frena a quien superó el límite de envíos", async () => {
     const deps = fakeDeps({ allowRequest: vi.fn(async () => false) });
     const result = await handleContact(form(valid), deps);
@@ -100,6 +110,7 @@ describe("handleContact", () => {
         email: valid.email,
         phone: valid.phone,
         message: valid.message,
+        consent: "on",
       },
     });
     expect(deps.logError).toHaveBeenCalled();
@@ -112,6 +123,7 @@ describe("buildContactEmail", () => {
     email: "ana@example.com",
     phone: undefined,
     message: "<b>Hola</b>",
+    consent: true as const,
     property: "campo-en-anta",
     lang: "en" as const,
   };
@@ -132,5 +144,6 @@ describe("buildContactEmail", () => {
     expect(text).toContain("Idioma del sitio: inglés");
     expect(text).toContain("<b>Hola</b>");
     expect(text).not.toContain("Propiedad:");
+    expect(text).toMatch(/Consentimiento: aceptó la política de privacidad del \d{4}-\d{2}-\d{2}/);
   });
 });

@@ -9,6 +9,7 @@ export const routes = {
   properties: { es: "propiedades", en: "properties" },
   about: { es: "nosotros", en: "about" },
   contact: { es: "contacto", en: "contact" },
+  privacy: { es: "privacidad", en: "privacy" },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type RouteKey = keyof typeof routes;

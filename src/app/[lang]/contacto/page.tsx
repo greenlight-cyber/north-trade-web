@@ -13,6 +13,7 @@ import { slugPattern } from "@/domain/contact";
 import { pickLocale } from "@/domain/property";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary, type Dictionary } from "@/i18n/get-dictionary";
+import { localizePath } from "@/i18n/routes";
 import { pageMetadata } from "@/lib/seo";
 import { getProperty } from "@/sanity/properties";
 import { getContactConfig } from "@/server/contact/config";
@@ -130,6 +131,7 @@ async function FormSection({ lang, dict, searchParams }: FormSectionProps) {
       locale={lang}
       labels={dict.form}
       siteKey={setup.config.turnstile.siteKey}
+      privacyHref={localizePath(lang, "privacy")}
       property={property}
     />
   );

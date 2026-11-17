@@ -6,7 +6,7 @@ import { languageAlternates } from "@/lib/seo";
 import { getSiteUrl } from "@/lib/site-url";
 import { getListedSlugs } from "@/sanity/properties";
 
-const sections: RouteKey[] = ["home", "properties", "about", "contact"];
+const sections: RouteKey[] = ["home", "properties", "about", "contact", "privacy"];
 
 /** Todas las páginas públicas en ambos idiomas; las fichas vendidas no se incluyen. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
