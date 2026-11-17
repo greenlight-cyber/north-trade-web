@@ -12,7 +12,8 @@ import { apiVersion, getSanityEnv } from "./env";
 /** Etiqueta de caché de todas las propiedades; el webhook de Sanity la invalida. */
 export const propertiesTag = "properties";
 
-// Solo campos públicos: las notas internas y la dirección vieja nunca salen del panel.
+// Solo los campos que muestra la web. Ojo: el dataset es público (plan gratuito), así que las
+// notas del equipo no se publican aquí pero sí se pueden leer por la API de Sanity.
 const image = `{
   "ref": asset._ref,
   alt,

@@ -67,7 +67,7 @@ On the owner's machine, builds and first-time dev page compiles are very slow. A
 
 **Content (Sanity).**
 
-- Schemas are in `src/sanity/schemas/`. `property.ts` holds Spanish editor labels, a custom `slugify`, and an `internalNotes` field that must never reach the site.
+- Schemas are in `src/sanity/schemas/`. `property.ts` holds Spanish editor labels, a custom `slugify`, and an `internalNotes` field that the site never renders. The dataset is public (free Sanity plan, decided in the security audit), so anything in Sanity, including `internalNotes` and sold properties, is readable through the Sanity API: never store prices or owner data there.
 - `src/sanity/properties.ts` (server-only) is the only read path. It runs GROQ queries that project public fields only, wrapped in `"use cache"` + `cacheTag("properties")` + `cacheLife("hours")`.
 - Results are validated with Zod; invalid documents are dropped with a warning rather than breaking pages.
 - Each function returns empty or null when the Sanity env is missing.

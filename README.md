@@ -54,7 +54,8 @@ muestra solo WhatsApp, teléfono y la oficina.
 Las 51 propiedades del sitio anterior se recuperaron de copias del
 [archivo de Internet](https://web.archive.org) y están en
 [`scripts/migracion/propiedades.json`](scripts/migracion/propiedades.json), ya sin precios,
-direcciones exactas ni mails. Cada una trae notas internas con lo que conviene revisar.
+direcciones exactas ni mails. Cada una trae notas del equipo con lo que conviene revisar. Esas notas no se muestran en la web, pero
+no son privadas: con el plan gratuito de Sanity todo lo cargado en el panel se puede leer por su API.
 
 Para cargarlas en Sanity (una sola vez):
 

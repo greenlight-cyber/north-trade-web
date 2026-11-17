@@ -195,8 +195,11 @@ export const property = defineType({
     }),
     defineField({
       name: "internalNotes",
-      title: "Notas internas",
-      description: "Solo para el equipo: nunca se muestran en el sitio.",
+      title: "Notas del equipo (no confidenciales)",
+      // Plan gratuito de Sanity: los datos del panel se pueden leer desde afuera con la API
+      // pública. La web no muestra este campo, pero no es un lugar privado.
+      description:
+        "No se muestran en la web, pero NO son privadas: cualquiera con conocimientos técnicos puede leerlas. No escriba precios, datos del dueño, teléfonos, correos ni nada confidencial.",
       type: "text",
       rows: 4,
       group: ["main", "advanced"],
