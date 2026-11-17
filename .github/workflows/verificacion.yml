@@ -37,8 +37,10 @@ jobs:
       - name: Tipos, linter, formato y pruebas
         run: npm run check
 
+      # Falla con vulnerabilidades altas o críticas, salvo las aceptadas (con motivo y fecha
+      # de vencimiento) en scripts/auditoria/excepciones.json.
       - name: Dependencias con vulnerabilidades altas o críticas
-        run: npm audit --audit-level=high
+        run: npm run auditar
 
       # Sin variables de entorno: el sitio compila igual (sin propiedades ni formulario).
       - name: Compilación de producción

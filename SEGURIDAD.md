@@ -73,8 +73,11 @@ certificación** y no debe decir que la tiene.
 
 **Gestión de cambios** (`.github/`)
 
-- GitHub Actions verifica cada cambio: tipos, linter, formato, pruebas, `npm audit`
-  (falla con vulnerabilidades altas o críticas) y compilación de producción.
+- GitHub Actions verifica cada cambio: tipos, linter, formato, pruebas, dependencias
+  (`npm run auditar`) y compilación de producción.
+- `npm run auditar` falla con cualquier vulnerabilidad alta o crítica, salvo las aceptadas en
+  `scripts/auditoria/excepciones.json`. Cada excepción dice por qué no afecta al sitio y vence
+  en un mes: al vencer, la verificación vuelve a fallar y hay que revisarla.
 - Dependabot propone actualizaciones de dependencias cada semana.
 
 ## Decisiones tomadas
@@ -94,8 +97,17 @@ certificación** y no debe decir que la tiene.
 
 ## Riesgos pendientes
 
-- **Dependencias:** quedan avisos de gravedad moderada en herramientas internas de Sanity
-  (línea de comandos), que no procesan datos de visitas. Dependabot avisará cuando haya arreglo.
+- **Dependencias:**
+  - `picomatch` (gravedad alta, GHSA-fc5q-39xc-vjpf): se vuelve lenta ante patrones de archivo
+    armados a propósito. Solo la usan herramientas de desarrollo y compilación con patrones del
+    propio proyecto; las visitas no pueden elegirlos. No hay versión corregida todavía.
+    Aceptada hasta el 17/12/2026.
+  - Avisos moderados en herramientas internas de Sanity (línea de comandos), que no procesan
+    datos de visitas.
+  - Dependabot avisará cuando haya arreglo.
+- **Pull requests de Dependabot con versiones mayores** (por ejemplo TypeScript 7 o
+  `@sanity/client` 8): pueden fallar la verificación porque traen cambios incompatibles. No
+  unirlas sin revisar; se pueden cerrar.
 - **Fichas inventadas:** una dirección con formato válido pero inexistente genera una consulta
   a Sanity. Si alguna vez hay abuso, se activa el firewall de Vercel ("Attack Challenge Mode").
 - **Panel `/admin`:** la pantalla de ingreso es pública; la seguridad depende de las cuentas

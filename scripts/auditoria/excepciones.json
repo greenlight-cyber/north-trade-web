@@ -1,0 +1,8 @@
+[
+  {
+    "id": "GHSA-fc5q-39xc-vjpf",
+    "paquete": "picomatch",
+    "motivo": "Lentitud ante patrones de archivo armados a propósito. Solo la usan herramientas de desarrollo y compilación (vite, eslint, la línea de comandos de Sanity) con patrones del propio proyecto; ninguna visita del sitio puede elegir esos patrones. Sin versión corregida publicada al 17/11/2026.",
+    "vence": "2026-12-17"
+  }
+]
