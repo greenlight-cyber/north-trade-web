@@ -8,6 +8,9 @@ export default defineConfig({
   },
   test: {
     environment: "node",
+    // El modo por defecto falla en la computadora del dueño (problema de la herramienta,
+    // no del código); este funciona igual en todas las máquinas y en GitHub.
+    pool: "vmThreads",
     include: ["src/**/*.test.ts", "scripts/**/*.test.ts"],
   },
 });

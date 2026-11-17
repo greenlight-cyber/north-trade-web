@@ -1,0 +1,23 @@
+# Dependabot propone actualizaciones de dependencias con un pull request.
+# Las actualizaciones de seguridad llegan apenas se publican; las demás, agrupadas una vez por semana.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: America/Argentina/Salta
+    open-pull-requests-limit: 5
+    groups:
+      menores:
+        update-types: [minor, patch]
+    commit-message:
+      prefix: "Dependencias"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "Verificación"

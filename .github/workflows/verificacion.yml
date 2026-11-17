@@ -1,0 +1,45 @@
+# Verificación automática de cada cambio: tipos, linter, formato, pruebas, dependencias
+# y compilación de producción. Si algo falla, GitHub lo marca en rojo antes de publicar.
+name: Verificación
+
+on:
+  push:
+    branches: [main, v2, mantenimiento]
+  pull_request:
+
+# Solo lectura del código: este flujo no necesita escribir nada en el repositorio.
+permissions:
+  contents: read
+
+concurrency:
+  group: verificacion-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependencias (exactas, según package-lock.json)
+        run: npm ci
+
+      - name: Tipos, linter, formato y pruebas
+        run: npm run check
+
+      - name: Dependencias con vulnerabilidades altas o críticas
+        run: npm audit --audit-level=high
+
+      # Sin variables de entorno: el sitio compila igual (sin propiedades ni formulario).
+      - name: Compilación de producción
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
