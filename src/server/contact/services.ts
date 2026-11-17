@@ -41,6 +41,14 @@ export async function verifyTurnstile(
 /** Envíos permitidos por dirección de visita dentro de la ventana. */
 export const rateLimit = { max: 5, windowSeconds: 60 * 60 } as const;
 
+/**
+ * Tope de mails por día para todo el sitio, aunque lleguen de muchas direcciones distintas.
+ * Holgado para consultas reales; frena una ola de spam antes de agotar la cuota de Resend.
+ */
+export const dailyLimit = { max: 50, windowSeconds: 24 * 60 * 60 } as const;
+
+type Upstash = { url: string; token: string };
+
 // Suma y fija el vencimiento en un solo paso: el contador nunca queda sin vencer.
 const countScript =
   "local n = redis.call('INCR', KEYS[1]) if n == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end return n";
@@ -48,33 +56,43 @@ const countScript =
 const countResponse = z.object({ result: z.number() });
 
 /**
- * Cuenta los envíos de una dirección en Upstash (Redis) con una ventana fija.
- * La dirección se guarda cifrada (hash), nunca tal cual.
- * Si Upstash no responde se permite el envío: el captcha sigue protegiendo y no se pierde la consulta.
+ * Suma uno al contador `key` en Upstash (Redis), con una ventana fija, y dice si sigue
+ * dentro del máximo. Si Upstash no responde se permite el envío: el captcha sigue
+ * protegiendo y no se pierde la consulta.
  */
-export async function allowByRateLimit(
-  upstash: { url: string; token: string },
-  ip: string | null,
+async function countWithinLimit(
+  upstash: Upstash,
+  key: string,
+  limit: { max: number; windowSeconds: number },
 ): Promise<boolean> {
+  try {
+    const response = await fetch(upstash.url, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${upstash.token}` },
+      body: JSON.stringify(["EVAL", countScript, "1", key, String(limit.windowSeconds)]),
+      signal: AbortSignal.timeout(3_000),
+    });
+    if (!response.ok) throw new Error(`Upstash respondió ${response.status}`);
+    return countResponse.parse(await response.json()).result <= limit.max;
+  } catch (error) {
+    console.error("Contacto: no se pudo consultar el límite de envíos.", error);
+    return true;
+  }
+}
+
+/** Límite por dirección de visita. La dirección se guarda cifrada (hash), nunca tal cual. */
+export function allowByRateLimit(upstash: Upstash, ip: string | null): Promise<boolean> {
   // Con clave secreta: un hash simple de una IPv4 se revierte probando todas las direcciones.
   const id = createHmac("sha256", upstash.token)
     .update(ip ?? "desconocida")
     .digest("hex")
     .slice(0, 32);
-  const key = `contacto:${id}`;
-  try {
-    const response = await fetch(upstash.url, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${upstash.token}` },
-      body: JSON.stringify(["EVAL", countScript, "1", key, String(rateLimit.windowSeconds)]),
-      signal: AbortSignal.timeout(3_000),
-    });
-    if (!response.ok) throw new Error(`Upstash respondió ${response.status}`);
-    return countResponse.parse(await response.json()).result <= rateLimit.max;
-  } catch (error) {
-    console.error("Contacto: no se pudo consultar el límite de envíos.", error);
-    return true;
-  }
+  return countWithinLimit(upstash, `contacto:${id}`, rateLimit);
+}
+
+/** Tope diario de todo el sitio. Se cuenta solo cuando el captcha ya se aprobó. */
+export function allowByDailyLimit(upstash: Upstash): Promise<boolean> {
+  return countWithinLimit(upstash, "contacto:total-diario", dailyLimit);
 }
 
 /** Dirección de la visita según los encabezados que agrega Vercel. */

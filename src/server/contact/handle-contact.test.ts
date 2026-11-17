@@ -25,6 +25,7 @@ const valid = {
 const fakeDeps = (overrides: Partial<ContactDeps> = {}): ContactDeps => ({
   allowRequest: vi.fn(async () => true),
   verifyCaptcha: vi.fn(async (token: string) => token === "token-valido"),
+  allowDailyTotal: vi.fn(async () => true),
   findProperty: vi.fn(async () => ({ title: "Campo en Anta", url: "https://x/propiedades/a" })),
   send: vi.fn(async () => {}),
   logError: vi.fn(),
@@ -68,6 +69,20 @@ describe("handleContact", () => {
     expect(deps.allowRequest).not.toHaveBeenCalled();
     expect(deps.verifyCaptcha).not.toHaveBeenCalled();
     expect(deps.send).not.toHaveBeenCalled();
+  });
+
+  it("pausa el formulario al llegar al tope diario, sin enviar", async () => {
+    const deps = fakeDeps({ allowDailyTotal: vi.fn(async () => false) });
+    const result = await handleContact(form(valid), deps);
+    expect(result).toMatchObject({ status: "unavailable", values: { name: valid.name } });
+    expect(deps.send).not.toHaveBeenCalled();
+    expect(deps.logError).toHaveBeenCalled();
+  });
+
+  it("no cuenta para el tope diario si el captcha no se aprobó", async () => {
+    const deps = fakeDeps();
+    await handleContact(form({ ...valid, [captchaField]: "otro" }), deps);
+    expect(deps.allowDailyTotal).not.toHaveBeenCalled();
   });
 
   it("frena a quien superó el límite de envíos", async () => {

@@ -11,7 +11,7 @@ import { getProperty } from "@/sanity/properties";
 import { getContactConfig } from "./config";
 import { buildContactEmail, sendWithResend } from "./email";
 import { handleContact } from "./handle-contact";
-import { allowByRateLimit, clientIp, verifyTurnstile } from "./services";
+import { allowByDailyLimit, allowByRateLimit, clientIp, verifyTurnstile } from "./services";
 
 /** Recibe el formulario de contacto. Cualquiera puede llamarla: todo se valida acá. */
 export async function sendContact(
@@ -26,6 +26,7 @@ export async function sendContact(
   return handleContact(formData, {
     allowRequest: () => allowByRateLimit(config.upstash, ip),
     verifyCaptcha: (token) => verifyTurnstile(config.turnstile.secretKey, token, ip),
+    allowDailyTotal: () => allowByDailyLimit(config.upstash),
     findProperty: async (slug) => {
       const property = await getProperty(slug);
       if (!property) return null;

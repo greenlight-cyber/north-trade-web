@@ -14,6 +14,8 @@ export type ContactDeps = {
   /** true si la dirección de la visita todavía puede enviar. */
   allowRequest: () => Promise<boolean>;
   verifyCaptcha: (token: string) => Promise<boolean>;
+  /** true si el sitio todavía no llegó al tope diario de mails (se cuenta tras el captcha). */
+  allowDailyTotal: () => Promise<boolean>;
   findProperty: (slug: string) => Promise<EnquiredProperty | null>;
   send: (message: ContactMessage, property: EnquiredProperty | null) => Promise<void>;
   logError: (message: string, error?: unknown) => void;
@@ -42,6 +44,13 @@ export async function handleContact(formData: FormData, deps: ContactDeps): Prom
     if (!(await deps.allowRequest())) return { status: "rateLimited", values: keepValues(raw) };
     if (!(await deps.verifyCaptcha(raw.captchaToken))) {
       return { status: "captcha", values: keepValues(raw) };
+    }
+    // Después del captcha: un robot sin verificar no puede agotar el tope de todos.
+    if (!(await deps.allowDailyTotal())) {
+      deps.logError(
+        "Contacto: se alcanzó el tope diario de consultas; el formulario queda en pausa.",
+      );
+      return { status: "unavailable", values: keepValues(raw) };
     }
 
     const slug = parsed.data.property;
