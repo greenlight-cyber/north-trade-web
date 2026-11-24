@@ -79,6 +79,8 @@ certificación** y no debe decir que la tiene.
   `scripts/auditoria/excepciones.json`. Cada excepción dice por qué no afecta al sitio y vence
   en un mes: al vencer, la verificación vuelve a fallar y hay que revisarla.
 - Dependabot propone actualizaciones de dependencias cada semana.
+- Vercel instala con `npm ci` (`vercel.json`), igual que GitHub: usa exactamente las versiones
+  de `package-lock.json`, sin recalcularlas. Node está fijo en la versión 22 (`engines`).
 
 ## Decisiones tomadas
 
