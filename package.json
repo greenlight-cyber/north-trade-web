@@ -18,7 +18,7 @@
     "auditar": "node scripts/auditoria/auditar.mjs"
   },
   "dependencies": {
-    "@sanity/client": "^7.28.0",
+    "@sanity/client": "^8.16.0",
     "@sanity/image-url": "^2.2.0",
     "@sanity/locale-es-es": "^1.2.39",
     "next": "16.4.6",
