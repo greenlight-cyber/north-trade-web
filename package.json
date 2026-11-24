@@ -22,10 +22,10 @@
     "@sanity/image-url": "^2.2.0",
     "@sanity/locale-es-es": "^1.2.39",
     "next": "16.4.6",
-    "next-sanity": "^13.4.0",
+    "next-sanity": "^13.5.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "sanity": "^6.23.0",
+    "sanity": "^6.24.0",
     "server-only": "^0.0.1",
     "styled-components": "^6.6.0",
     "zod": "^4.6.7"
@@ -38,11 +38,11 @@
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^5.0.5"
+    "vitest": "^5.1.1"
   },
   "engines": {
     "node": "22.x"
